@@ -1,25 +1,30 @@
 import React, { Component } from "react";
-import { Card, Button, Nav, Container, Modal} from 'react-bootstrap';
+import { Card, Button, Nav, Container, Modal, Row, Col, Image } from 'react-bootstrap';
 import ListCreate from './listcreate'
+import btnImg from '../img/img-placeholder.jpg'
 export default class List extends Component {
     state = {
         ModalShow: false
-      }
-      openModal = () => this.setState({ ModalShow: true });
-      closeModal = () => this.setState({ ModalShow: false });
+    }
+    openModal = () => this.setState({ ModalShow: true });
+    closeModal = () => this.setState({ ModalShow: false });
     render() {
         return (
             <div>
-                <div class="jumbotron jumbotron-fluid">
-                    <div class="container">
-                        <h1 class="display-4">Wishcart.</h1>
-                        <p class="lead">Always there for you to manage and</p>
-                        <p>organize for any occasion.</p>
-                        <a class="btn btn-primary btn-lg" href="#" role="button">Go to my list</a><br/>
-                        <a class="btn btn-primary btn-lg" href="#" onClick={this.openModal}>Add new List</a>
-                    </div>
-                </div>
                 <Container>
+                    <div class="jumbotron jumbotron-fluid">
+                        <Row>
+                            <Col sm>
+                                <Button size="sm">
+                                    <Image src={btnImg} rounded responsive width='200px' />
+                                </Button>
+                            </Col>
+                            <Col sm>
+                                <h4>My Wishlist</h4>
+                            </Col>
+                            <Col sm></Col>
+                        </Row>
+                    </div>
                     <Card >
                         <Card.Header>
                             <Nav variant="tabs" defaultActiveKey="#items">

@@ -60,7 +60,7 @@ class App extends Component {
                   </Link>
                 </Nav>
                 <Nav>
-                  <Link className="nav-link" to={'/list'} onClick={this.openModal}>List</Link>
+                  <Link className="nav-link" to={'/list'} onClick={this.openModal}>Create a list</Link>
                   <Link className="nav-link" to={'/list'}>Notif<Badge bg="secondary">9</Badge>
                     <span className="visually-hidden">unread messages</span></Link>
                 </Nav>
