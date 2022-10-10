@@ -5,6 +5,8 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/home'
 import Help from './pages/help'
+import About from './pages/about'
+import Blog from './pages/blog'
 import List from './pages/list';
 import ListCreate from './pages/listcreate'
 import Footer from './components/footer';
