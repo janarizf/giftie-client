@@ -70,8 +70,7 @@ class App extends Component {
           <div>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/sign-in" element={<Login />} />
-              <Route path="/sign-up" element={<SignUp />} />
+             
               <Route path="/home" element={<Home />} />
               <Route path="/help" element={<Help />} />
               <Route path="/about" element={<About />} />
