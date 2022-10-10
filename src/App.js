@@ -30,7 +30,7 @@ class App extends Component {
           <Navbar expand="lg" variant="light">
           <Container>
           <Col>
-              <Navbar.Brand href="/"><img src={require('./img/wishcart_logo.png')} weign="40" height="40"/></Navbar.Brand>
+              <Navbar.Brand href="/home"><img src={require('./img/wishcart_logo.png')} weign="40" height="40"/></Navbar.Brand>
           </Col>
               <Col>
               <Navbar.Collapse id="basic-navbar-nav">
