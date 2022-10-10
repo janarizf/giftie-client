@@ -81,10 +81,12 @@ html,
 .footer {
   background: #56618f;
   border-radius: 5px;
-  padding: 20px;
+  padding: 30px;
   color: #ffffff;
 }
-
+.footer-col{
+  justify-content: right;
+}
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Row, Container, Col } from 'react-bootstrap';
+import { Row, Container, Col, Button } from 'react-bootstrap';
+import { ArrowRightCircle } from 'react-bootstrap-icons';
 
 export default class About extends Component {
     render() {
@@ -7,19 +8,19 @@ export default class About extends Component {
             <main>
                 <Row>
                     <div class="jumbotron jumbotron-fluid">
-                        <div class="container">
-                            <Row>
-                                <Col>
-                                    <h1 class="display-4">Wishcart.</h1>
-                                    <p class="lead">Always there for you to manage and</p>
-                                    <p>organize for any occasion.</p>
-                                    <a class="btn btn-primary btn-sm" href="#" role="button">Go to my list</a>
-                                </Col>
-                                <Col>
-                                    <img src={require('../img/cart.png')} className="rounded float-right img-responsive" width="80%" height="auto" />
-                                </Col>
-                            </Row>
-                        </div>
+                    <Container>
+              <Row>
+                <Col className="col-text">
+                  <h1>Wishcart.</h1>
+                  <h2>Always there for you to <text className="jumbotron-manage">manage</text> and</h2>
+                  <h2><text className="jumbotron-organize">organize</text> for any occasion.</h2>
+                  <Button href="#" variant="flat">Go to my list  <ArrowRightCircle color="white" /></Button>
+                </Col>
+                <Col>
+                  <img src={require('../img/cart.png') } className="rounded float-right img-responsive" width="80%" height="auto"/>
+                </Col>
+              </Row>
+              </Container>
                     </div>
                 </Row>
                 <Container>

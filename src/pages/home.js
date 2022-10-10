@@ -58,6 +58,12 @@ export default class home extends Component {
               {listInfo.map(renderList)}
             </div>
           </Row>
+          <Row>
+          <h4>Mostly used by our users for occasion</h4>
+            <div className="grid-container">
+              {listInfo.map(renderList)}
+            </div>
+          </Row>
         </Container>
       </main>
     );
