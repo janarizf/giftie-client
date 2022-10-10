@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Nav, Navbar, NavDropdown, Modal, Button,Badge } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown, Modal, Button,Badge, Col } from 'react-bootstrap';
 import Helmet from 'react-helmet';
 import logo from './logo.svg';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -14,6 +14,7 @@ import Blog from './pages/blog'
 import List from './pages/list';
 import ListCreate from './pages/listcreate'
 import Footer from './components/footer';
+import { Plus, PlusCircle } from 'react-bootstrap-icons';
 class App extends Component {
   state = {
     ModalShow: false
@@ -26,55 +27,51 @@ class App extends Component {
     return (
       <Router>
         <header>
-          <Navbar expand="lg" className='color-nav' variant="dark">
-            <Container>
-              <Navbar.Brand href="#home">WishCart</Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar expand="lg" variant="light">
+          <Container>
+          <Col>
+              <Navbar.Brand href="/"><img src={require('./img/wishcart_logo.png')} weign="40" height="40"/></Navbar.Brand>
+          </Col>
+              <Col>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                  <Link className="nav-link" to={'/sign-in'}>
-                    Login
-                  </Link>
-                  <Link className="nav-link" to={'/sign-up'}>
-                    Sign up
-                  </Link>
                   <Link className="nav-link" to={'/home'}>
                     Home
                   </Link>
-                  <NavDropdown title="Features" id="basic-nav-dropdown">
-                    <NavDropdown.Item><Link className="nav-link" to={'/list'}>List</Link></NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2"> Another action </NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                  </NavDropdown>
+                  <Link className="nav-link" to={'/help'}>
+                    Help
+                  </Link>
+                  <Link className="nav-link" to={'/about'}>
+                    Gift Ideas
+                  </Link>
                   <Link className="nav-link" to={'/about'}>
                     About Us
                   </Link>
                   <Link className="nav-link" to={'/blog'}>
                     Blog
                   </Link>
-                  <Link className="nav-link" to={'/help'}>
-                    Help
-                  </Link>
                   <Link className="nav-link" to={'/list'}>
                     Account
                   </Link>
                 </Nav>
+                </Navbar.Collapse>
+                </Col>
+                <Col style={{display:'flex', justifyContent:'right'}}>
+               
                 <Nav>
-                  <Link className="nav-link" to={'/list'} onClick={this.openModal}>Create a list</Link>
-                  <Link className="nav-link" to={'/list'}>Notif<Badge bg="secondary">9</Badge>
-                    <span className="visually-hidden">unread messages</span></Link>
+                  <Link className="nav-link" to={'/list'} onClick={this.openModal}><PlusCircle color="gray" /> Create a list</Link>
                 </Nav>
-              </Navbar.Collapse>
-            </Container>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                </Col>
+               </Container>
           </Navbar>
         </header>
         <main>
           <div>
             <Routes>
-              <Route exact path="/" element={<Login />} />
+              <Route exact path="/" element={<Home />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
-
               <Route path="/home" element={<Home />} />
               <Route path="/help" element={<Help />} />
               <Route path="/about" element={<About />} />

@@ -9,7 +9,7 @@ body {
   min-height: 100vh;
   display: flex;
   font-weight: 400;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 h1,
@@ -20,8 +20,8 @@ h5,
 h6,
 label,
 span {
-  font-weight: 500;
-  font-family: 'Fira Sans', sans-serif;
+  font-weight: bolder;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body,
@@ -67,8 +67,15 @@ html,
   padding-bottom: 20px;
 }
 
-.color-nav {
-  background: #56618f;
+.btn-flat {
+  background-color: #2E4C80 !important;
+  color: white !important;
+}
+
+.col-text {
+  padding: 80px;
+  justify-content: space-evenly;
+  display: block;
 }
 
 .footer {
@@ -92,6 +99,12 @@ html,
   color: #ffffff;
 }
 
+.jumbotron-manage{
+  color: #88f7f5;
+}
+.jumbotron-organize{
+  color: #7689df;
+}
 .login-bg {
   background-image: url("./img/jumbotron-img.jpg");
   height: 100vh;

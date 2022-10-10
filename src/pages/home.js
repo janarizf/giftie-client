@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, CardGroup, Button, Row, Container, Image, Col } from 'react-bootstrap';
+import { ArrowRightCircle } from 'react-bootstrap-icons';
 
 export default class home extends Component {
   render() {
@@ -20,7 +21,8 @@ export default class home extends Component {
                 <Card.Title>{card.title}</Card.Title>
                 <Card.Text>
                   {card.text}<br />
-                  <a class="btn btn-primary btn-sm" href={card.list} role="button">Go to my list</a>
+                  <Button href={card.list} variant="flat">Go to my list  <ArrowRightCircle color="white" /></Button>
+                 
                 </Card.Text>
               </Col>
             </Row>
@@ -33,23 +35,23 @@ export default class home extends Component {
       <main>
         <Row>
           <div class="jumbotron jumbotron-fluid">
-            <div class="container">
+          <Container>
               <Row>
-                <Col>
-                  <h1 class="display-4">Wishcart.</h1>
-                  <p class="lead">Always there for you to manage and</p>
-                  <p>organize for any occasion.</p>
-                  <a class="btn btn-primary btn-sm" href="#" role="button">Go to my list</a>
+                <Col className="col-text">
+                  <h1>Wishcart.</h1>
+                  <h2>Always there for you to <text className="jumbotron-manage">manage</text> and</h2>
+                  <h2><text className="jumbotron-organize">organize</text> for any occasion.</h2>
+                  <Button href="#" variant="flat">Go to my list  <ArrowRightCircle color="white" /></Button>
                 </Col>
                 <Col>
-                  <img src={require('../img/cart.jpg') } className="rounded float-right img-responsive" width="80%" height="auto"/>
+                  <img src={require('../img/cart.png') } className="rounded float-right img-responsive" width="80%" height="auto"/>
                 </Col>
               </Row>
-            </div>
+              </Container>
           </div>
         </Row>
         <Container>
-          <Row><img src={require('../img/infobanner.png')} /></Row>
+          <Row><img src={require('../img/infobanner.png')}/></Row>
           <Row>
             <h4>Starter List</h4>
             <div className="grid-container">

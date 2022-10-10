@@ -16,7 +16,7 @@ export default class About extends Component {
                                     <a class="btn btn-primary btn-sm" href="#" role="button">Go to my list</a>
                                 </Col>
                                 <Col>
-                                    <img src={require('../img/cart.jpg')} className="rounded float-right img-responsive" width="80%" height="auto" />
+                                    <img src={require('../img/cart.png')} className="rounded float-right img-responsive" width="80%" height="auto" />
                                 </Col>
                             </Row>
                         </div>
