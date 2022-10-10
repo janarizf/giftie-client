@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { Container, Nav, Navbar, NavDropdown, Modal, Button,Badge, Col } from 'react-bootstrap';
-import Helmet from 'react-helmet';
-import logo from './logo.svg';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Login from './login/login.component'
-import SignUp from './login/signup.component'
 import Home from './pages/home'
 import Help from './pages/help'
-import About from './pages/about'
-import Blog from './pages/blog'
 import List from './pages/list';
 import ListCreate from './pages/listcreate'
 import Footer from './components/footer';
-import { Plus, PlusCircle } from 'react-bootstrap-icons';
+import { PlusCircle } from 'react-bootstrap-icons';
 class App extends Component {
   state = {
     ModalShow: false
