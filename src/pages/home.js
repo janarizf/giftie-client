@@ -34,7 +34,7 @@ export default class home extends Component {
     return (
       <main>
         <Row>
-          <div class="jumbotron jumbotron-fluid">
+          <div className="jumbotron jumbotron-fluid">
           <Container>
               <Row>
                 <Col className="col-text">

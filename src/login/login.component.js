@@ -9,9 +9,9 @@ export default class Login extends Component {
       <Container>
         <Row>
           <Col sm={8}>
-            <div class="container">
-              <h1 class="display-4">Wishcart.</h1>
-              <p class="lead">Always there for you to manage and</p>
+            <div className="container">
+              <h1 className="display-4">Wishcart.</h1>
+              <p className="lead">Always there for you to manage and</p>
               <p>organize for any occasion.</p>
             </div>
           </Col>
@@ -19,8 +19,8 @@ export default class Login extends Component {
             <Container>
             <h3>Login to your Account</h3>
             <div className="d-grid gap-2">
-              <div class="g-signin2" data-onsuccess="onSignIn"></div>
-              <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+              <div className="g-signin2" data-onsuccess="onSignIn"></div>
+              <div className="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
               <p className="forgot-password text-right">
                 Don't have an account? <a href="#">sign-up</a>
               </p>
