@@ -15,11 +15,11 @@ function Footer() {
             <Row>
             <Col>
             <Breadcrumb>
-            <Breadcrumb.Item href="#">My List</Breadcrumb.Item>
-            <Breadcrumb.Item href="#">Blogs </Breadcrumb.Item>
-            <Breadcrumb.Item href="#">Referrals</Breadcrumb.Item>
-            <Breadcrumb.Item href="#">About Us</Breadcrumb.Item>
-            <Breadcrumb.Item href="#">Contact Us</Breadcrumb.Item>
+            <Breadcrumb.Item href="/list">My List</Breadcrumb.Item>
+            <Breadcrumb.Item href="/blog">Blogs </Breadcrumb.Item>
+            <Breadcrumb.Item href="/about">Referrals</Breadcrumb.Item>
+            <Breadcrumb.Item href="/about">About Us</Breadcrumb.Item>
+            <Breadcrumb.Item href="/help">Contact Us</Breadcrumb.Item>
             </Breadcrumb>
           
             </Col>

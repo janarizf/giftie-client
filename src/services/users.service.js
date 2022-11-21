@@ -1,6 +1,11 @@
 import http from "../http-common";
 
-class ListsDataService {
+class UsersDataService {
+    
+
+signIn = (formData) => http.post('/user/signin', formData);
+signUp = (formData) => http.post('/user/signup', formData);
+
   getAll() {
     return http.get("/lists/getAll");
   }
@@ -32,4 +37,4 @@ class ListsDataService {
   }
 }
 
-export default new ListsDataService();
+export default new UsersDataService();
