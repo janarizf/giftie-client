@@ -26,7 +26,7 @@ const SignUp = () => {
         try {
             // dispatch({ type: "AUTH", data: { result, token } });
 
-            navigate('/');
+            navigate('/lists');
         } catch (error) {
             console.log(error);
         }
@@ -49,9 +49,17 @@ const SignUp = () => {
                         theme={'outline '}
                         size={'large'}
                         shape={'rectangular'}
-
+                        width="400"
                     />
-
+                   
+                    <div class="fb-login-button" 
+                        data-width="400" 
+                        data-size="large" 
+                        data-button-type="continue_with" 
+                        data-layout="default" 
+                        data-auto-logout-link="false" 
+                        data-use-continue-as="true">
+                    </div>
                 </Col>
                 <Col className='rightCol'>
 

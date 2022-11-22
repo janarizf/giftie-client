@@ -21,6 +21,7 @@ export default class ItemListView extends Component {
             location: "",
             set_date: format(new Date(), 'yyyy-MM-dd'),
             items: [],
+            user : this.getUser(),
             addItemShow: false,
             viewItemShow: false
         };
@@ -36,6 +37,11 @@ export default class ItemListView extends Component {
     closeAddItem = () => this.setState({ addItemShow: false });
     openViewItem = () => this.setState({ viewItemShow: true });
     closeViewItem = () => this.setState({ viewItemShow: false });
+    
+    getUser(){
+        var userObj = JSON.parse(localStorage.getItem('user'));
+         return userObj ? userObj.name : "";
+       }
     onChangeName(e) {
         this.setState({
             name: e.target.value
@@ -74,14 +80,14 @@ export default class ItemListView extends Component {
 
         var data = {
             name: this.state.name,
-            user_id: this.state.user_id,
+            user_id: this.state.user,
             status: this.state.status,
             category: this.state.category,
             introduction: this.state.introduction,
             location: this.state.location,
             set_date: this.state.set_date,
             status_id: 1,
-            updatedby: "admin",
+            updatedby: this.state.user,
             updateddate: new Date()
         };
         await listsService.update(this.state.list._id, data)

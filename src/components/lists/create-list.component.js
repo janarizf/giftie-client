@@ -17,14 +17,22 @@ export default class ListCreate extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
+        user: this.getUser(),
         name: "Wishlist",
-        user_id: "1",
         status: "1",
         category: "",
         introduction: "",
         location: "",
         set_date: format(new Date(), 'yyyy-MM-dd')
       }
+      console.log(this.state.user_id);
+  }
+
+  getUser(){
+   var userObj = JSON.parse(localStorage.getItem('user'));
+   if(userObj)
+    return userObj.name
+   return "Guest";
   }
 
   onChangeName(e) {
@@ -64,16 +72,16 @@ export default class ListCreate extends Component {
   async onSubmit(e) {
     var data = {
       name: this.state.name,
-      user_id: this.state.user_id,
+      user_id: this.state.user,
       status: this.state.status,
       category: this.state.category,
       introduction: this.state.introduction,
       location: this.state.location,
       set_date: this.state.set_date,
       status_id: 1,
-      createdby: "admin",
+      createdby: this.state.user,
       createddate: new Date(),
-      updatedby: "admin",
+      updatedby: this.state.user,
       updateddate: new Date()
     };
 
