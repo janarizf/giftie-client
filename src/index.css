@@ -183,3 +183,22 @@ h3 {
   color:white;
   font-family: 'Nunito', sans-serif;
 }
+
+.loginContainer {
+  min-height: 100vh
+}
+.loginContainer .rightCol{
+  background-image: url("./img/log_in.jpg");
+ /* Full height */
+ height: 100%;
+ /* Center and scale the image nicely */
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: cover;
+ min-height: 100vh
+}
+.loginContainer .leftCol{
+  margin: auto;
+  width: auto;
+  padding: 100px;
+}

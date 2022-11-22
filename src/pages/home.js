@@ -38,10 +38,10 @@ export default class home extends Component {
           <Container>
               <Row>
                 <Col className="col-text">
-                  <h1>Wishcart.</h1>
-                  <h2>Always there for you to <text className="jumbotron-manage">manage</text> and</h2>
-                  <h2><text className="jumbotron-organize">organize</text> for any occasion.</h2>
-                  <Button href="#" variant="flat">Go to my list  <ArrowRightCircle color="white" /></Button>
+                  <h1>Great gifts – always.</h1>
+                  <h2>Giftie is the Ultimate Wish List Maker to help you</h2>
+                  <h2>give and receive great gifts for any celebration.</h2>
+                  <Button href="#" variant="flat">How it works  <ArrowRightCircle color="white" /></Button>
                 </Col>
                 <Col>
                   <img src={require('../img/cart.png') } className="rounded float-right img-responsive" width="80%" height="auto"/>

@@ -3,10 +3,10 @@ import { Nav, Navbar, Col, Container } from 'react-bootstrap';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { PlusCircle } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
-import decode from 'jwt-decode';
+
 
 const NavbarMain = () => {
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const dispatch = useDispatch();
     const location = useLocation();
     const history = useNavigate();
@@ -24,15 +24,15 @@ const NavbarMain = () => {
         const token = user?.token;
 
         if (token) {
-            const decodedToken = decode(token);
+          //  const decodedToken = decode(token);
 
             //   if (decodedToken.exp * 1000 < new Date().getTime()) logout();
         }
 
-        setUser(JSON.parse(localStorage.getItem('profile')));
+        setUser(JSON.parse(localStorage.getItem('user')));
     }, [location]);
     return (
-        <Container>
+     
             <Navbar expand="lg" variant="light" >
                 <Navbar.Brand href="/home"><img src={require('../../img/wishcart_logo.png')} weign="40" height="40" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -70,7 +70,7 @@ const NavbarMain = () => {
                     </Col>
                 </Navbar.Collapse>
             </Navbar>
-        </Container>
+       
     )
 };
 export default NavbarMain;

@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { Col, Container, Button, Row } from 'react-bootstrap';
-
+import jwt_decode from "jwt-decode";
 const SignUp = () => {
     const [isSignup, setIsSignup] = useState(false);
+    const [user, setUser] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -17,19 +18,13 @@ const SignUp = () => {
 
     const googleSuccess = async (response) => {
         console.log(response);
-    //    const result = res?.profileObj;
-      //  const token = res?.tokenId;
-      localStorage.setItem('user', JSON.stringify(response));
-      const { clientId, name, imageUrl } = response;
-      const doc = {
-        _id: clientId,
-        _type: 'user',
-        userName: name,
-        image: imageUrl,
-      };
+        var userObj = jwt_decode(response.credential);
+        console.log(userObj);
+        setUser(userObj);
 
+        localStorage.setItem('user', JSON.stringify(userObj));
         try {
-           // dispatch({ type: "AUTH", data: { result, token } });
+            // dispatch({ type: "AUTH", data: { result, token } });
 
             navigate('/');
         } catch (error) {
@@ -39,32 +34,27 @@ const SignUp = () => {
 
     const googleError = (error) => { console.log(error) };
     return (
-        <Container >
+        <Container className='loginContainer'>
             <Row>
-                <Col sm={8}>
-                    <div className="container">
-                        <h1 className="display-4">Wishcart.</h1>
-                        <p className="lead">Always there for you to manage and</p>
-                        <p>organize for any occasion.</p>
-                    </div>
-                </Col>
-                <Col sm={4} >
+                <Col className='leftCol'>
+                    <h5> Ready for Great Gifts?</h5>
+                    <h1>Log In to Giftie</h1>
+
+                    <h5> Dont have an account? Create one now.</h5>
                     <GoogleLogin
                         onSuccess={googleSuccess}
                         onError={googleError}
                         cookiePolicy={'single_host_origin'}
-                        type= {'standard'}
+                        type={'standard'}
                         theme={'outline '}
                         size={'large'}
                         shape={'rectangular'}
+
                     />
-                    <Row>
-                        <Col>
-                            <Button onClick={switchMode}>
-                                {isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up"}
-                            </Button>
-                        </Col>
-                    </Row>
+
+                </Col>
+                <Col className='rightCol'>
+
                 </Col>
             </Row>
         </Container>

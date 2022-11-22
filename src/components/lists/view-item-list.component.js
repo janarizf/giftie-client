@@ -4,7 +4,7 @@ import listsService from "../../services/lists.service";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Card, CardGroup, Button, Nav, Container, Modal, Row, Col, Form, Image } from 'react-bootstrap';
 import btnImg from '../../img/img-placeholder.jpg'
-import { PlusCircle } from 'react-bootstrap-icons';
+import { PlusCircle, Facebook, Messenger, Instagram, Twitter } from 'react-bootstrap-icons';
 import { format } from 'date-fns';
 
 export default class ItemListView extends Component {
@@ -21,7 +21,8 @@ export default class ItemListView extends Component {
             location: "",
             set_date: format(new Date(), 'yyyy-MM-dd'),
             items: [],
-            modalShow: false
+            addItemShow: false,
+            viewItemShow: false
         };
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeStatus = this.onChangeStatus.bind(this);
@@ -31,8 +32,10 @@ export default class ItemListView extends Component {
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    openModal = () => this.setState({ modalShow: true });
-    closeModal = () => this.setState({ modalShow: false });
+    openAddItem = () => this.setState({ addItemShow: true });
+    closeAddItem = () => this.setState({ addItemShow: false });
+    openViewItem = () => this.setState({ viewItemShow: true });
+    closeViewItem = () => this.setState({ viewItemShow: false });
     onChangeName(e) {
         this.setState({
             name: e.target.value
@@ -68,7 +71,7 @@ export default class ItemListView extends Component {
     }
 
     async onSubmit(e) {
-      
+
         var data = {
             name: this.state.name,
             user_id: this.state.user_id,
@@ -82,11 +85,11 @@ export default class ItemListView extends Component {
             updateddate: new Date()
         };
         await listsService.update(this.state.list._id, data)
-        .then(response => {})
+            .then(response => { })
             .catch(function (error) {
                 console.log(error);
             })
-           
+
     }
     async loadList() {
         await listsService.get(this.state.listId)
@@ -94,10 +97,10 @@ export default class ItemListView extends Component {
                 this.state.list = response.data;
                 this.state.items = response.data.items;
                 this.state.name = response.data.name;
-                this.state.category= response.data.category;
-                this.state.introduction= response.data.introduction;
+                this.state.category = response.data.category;
+                this.state.introduction = response.data.introduction;
                 this.state.location = response.data.location;
-                this.state.set_date= format(response.data.set_date, 'yyyy-MM-dd');
+                this.state.set_date = format(response.data.set_date, 'yyyy-MM-dd');
             })
             .catch(function (error) {
                 console.log(error);
@@ -110,7 +113,6 @@ export default class ItemListView extends Component {
 
     render() {
         const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
-
         return (
             <div>
                 <div className="jumbotron jumbotron-fluid">
@@ -159,35 +161,40 @@ export default class ItemListView extends Component {
                             </Col>
                             <Col></Col>
                             <Col>
-                                <Link className="nav-link" to={'#'} onClick={this.openModal}><PlusCircle color="gray" /> Add items</Link>
+                                <Link className="nav-link" to={'#'} onClick={this.openAddItem}><PlusCircle color="gray" /> Add items</Link>
                             </Col>
                         </Row>
                         <Row>
-                            <div>
+                            <Col>
                                 <h4>Your Items</h4>
-                                <CardGroup>
+                                <Row xs={1} md={3}>
                                     {this.state.items.map(function (d) {
                                         return (
-                                            <Card style={{ width: "auto" }} key={d._id} >
-                                                <Card.Img variant="top" src={d.image} />
-                                                <Card.Body>
+                                            <div>
+                                                <Card key={d._id} className='h-100'>
+                                                    <Card.Img variant="top" src={d.image} />
+                                                    <Card.Body>
+                                                        <Card.Title>{d.name}</Card.Title>
+                                                        <Card.Text>
+                                                            {d.name}<br />
+                                                            {d.quantity}<br />
+                                                        </Card.Text>
 
-                                                    <Card.Title>{d.name}</Card.Title>
-                                                    <Card.Text>
-                                                        {d.name}<br />
-                                                        {d.quantity}<br />
-                                                    </Card.Text>
-
-                                                </Card.Body>
-                                            </Card>
+                                                    </Card.Body>
+                                                    <Card.Footer>
+                                                        <Button onClick={this.openViewItem}>View</Button>
+                                                    </Card.Footer>
+                                                </Card>
+                                            </div>
                                         )
-                                    })}
-                                </CardGroup>
-                            </div>
+
+                                    }, this)}
+                                </ Row>
+                            </Col>
                         </Row>
                     </Card.Body>
                 </Card>
-                <Modal show={this.state.modalShow} onHide={this.closeModal} >
+                <Modal show={this.state.addItemShow} onHide={this.closeAddItem} >
                     <Modal.Header closeButton>
                         <Modal.Title>Add an item to your list</Modal.Title>
                     </Modal.Header>
@@ -195,7 +202,20 @@ export default class ItemListView extends Component {
                         <AddItem listData={this.state.list} />
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={this.closeModal}>
+                        <Button variant="secondary" onClick={this.closeAddItem}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal >
+                <Modal show={this.state.viewItemShow} onHide={this.closeViewItem} >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Item Name</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <h2><Button><Facebook /><Messenger /><Instagram /><Twitter /></Button> </h2>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.closeViewItem}>
                             Close
                         </Button>
                     </Modal.Footer>

@@ -30,6 +30,9 @@ export default class List extends Component {
                             <Row>
                                 <Col><Nav variant="tabs" defaultActiveKey="#lists">
                                     <Nav.Item>
+                                        <Nav.Link href="#">Profile</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
                                         <Nav.Link href="#lists">Lists</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>

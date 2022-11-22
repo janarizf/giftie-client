@@ -4,6 +4,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 function Footer() {
     return (
         <Container className="footer" fluid="md">
+            
               <Row>
                 <Col>
                 <img src={require('../img/wishcart_logo_white.png') }  width="30%" height="auto"/>
