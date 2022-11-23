@@ -16,10 +16,14 @@ const Todo = props => (
 export default class ListView extends Component {
     constructor(props) {
         super(props);
-        this.state = { todos: [] };
+        this.state = {
+            todos: [],
+            userObj: JSON.parse(localStorage.getItem('user'))
+        };
     }
     componentDidMount() {
-        listsService.getAll()
+        var user = JSON.parse(localStorage.getItem('user'));
+        listsService.getByUser(user._id)
             .then(response => {
                 this.setState({ todos: response.data });
             })
@@ -36,6 +40,7 @@ export default class ListView extends Component {
         return (
 
             <div>
+                <br />
                 <h4>Your Lists</h4>
                 <Table id="listTable" hover>
                     <thead>

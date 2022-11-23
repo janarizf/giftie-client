@@ -20,7 +20,7 @@ export default class AddItem extends Component {
       list_data: props.listData,
       name: "",
       website: "",
-      category_id: "",
+      category: "",
       image: "",
       note: "",
       price: 0,
@@ -43,7 +43,7 @@ export default class AddItem extends Component {
 
   onChangeCategory(e) {
     this.setState({
-      category_id: e.target.value
+      category: e.target.value
     });
   }
 
@@ -119,22 +119,20 @@ export default class AddItem extends Component {
       <Form onSubmit={this.saveItems}>
         <Form.Group controlId="1">
           <Form.Label>Add to List</Form.Label>
-          <Form.Select aria-label="Default select example" name="list">
-            <option>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </Form.Select>
+          <Form.Control placeholder="Disabled input" disabled value={this.state.list_data.name}/>
           <Form.Label>What would you like?</Form.Label>
           <Form.Control placeholder="e.g. toys, chocolates, essentials etc.." name="name" required value={this.state.name} onChange={this.onChangeName} />
           <Form.Label>Website item link (optional)</Form.Label>
           <Form.Control placeholder="https://" name="website" value={this.state.website} onChange={this.onChangeWebsite} />
           <Form.Label>Item Category</Form.Label>
-          <Form.Select aria-label="Default select example" name="category" value={this.state.category_id} onChange={this.onChangeCategory} >
-            <option>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <Form.Select value={this.state.category} onChange={this.onChangeCategory} required >
+              <option value="">Category</option>
+              {
+                itemCategoryData.map(function (category) {
+                  return <option key={category.id} value={category.id} >{category.value}</option>
+                })
+              }
+        
           </Form.Select>
           <Form.Label>Images (optional)</Form.Label>
           <Form.Control type="file" name="image" value={this.state.image} onChange={this.onChangeImage} />

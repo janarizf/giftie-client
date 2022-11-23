@@ -31,7 +31,7 @@ export default class ListCreate extends Component {
   getUser(){
    var userObj = JSON.parse(localStorage.getItem('user'));
    if(userObj)
-    return userObj.name
+    return userObj._id
    return "Guest";
   }
 

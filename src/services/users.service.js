@@ -1,13 +1,18 @@
 import http from "../http-common";
 
 class UsersDataService {
-    
 
-signIn = (formData) => http.post('/user/signin', formData);
-signUp = (formData) => http.post('/user/signup', formData);
+  signIn(email) {
+    return http.post(`/users/signin/${email}`);
+  }
+
+  signUp(data) {
+
+    return http.post(`/users/create/`,data);
+  }
 
   getAll() {
-    return http.get("/lists/getAll");
+    return http.get("/lists/getAll/");
   }
 
   get(id) {
@@ -15,7 +20,7 @@ signUp = (formData) => http.post('/user/signup', formData);
   }
 
   create(data) {
-     return http.post("/lists/create",data);
+    return http.post("/lists/create", data);
   }
 
   update(id, data) {
@@ -32,8 +37,8 @@ signUp = (formData) => http.post('/user/signup', formData);
     return http.delete(`/lists`);
   }
 
-  findByTitle(name) {
-    return http.get(`/lists?title=${name}`);
+  findByEmail(email) {
+    return http.get(`/users/findbyemail/${email}`);
   }
 }
 

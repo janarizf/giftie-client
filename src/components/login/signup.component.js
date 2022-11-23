@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { Col, Container, Button, Row } from 'react-bootstrap';
 import jwt_decode from "jwt-decode";
 import usersService from "../../services/users.service";
-const Login = () => {
+const SignUp = () => {
     const [isSignup, setIsSignup] = useState(false);
     const [user, setUser] = useState({});
     const dispatch = useDispatch();
@@ -23,22 +23,22 @@ const Login = () => {
         console.log(userObj);
         setUser(userObj);
 
+      
         try {
             if (userObj) {
-                await usersService.findByEmail(userObj.email)
+                await usersService.signUp(userObj)
                     .then((existing) => {
-                        if (existing.data.length > 0) {
-                            localStorage.setItem('user', JSON.stringify(existing.data[0]));
+                        if (existing) {
+                            console.log(existing);
+                            localStorage.setItem('user', JSON.stringify(userObj));
                             navigate('/list');
                         }
-                        else {
-                            navigate('/signup');
-                        }
+                     
                     })
                     .catch(function (error) {
                         console.log(error);
                     })
-
+                 
             }
 
             //findByEmail
@@ -55,15 +55,10 @@ const Login = () => {
 
     const googleError = (error) => { console.log(error) };
     return (
-        <Container className='loginContainer'>
+        <Container className='signupContainer'>
             <Row>
                 <Col className='leftCol'>
-                    <h5> Ready for Great Gifts?</h5>
-                    <h1>Log In to Giftie</h1>
-
-                    <h5> Dont have an account?  <Link to={'/signup'}>
-                        Create one now.
-                    </Link></h5>
+                    <h5> Create a free Giftie account.</h5>
                     <GoogleLogin
                         onSuccess={googleSuccess}
                         onError={googleError}
@@ -75,7 +70,7 @@ const Login = () => {
                         width="300px"
                     />
 
-                    { /*  <div className="fb-login-button"
+                    {/* <div className="fb-login-button"
                         data-width="400"
                         data-size="large"
                         data-button-type="continue_with"
@@ -91,4 +86,4 @@ const Login = () => {
         </Container>
     )
 };
-export default Login;
+export default SignUp;

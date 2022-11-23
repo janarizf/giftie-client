@@ -9,7 +9,8 @@ import About from './pages/about'
 import Blog from './pages/blog'
 import List from './pages/list';
 import ListEdit from './pages/list-edit';
-import SignUp from './components/login/login.component';
+import Login from './components/login/login.component';
+import SignUp from './components/login/signup.component';
 import Footer from './components/footer';
 import NavbarMain from './components/navbar/navbar';
 class App extends Component {
@@ -29,7 +30,8 @@ class App extends Component {
             <Route path="/blog" element={<Blog />} />
             <Route path="/list" element={<List />} />
             <Route path="/list/:id" element={<ListEdit />} />
-            <Route path="/login" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
           </Routes>
           <Footer />
         </Container>

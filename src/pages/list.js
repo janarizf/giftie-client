@@ -45,12 +45,12 @@ export default class List extends Component {
                                 </Col>
                                 <Col></Col>
                                 <Col>
-                                    <Link className="nav-link" to={'/list'} onClick={this.openModal}><PlusCircle color="gray" /> Add items</Link>
+                                    {/* <Link className="nav-link" to={'/list'} onClick={this.openModal}><PlusCircle color="gray" /> Add items</Link> */}
                                 </Col>
                             </Row>
-
+                            <Col>
                             <ListView />
-
+                            </Col>
                         </Card.Body>
                     </Card>
 

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import AddItem from "./add-item.component";
+import ViewItem from "./view-item.components";
 import listsService from "../../services/lists.service";
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Card, CardGroup, Button, Nav, Container, Modal, Row, Col, Form, Image } from 'react-bootstrap';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Card, Button, Nav, Modal, Row, Col, Form, Image } from 'react-bootstrap';
 import btnImg from '../../img/img-placeholder.jpg'
 import { PlusCircle, Facebook, Messenger, Instagram, Twitter } from 'react-bootstrap-icons';
 import { format } from 'date-fns';
@@ -21,9 +22,10 @@ export default class ItemListView extends Component {
             location: "",
             set_date: format(new Date(), 'yyyy-MM-dd'),
             items: [],
-            user : this.getUser(),
+            user: this.getUser(),
             addItemShow: false,
-            viewItemShow: false
+            viewItemShow: false,
+            selectedItem: ""
         };
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeStatus = this.onChangeStatus.bind(this);
@@ -33,15 +35,18 @@ export default class ItemListView extends Component {
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    openAddItem = () => this.setState({ addItemShow: true });
+    openAddItem =  () => this.setState({ addItemShow: true });
     closeAddItem = () => this.setState({ addItemShow: false });
-    openViewItem = () => this.setState({ viewItemShow: true });
     closeViewItem = () => this.setState({ viewItemShow: false });
-    
-    getUser(){
+    openViewItem = (e) => this.setState({viewItemShow: true, selectedItem: this.getSelectedItem(e.currentTarget.id) });
+   
+    getSelectedItem(itemId){
+        return this.state.items.filter((a) => a._id == itemId)
+    }
+    getUser() {
         var userObj = JSON.parse(localStorage.getItem('user'));
-         return userObj ? userObj.name : "";
-       }
+        return userObj ? userObj.name : "";
+    }
     onChangeName(e) {
         this.setState({
             name: e.target.value
@@ -182,13 +187,14 @@ export default class ItemListView extends Component {
                                                     <Card.Body>
                                                         <Card.Title>{d.name}</Card.Title>
                                                         <Card.Text>
-                                                            {d.name}<br />
+                                                            {d.note}<br />
+                                                            {d.category_id}<br />
                                                             {d.quantity}<br />
                                                         </Card.Text>
 
                                                     </Card.Body>
                                                     <Card.Footer>
-                                                        <Button onClick={this.openViewItem}>View</Button>
+                                                        <Button onClick={this.openViewItem} id={d._id}>View</Button>
                                                     </Card.Footer>
                                                 </Card>
                                             </div>
@@ -218,7 +224,8 @@ export default class ItemListView extends Component {
                         <Modal.Title>Item Name</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <h2><Button><Facebook /><Messenger /><Instagram /><Twitter /></Button> </h2>
+                    <ViewItem itemData={this.state.selectedItem} />
+                       
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.closeViewItem}>

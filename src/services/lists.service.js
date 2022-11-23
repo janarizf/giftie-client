@@ -4,6 +4,10 @@ class ListsDataService {
   getAll() {
     return http.get("/lists/getAll");
   }
+  
+  getByUser(id) {
+    return http.get(`/lists/getByUser/${id}`);
+  }
 
   get(id) {
     return http.get(`/lists/getOne/${id}`);

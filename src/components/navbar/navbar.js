@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Nav, Navbar, Col, Container, Button } from 'react-bootstrap';
+import { Nav, Navbar, Col, Container, Button, NavDropdown } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { PlusCircle } from 'react-bootstrap-icons';
@@ -42,7 +42,7 @@ const NavbarMain = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Col ></Col>
-                <Col xs={6}>
+                <Col xs={8}>
                     <Nav className="me-auto">
                         <Nav.Link href={'/home'}>
                             Home
@@ -59,23 +59,23 @@ const NavbarMain = () => {
                         <Link className="nav-link" to={'/blog'}>
                             Blog
                         </Link>
-                        <Link className="nav-link" to={'/list'}>
+                        {isLoggedin &&   <Link className="nav-link" to={'/list'}>
                             Account
-                        </Link>
+                        </Link>}
 
                     </Nav>
                 </Col>
                 <Col>
                     <Nav>
-                        <Link className="nav-link" to={'/list'} ><PlusCircle color="gray" /> Create a list</Link>
+                        {/* <Link className="nav-link" to={'/list'} ><PlusCircle color="gray" /> Create a list</Link> */}
                         {isLoggedin == null && <Link className="nav-link" to={'/login'}>
                             Login
                         </Link>}
+
+                        {isLoggedin && 
+                            <Button className="nav-link" variant="link" onClick={logout} > Sign Out</Button>}
                         {isLoggedin &&
-                            <Button className="nav-link" variant="link" onClick={logout} > Sign Out</Button>
-                        }
-                        {isLoggedin &&
-                            <Image src={user.picture} roundedCircle thumbnail width="50x"/>}
+                            <Image src={user.photo} roundedCircle thumbnail width="50x" />}
                     </Nav>
                 </Col>
             </Navbar.Collapse>

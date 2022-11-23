@@ -184,9 +184,7 @@ h3 {
   font-family: 'Nunito', sans-serif;
 }
 
-.loginContainer {
-  min-height: 100vh
-}
+
 .loginContainer .rightCol{
   background-image: url("./img/log_in.jpg");
  /* Full height */
@@ -198,6 +196,22 @@ h3 {
  min-height: 100vh
 }
 .loginContainer .leftCol{
+  margin: auto;
+  width: auto;
+  padding: 100px;
+}
+
+.signupContainer .rightCol{
+  background-image: url("./img/sign_up.jpg");
+ /* Full height */
+ height: 100%;
+ /* Center and scale the image nicely */
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: cover;
+ min-height: 100vh
+}
+.signupContainer .leftCol{
   margin: auto;
   width: auto;
   padding: 100px;
