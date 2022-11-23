@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { Card, Button, Nav, Container, Modal, Row, Col, Image, Form } from 'react-bootstrap';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import AddItem from "../components/lists/add-item.component";
 import ListView from "../components/lists/view-list.component";
 import CreateList from "../components/lists/create-list.component"
-import { PlusCircle, ArrowRightCircle } from 'react-bootstrap-icons';
-import listsService from "../services/lists.service";
 export default class List extends Component {
     constructor(props) {
         super(props);

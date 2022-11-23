@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import AddItem from "./add-item.component";
 import ViewItem from "./view-item.components";
 import listsService from "../../services/lists.service";
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Card, Button, Nav, Modal, Row, Col, Form, Image } from 'react-bootstrap';
 import btnImg from '../../img/img-placeholder.jpg'
-import { PlusCircle, Facebook, Messenger, Instagram, Twitter } from 'react-bootstrap-icons';
+import { PlusCircle } from 'react-bootstrap-icons';
 import { format } from 'date-fns';
 
 export default class ItemListView extends Component {
@@ -41,7 +41,7 @@ export default class ItemListView extends Component {
     openViewItem = (e) => this.setState({viewItemShow: true, selectedItem: this.getSelectedItem(e.currentTarget.id) });
    
     getSelectedItem(itemId){
-        return this.state.items.filter((a) => a._id == itemId)
+        return this.state.items.filter((a) => a._id === itemId)
     }
     getUser() {
         var userObj = JSON.parse(localStorage.getItem('user'));

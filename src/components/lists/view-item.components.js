@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form } from 'react-bootstrap';
-import { PlusCircle, Facebook, Messenger, Instagram, Twitter } from 'react-bootstrap-icons';
+import { Facebook, Messenger, Instagram, Twitter } from 'react-bootstrap-icons';
 export default class ViewItem extends Component {
   constructor(props) {
     super(props);

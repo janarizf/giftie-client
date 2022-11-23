@@ -12,8 +12,8 @@ export default class About extends Component {
               <Row>
                 <Col className="col-text">
                   <h1>Wishcart.</h1>
-                  <h2>Always there for you to <text className="jumbotron-manage">manage</text> and</h2>
-                  <h2><text className="jumbotron-organize">organize</text> for any occasion.</h2>
+                  <h2>Always there for you to <span className="jumbotron-manage">manage</span> and</h2>
+                  <h2><span className="jumbotron-organize">organize</span> for any occasion.</h2>
                   <Button href="#" variant="flat">Go to my list  <ArrowRightCircle color="white" /></Button>
                 </Col>
                 <Col>

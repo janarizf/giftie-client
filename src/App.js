@@ -14,9 +14,7 @@ import SignUp from './components/login/signup.component';
 import Footer from './components/footer';
 import NavbarMain from './components/navbar/navbar';
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
+ 
   render() {
     return (
       <BrowserRouter>

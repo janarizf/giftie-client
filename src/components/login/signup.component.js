@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
-import { Col, Container, Button, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import jwt_decode from "jwt-decode";
 import usersService from "../../services/users.service";
 const SignUp = () => {
-    const [isSignup, setIsSignup] = useState(false);
     const [user, setUser] = useState({});
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const switchMode = () => {
-        // setForm(initialState);
-        setIsSignup((prevIsSignup) => !prevIsSignup);
-        // setShowPassword(false);
-    };
 
     const googleSuccess = async (response) => {
         console.log(response);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardGroup, Button, Row, Container, Image, Col } from 'react-bootstrap';
+import { Card, Button, Row, Container, Col } from 'react-bootstrap';
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 
 export default class home extends Component {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import listsService from "../services/lists.service";
 import ItemListView from "../components/lists/view-item-list.component";
 import { Container } from 'react-bootstrap';

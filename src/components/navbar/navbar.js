@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Nav, Navbar, Col, Container, Button, NavDropdown } from 'react-bootstrap';
+import { Nav, Navbar, Col, Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { PlusCircle } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
-import { GoogleLogout } from '@react-oauth/google';
 
 const NavbarMain = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
@@ -23,16 +21,9 @@ const NavbarMain = () => {
     }
 
     useEffect(() => {
-        const token = user?.token;
-
-        if (token) {
-            //  const decodedToken = decode(token);
-
-            //   if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-        }
-
+     
         setUser(JSON.parse(localStorage.getItem('user')));
-        var us = user;
+       
     }, [location]);
     const isLoggedin = user;
     return (
