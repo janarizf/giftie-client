@@ -29,7 +29,7 @@ const NavbarMain = () => {
     return (
 
         <Navbar expand="lg" variant="light" >
-            <Navbar.Brand href="/home"><img src={require('../../img/wishcart_logo.png')} weign="40" height="40" /></Navbar.Brand>
+            <Navbar.Brand href="/home"><img src={require('../../img/giftie_logo.png')} weign="40" height="40" /></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Col ></Col>
@@ -41,7 +41,7 @@ const NavbarMain = () => {
                         <Link className="nav-link" to={'/help'}>
                             Help
                         </Link>
-                        <Link className="nav-link" to={'/about'}>
+                        <Link className="nav-link" to={'/gift'}>
                             Gift Ideas
                         </Link>
                         <Link className="nav-link" to={'/about'}>

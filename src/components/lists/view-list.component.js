@@ -17,12 +17,11 @@ export default class ListView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            todos: [],
-            userObj: JSON.parse(localStorage.getItem('user'))
+            todos: []
         };
     }
     componentDidMount() {
-        var user = JSON.parse(localStorage.getItem('user'));
+        var user = (JSON.parse(localStorage.getItem('user'))?JSON.parse(localStorage.getItem('user')):"Guest");
         listsService.getByUser(user._id)
             .then(response => {
                 this.setState({ todos: response.data });

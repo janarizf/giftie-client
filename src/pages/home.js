@@ -38,20 +38,20 @@ export default class home extends Component {
           <Container>
               <Row>
                 <Col className="col-text">
-                  <h1>Great gifts – always.</h1>
-                  <h2>Giftie is the Ultimate Wish List Maker to help you</h2>
-                  <h2>give and receive great gifts for any celebration.</h2>
-                  <Button href="#" variant="flat">How it works  <ArrowRightCircle color="white" /></Button>
+                  <h2>Great gifts – always.</h2>
+                  <h4>Giftie is the Ultimate Wish List Maker to help you</h4>
+                  <h4>give and receive great gifts for any celebration.</h4>
+                  <Button href="/list" variant="flat">How it works  <ArrowRightCircle color="white" /></Button>
                 </Col>
                 <Col>
-                  <img src={require('../img/cart.png') } className="rounded float-right img-responsive" width="80%" height="auto"/>
+                  <img src={require('../img/cart.png') } className="rounded float-right img-responsive" width="70%" height="auto"/>
                 </Col>
               </Row>
               </Container>
           </div>
         </Row>
         <Container>
-          <Row><img src={require('../img/infobanner.png')}/></Row>
+          <Row><img src={require('../img/infobanner.png') }/></Row>
           <Row>
             <h4>Starter List</h4>
             <div className="grid-container">

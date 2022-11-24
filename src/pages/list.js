@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import { Card, Button, Nav, Container, Modal, Row, Col, Image, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Card, Button, Nav, Container, Modal, Row, Col } from 'react-bootstrap';
 import AddItem from "../components/lists/add-item.component";
 import ListView from "../components/lists/view-list.component";
 import CreateList from "../components/lists/create-list.component"
+import { PlusCircle } from 'react-bootstrap-icons';
+
 export default class List extends Component {
     constructor(props) {
         super(props);
@@ -42,7 +45,7 @@ export default class List extends Component {
                                 </Col>
                                 <Col></Col>
                                 <Col>
-                                    {/* <Link className="nav-link" to={'/list'} onClick={this.openModal}><PlusCircle color="gray" /> Add items</Link> */}
+                                     {/* <Link className="nav-link" to={'/list'} onClick={this.openModal}><PlusCircle color="gray" /> Add items</Link> */}
                                 </Col>
                             </Row>
                             <Col>

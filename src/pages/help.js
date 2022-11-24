@@ -1,36 +1,48 @@
 import React, { Component } from "react";
-import { Row, Container, Col, Button } from 'react-bootstrap';
+import { Row, Container, Col, Button, Card } from 'react-bootstrap';
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 
 export default class Help extends Component {
-    render() {
-        return (
-            <main>
-                <Row>
-                    <div className="jumbotron jumbotron-fluid">
-                    <Container>
-              <Row>
-                <Col className="col-text">
-                  <h1>Wishcart.</h1>
-                  <h2>Always there for you to <text className="jumbotron-manage">manage</text> and</h2>
-                  <h2><text className="jumbotron-organize">organize</text> for any occasion.</h2>
-                  <Button href="#" variant="flat">Go to my list  <ArrowRightCircle color="white" /></Button>
-                </Col>
-                <Col>
-                  <img src={require('../img/cart.png') } className="rounded float-right img-responsive" width="80%" height="auto"/>
-                </Col>
-              </Row>
-              </Container>
-                    </div>
-                </Row>
-                <Container>
-                    <h2>Help</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nunc leo, faucibus ac sodales sed, elementum et nisl. Pellentesque sit amet maximus justo. Cras rutrum imperdiet nisl, id venenatis diam sodales in. Maecenas sed nisi porta, tempus mauris sed, ornare tortor. Nulla non ultrices risus, mattis sagittis libero. In imperdiet tortor vitae tellus rhoncus commodo. Maecenas at tellus interdum, fermentum arcu sit amet, tempus purus. Mauris vel varius lacus. Vestibulum dapibus, lacus non rutrum posuere, lacus ex suscipit magna, sit amet facilisis erat odio sit amet velit. Nam mauris tortor, pellentesque id nisl sed, placerat convallis enim. Nulla in ante eget nulla eleifend ornare. Nam varius diam sed mollis consequat. Donec lobortis elit et nisi fringilla sollicitudin. Fusce id eros ut lorem tempor aliquam id ac erat. Donec vel ligula dolor. Suspendisse dictum neque vitae est fringilla, nec tincidunt ipsum euismod.</p>
-                    <p>Fusce in efficitur est, quis rhoncus lorem. In vulputate enim volutpat enim bibendum suscipit. Curabitur facilisis interdum vestibulum. Vivamus sit amet consequat lorem. Vestibulum suscipit consequat orci, vitae facilisis elit porttitor sit amet. Proin nibh nisi, laoreet eu dui bibendum, ullamcorper laoreet nibh. Curabitur facilisis cursus porttitor. Etiam accumsan leo sapien. Proin finibus imperdiet lectus a laoreet. Etiam luctus orci a magna blandit, vel euismod est congue. Proin id nisl in nisl semper feugiat a vitae erat. Vestibulum vitae dapibus ante.</p>
-                    <p>Nulla nibh orci, condimentum quis interdum vitae, imperdiet at orci. Vestibulum vitae nisl risus. Nullam ac porta sem. Pellentesque id vulputate massa. Sed porttitor non elit eu bibendum. Praesent vestibulum aliquam nulla, eget posuere tortor vehicula non. Praesent fermentum velit arcu, non rhoncus lorem rutrum sit amet. Nunc quis elementum urna, sed imperdiet leo. Quisque imperdiet, ligula in rhoncus aliquam, augue nibh eleifend eros, vitae tincidunt turpis erat in magna. Ut id mi nunc. Nulla facilisi. Integer ac ultricies enim, et dignissim elit. Duis venenatis eu leo sed consequat. Nulla congue finibus erat, a vulputate ligula vehicula nec. Aliquam eros urna, mollis et pellentesque ut, scelerisque et velit. Nulla vulputate sit amet velit a lacinia.</p>
-                    <p>Proin sit amet augue pellentesque tellus ultrices scelerisque vitae eu metus. Nulla pretium pharetra orci, eu fringilla arcu facilisis eu. Aliquam erat volutpat. Maecenas luctus mauris vitae dui facilisis aliquam. Aliquam nec venenatis tortor. Sed nulla lacus, blandit sit amet neque maximus, interdum tincidunt diam. Vivamus tempor lorem vitae sem lobortis, nec consectetur dolor volutpat. Duis erat arcu, scelerisque at risus ut, fringilla luctus urna. Nunc sodales ipsum tincidunt mollis efficitur. Morbi et massa ut est fermentum imperdiet. Cras mi purus, tristique vitae sodales sed, vestibulum sit amet nibh. Aliquam ultricies, lorem non porttitor imperdiet, neque metus suscipit tellus, sed suscipit elit diam sed mi. Morbi non neque non est sagittis dictum.</p>
-                </Container>
-            </main>
-        );
-    }
+  render() {
+    return (
+      <Container>
+
+        <Card>
+          <Card.Header> <h2>Help</h2></Card.Header>
+          <Card.Body>
+            <h2>Frequently Asked Questions</h2>
+
+            <h4>What is a gift registry / wish list?</h4>
+            A gift registry / wish list / gift list  is a list of items that you wish and prefer to receive put together and shared to friends, family and/or event guests.
+
+
+            <h4>Why do I need a Giftie list?</h4>
+            For celebrants - a Giftie list will help you share to your loved ones the gift items that you truuuly need, want and/or prefer to receive.<br />
+            <h5> Benefit:</h5>
+            Avoid duplicate gifts<br />
+            Avoid unnecessary gifts<br />
+            Avoid “wrong” gifts<br />
+            Get gifts that you truly want and/or need<br />
+
+            <h5>For gift givers:</h5>
+            Save time and effort in thinking and searching for gifts that the celebrant needs or “will like”<br />
+            Know that celebrant's preferences through the listed items<br />
+
+            <h5>  1. Can I add items that are only found in a physical store?</h5>
+            Yes, you can add items that are found in online store, physical store or both. If the store doesnt have an online shop or the item is not found in any online store, you can just put the details and manually upload the picture of the item in your list.<br />
+
+
+            <h5>  2. What if I need more than one of the same item?</h5>
+            You can customize the quantity of an item from 1 to unlimited. Similarly, your guest can reserve multiple items.<br />
+
+
+            <h5> 3. Where can I share my Giftie list?</h5>
+            - You can add it in your Facebook profile (Facebook profile - Info - Links - Websites)<br />
+            - Add to your Facebook Event Description<br />
+            - Add to your invitation<br />
+          </Card.Body>
+        </Card>
+      </Container>
+    );
+  }
 }

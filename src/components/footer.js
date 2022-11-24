@@ -7,7 +7,7 @@ function Footer() {
             
               <Row>
                 <Col>
-                <img src={require('../img/wishcart_logo_white.png') }  width="30%" height="auto"/>
+                <img src={require('../img/giftie_logo_white.png') }  width="30%" height="auto"/>
                 </Col>
                 <Col>
                 Subscribe for more updates
@@ -38,7 +38,7 @@ function Footer() {
             </Row>
             <Row>
                 <Col>
-                <span>&copy;WishCart 2022</span>
+                <span>&copy;Giftie 2022</span>
                 </Col>
                 <Col>
                 <Breadcrumb >
