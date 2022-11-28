@@ -68,11 +68,6 @@ html,
   padding-bottom: 20px;
 }
 
-.btn-flat {
-  background-color: #2E4C80 !important;
-  color: white !important;
-}
-
 .col-text {
   padding: 80px;
   justify-content: space-evenly;
@@ -80,14 +75,11 @@ html,
 }
 
 .footer {
-  background: #56618f;
-  border-radius: 5px;
+  background: #10c4a4;
   padding: 30px;
   color: #ffffff;
 }
-.footer-col{
-  justify-content: right;
-}
+
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
@@ -95,20 +87,21 @@ html,
   padding: 5px;
   justify-content: space-evenly;
 }
-
-.jumbotron {
-  background: #56618f;
+.jumbotron{
+  background-color: #10c4a4;
+  background-size: cover;
   padding: 20px;
   color: #ffffff;
+  text-align:left;
+}
+.jumbotron-profile{
+  background-image: url("./img/giftie_green.jpg");
+  background-size: cover;
+  padding: 20px;
+  color: #ffffff;
+  text-align: center;
 }
 
-.jumbotron-manage{
-  color: #88f7f5;
-}
-.jumbotron-organize{
-  color: #7689df;
-  font-family: 'Nunito', sans-serif;
-}
 .login-bg {
   background-image: url("./img/jumbotron-img.jpg");
   height: 100vh;
@@ -120,15 +113,6 @@ html,
 .login-card {
   background: #56618f;
   padding: 20px;
-}
-
-h3 {
-  text-align: center;
-  color: #FFFFFF;
-}
-
-.mb-3 {
-  color: #FFFFFF;
 }
 
 .custom-control-label {
@@ -155,12 +139,12 @@ h3 {
   margin-bottom: 5px;
   font-size: 15px;
   background-color: transparent;
-  color: white;
+  color: 044237;
   font-family: 'Nunito', sans-serif;
 }
 
 .formItem input::placeholder {
-  color:white;
+  color:044237;
 }
 
 .formItem select{
@@ -170,7 +154,7 @@ h3 {
   margin-bottom: 5px;
   font-size: 15px;
   background-color: transparent;
-  color: white;
+  color: 044237;
   font-family: 'Nunito', sans-serif;
 }
 .formItem option{
@@ -180,7 +164,7 @@ h3 {
   margin-bottom: 5px;
   font-size: 15px;
   background-color: #56618f;
-  color:white;
+  color:044237;
   font-family: 'Nunito', sans-serif;
 }
 

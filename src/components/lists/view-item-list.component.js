@@ -35,12 +35,12 @@ export default class ItemListView extends Component {
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    openAddItem =  () => this.setState({ addItemShow: true });
+    openAddItem = () => this.setState({ addItemShow: true });
     closeAddItem = () => this.setState({ addItemShow: false });
     closeViewItem = () => this.setState({ viewItemShow: false });
-    openViewItem = (e) => this.setState({viewItemShow: true, selectedItem: this.getSelectedItem(e.currentTarget.id) });
-   
-    getSelectedItem(itemId){
+    openViewItem = (e) => this.setState({ viewItemShow: true, selectedItem: this.getSelectedItem(e.currentTarget.id) });
+
+    getSelectedItem(itemId) {
         return this.state.items.filter((a) => a._id === itemId)
     }
     getUser() {
@@ -127,14 +127,18 @@ export default class ItemListView extends Component {
         return (
             <div>
                 <div className="jumbotron jumbotron-fluid">
-                    <Form className="formItem" onSubmit={this.onSubmit}>
+                    <Form className="p-5" onSubmit={this.onSubmit}>
                         <Row>
                             <Col sm>
-                                <Button>
-                                    <Image src={btnImg} rounded width='200px' />
-                                </Button>
+                                <Form.Group className="mb-3 text-center">
+                                    List: <Form.Label>{this.state.name} </Form.Label><br/>
+                                   Set Date: <Form.Label>{this.state.set_date} </Form.Label><br/>
+                                    Location: <Form.Label>{this.state.location}</Form.Label><br/>
+                                    Introduction: <Form.Label>{this.state.introduction} </Form.Label><br/>
+                                 Category:  <Form.Label>{this.state.category}</Form.Label><br/>
+                                </Form.Group>
                             </Col>
-                            <Col sm>
+                           {/*  <Col sm>
                                 <Form.Control placeholder="Wishlist" name="name" required value={this.state.name} onChange={this.onChangeName} />
                                 <Form.Control type="date" name='set_date' value={this.state.set_date} onChange={this.onChangeSetDate} />
                                 <Form.Control placeholder="Add Location" name="location" value={this.state.location} onChange={this.onChangeLocation} />
@@ -153,7 +157,7 @@ export default class ItemListView extends Component {
                                 <Button variant="primary" type="submit">
                                     Save
                                 </Button>
-                            </Col>
+                            </Col> */}
                         </Row>
                     </Form>
 
@@ -170,15 +174,25 @@ export default class ItemListView extends Component {
                                 </Nav.Item>
                             </Nav>
                             </Col>
-                            <Col></Col>
-                            <Col>
-                                <Link className="nav-link" to={'#'} onClick={this.openAddItem}><PlusCircle color="gray" /> Add items</Link>
-                            </Col>
+
                         </Row>
                         <Row>
                             <Col>
                                 <h4>Your Items</h4>
                                 <Row xs={1} md={3}>
+                                    <Card className='text-center h-100'>
+                                    <Card.Title></Card.Title>
+                                        <Card.Body>
+                                            <Card.Text>
+                                                <Link onClick={this.openAddItem}>
+                                                    <Image src={require('../../img/plus_sign.png')} roundedCircle />
+                                                </Link>
+                                                <br />
+                                                <span>Add Item</span>
+                                            </Card.Text>
+                                        </Card.Body>
+                                       
+                                    </Card>
                                     {this.state.items.map(function (d) {
                                         return (
                                             <div>
@@ -224,8 +238,8 @@ export default class ItemListView extends Component {
                         <Modal.Title>Item Name</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    <ViewItem itemData={this.state.selectedItem} />
-                       
+                        <ViewItem itemData={this.state.selectedItem} />
+
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.closeViewItem}>

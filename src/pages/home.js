@@ -21,7 +21,7 @@ export default class home extends Component {
                 <Card.Title>{card.title}</Card.Title>
                 <Card.Text>
                   {card.text}<br />
-                  <Button href={card.list} variant="flat">Go to my list  <ArrowRightCircle color="white" /></Button>
+                  <Button href={card.list} variant='custom'>Go to my list  <ArrowRightCircle color="white" /></Button>
                  
                 </Card.Text>
               </Col>
@@ -34,24 +34,25 @@ export default class home extends Component {
     return (
       <main>
         <Row>
-          <div className="jumbotron jumbotron-fluid">
+          <div className="jumbotron jumbotron-fluid p-5">
           <Container>
               <Row>
                 <Col className="col-text">
-                  <h2>Great gifts – always.</h2>
-                  <h4>Giftie is the Ultimate Wish List Maker to help you</h4>
-                  <h4>give and receive great gifts for any celebration.</h4>
-                  <Button href="/list" variant="flat">How it works  <ArrowRightCircle color="white" /></Button>
+                  <h1>Great gifts – Always.</h1>
+                  <h5>Giftie is the Ultimate Wish List Maker to help you</h5>
+                  <h5>give and receive great gifts for any celebration.</h5>
+                  <Button size="lg" href="/list" variant='custom'>How it Works  <ArrowRightCircle color="white" /></Button>
                 </Col>
                 <Col>
-                  <img src={require('../img/cart.png') } className="rounded float-right img-responsive" width="70%" height="auto"/>
+                  <img src={require('../img/girl_gift.png') } className="img-responsive" width="100%" height="auto"/>
                 </Col>
               </Row>
               </Container>
           </div>
         </Row>
         <Container>
-          <Row><img src={require('../img/infobanner.png') }/></Row>
+          <Row className="img-responsive p-5" sm><img src={require('../img/why_giftie.png') } /></Row>
+          <Row className="img-responsive p-5" sm><img src={require('../img/how_giftie.png') } /></Row>
           <Row>
             <h4>Starter List</h4>
             <div className="grid-container">

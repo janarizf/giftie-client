@@ -107,12 +107,7 @@ export default class ListEdit extends Component {
         
         this.props.history.push('/');
     }
-    listInfo = [
-        { image: "https://picsum.photos/200", title: "List 1", text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", link: "#" },
-        { image: "https://picsum.photos/200", title: "List 2", text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", link: "#" },
-        { image: "https://picsum.photos/200", title: "List 3", text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", link: "#" },
-        { image: "https://picsum.photos/200", title: "List 4", text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", link: "#" },
-      ];
+  
     renderList = (card, index) => {
         return (
           <Card style={{ width: "auto" }} key={index} >
@@ -138,11 +133,7 @@ export default class ListEdit extends Component {
                     <div className="jumbotron jumbotron-fluid">
                         <Form>
                             <Row>
-                                <Col sm>
-                                    <Button size="sm">
-                                        <Image src={btnImg} rounded width='200px' />
-                                    </Button>
-                                </Col>
+                               
                                 <Col sm>
                                     <Form.Control placeholder="Wishlist" name="name" required value={this.state.name} onChange={this.onChangeName}/>
                                     <Form.Control type="date" name='set_date' value={this.state.set_date} onChange={this.onChangeSetDate}/>

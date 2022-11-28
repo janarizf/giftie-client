@@ -1,53 +1,47 @@
 import React from "react";
-import { Container, Row, Col, Breadcrumb, Form, Button } from 'react-bootstrap';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 function Footer() {
     return (
-        <Container className="footer" fluid="md">
-            
-              <Row>
-                <Col>
-                <img src={require('../img/giftie_logo_white.png') }  width="30%" height="auto"/>
-                </Col>
-                <Col>
-                Subscribe for more updates
-                </Col>
-            </Row>
-            <Row>
-            <Col>
-            <Breadcrumb>
-            <Breadcrumb.Item href="/list">My List</Breadcrumb.Item>
-            <Breadcrumb.Item href="/blog">Blogs </Breadcrumb.Item>
-            <Breadcrumb.Item href="/about">Referrals</Breadcrumb.Item>
-            <Breadcrumb.Item href="/about">About Us</Breadcrumb.Item>
-            <Breadcrumb.Item href="/help">Contact Us</Breadcrumb.Item>
-            </Breadcrumb>
-          
-            </Col>
-                <Col>
-                <Form className="d-flex">
-                    <Form.Control
-                    type="search"
-                    placeholder="Enter email"
-                    className="me-2"
-                    aria-label="EnterEmail"
-                    />
-                    <Button variant="flat">Subscribe</Button>
-                </Form>
-                </Col>
-            </Row>
+        <Container className="footer p-5">
             <Row>
                 <Col>
-                <span>&copy;Giftie 2022</span>
+                    <Row>
+                        <Col><Link className="nav-link" to={'/list'}>
+                            My List
+                        </Link></Col>
+                        <Col><Link className="nav-link" to={'/blog'}>
+                            Blogs
+                        </Link></Col>
+                        <Col><Link className="nav-link" to={'/about'}>
+                            Referrals
+                        </Link></Col>
+                        <Col><Link className="nav-link" to={'/about'}>
+                            About Us
+                        </Link></Col>
+                        <Col><Link className="nav-link" to={'/help'}>
+                            Contact Us
+                        </Link></Col>
+                    </Row>
+                    <Row>
+                        <span>Subscribe for more updates</span>
+                    </Row>
+                    <Row>
+                        <Form className="justify-content-between">
+                            <Form.Control
+                                placeholder="Enter email"
+                            />
+                            <Button variant="custom">Subscribe</Button>
+                        </Form>
+                    </Row>
+                    <span>Giftie | 2022 | Terms & Conditions | Privacy Policy</span>
                 </Col>
+
                 <Col>
-                <Breadcrumb >
-                <Breadcrumb.Item href="#">Terms & Conditions</Breadcrumb.Item>
-                <Breadcrumb.Item href="#">Privacy Policy</Breadcrumb.Item>
-                </Breadcrumb>
+                    <img src={require('../img/giftie_icon_white.png')} title="Giftie" alt="Giftie" className="float-md-end" width="30%" height="auto" />
                 </Col>
             </Row>
-          
+
         </Container>
     )
 }

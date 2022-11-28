@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
 import { Card, Button, Nav, Container, Modal, Row, Col } from 'react-bootstrap';
 import AddItem from "../components/lists/add-item.component";
 import ListView from "../components/lists/view-list.component";
-import CreateList from "../components/lists/create-list.component"
-import { PlusCircle } from 'react-bootstrap-icons';
+import Image from 'react-bootstrap/Image'
 
 export default class List extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            modalShow: false
+            modalShow: false,
+            user: JSON.parse(localStorage.getItem('user'))
         }
+        console.log(this.state.user);
+        console.log(this.state.user.photo);
     }
 
     openModal = () => this.setState({ modalShow: true });
@@ -20,17 +21,17 @@ export default class List extends Component {
 
     render() {
         return (
-            <div>
-                <Container>
-                    <div className="jumbotron jumbotron-fluid">
-                        <CreateList />
+            <Container>
+                    <div className="jumbotron-profile p-5">
+                        <Row sm={6} className="justify-content-md-center"> <Image src={this.state.user.photo} roundedCircle /></Row>
+                        <Row sm={6}className="justify-content-md-center"><h4> {this.state.user.firstname}  {this.state.user.lastname}</h4></Row>
                     </div>
                     <Card >
                         <Card.Body>
                             <Row>
                                 <Col><Nav variant="tabs" defaultActiveKey="#lists">
                                     <Nav.Item>
-                                        <Nav.Link href="#">Profile</Nav.Link>
+                                        <Nav.Link href="#Profile">Profile</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link href="#lists">Lists</Nav.Link>
@@ -43,13 +44,10 @@ export default class List extends Component {
                                     </Nav.Item>
                                 </Nav>
                                 </Col>
-                                <Col></Col>
-                                <Col>
-                                     {/* <Link className="nav-link" to={'/list'} onClick={this.openModal}><PlusCircle color="gray" /> Add items</Link> */}
-                                </Col>
+                               
                             </Row>
                             <Col>
-                            <ListView />
+                                <ListView />
                             </Col>
                         </Card.Body>
                     </Card>
@@ -66,7 +64,6 @@ export default class List extends Component {
                         </Modal.Footer>
                     </Modal>
                 </Container>
-            </div>
         );
     }
 }

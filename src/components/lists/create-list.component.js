@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Button, Row, Col, Image, Form } from 'react-bootstrap';
-import btnImg from '../../img/img-placeholder.jpg'
+import { Button, Row, Col, Form } from 'react-bootstrap';
 import listsService from "../../services/lists.service";
 import { format } from 'date-fns';
 
@@ -16,23 +15,23 @@ export default class ListCreate extends Component {
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-      this.state = {
-        user: this.getUser(),
-        name: "Wishlist",
-        status: "1",
-        category: "",
-        introduction: "",
-        location: "",
-        set_date: format(new Date(), 'yyyy-MM-dd')
-      }
-      console.log(this.state.user_id);
+    this.state = {
+      user: this.getUser(),
+      name: "Wishlist",
+      status: "1",
+      category: "",
+      introduction: "",
+      location: "",
+      set_date: format(new Date(), 'yyyy-MM-dd')
+    }
+    console.log(this.state.user);
   }
 
-  getUser(){
-   var userObj = JSON.parse(localStorage.getItem('user'));
-   if(userObj)
-    return userObj._id
-   return "Guest";
+  getUser() {
+    var userObj = JSON.parse(localStorage.getItem('user'));
+    if (userObj)
+      return userObj._id
+    return "Guest";
   }
 
   onChangeName(e) {
@@ -84,26 +83,26 @@ export default class ListCreate extends Component {
       updatedby: this.state.user,
       updateddate: new Date()
     };
+    console.log(data);
+    var userCreated = await listsService.create(data)
 
-    await listsService.create(data)
-      .then(() => {
-
-        // e.preventDefault();
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
+    try {
+      console.log(userCreated);
+      // e.preventDefault();
+    } catch (error) {
+      console.log(error);
+    }
   }
   render() {
     const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
     return (
       <Form className="formItem" onSubmit={this.onSubmit}>
         <Row>
-          <Col sm>
+          {/* <Col sm>
             <Button>
               <Image src={btnImg} rounded width='200px' />
             </Button>
-          </Col>
+          </Col> */}
           <Col sm>
             <Form.Control placeholder="Wishlist" name="name" required value={this.state.name} onChange={this.onChangeName} />
             <Form.Control type="date" name='set_date' value={this.state.set_date} onChange={this.onChangeSetDate} />

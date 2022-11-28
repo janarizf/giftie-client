@@ -35,9 +35,9 @@ const NavbarMain = () => {
                 <Col ></Col>
                 <Col xs={8}>
                     <Nav className="me-auto">
-                        <Nav.Link href={'/home'}>
+                        <Link className="nav-link" to={'/home'}>
                             Home
-                        </Nav.Link>
+                        </Link>
                         <Link className="nav-link" to={'/help'}>
                             Help
                         </Link>
