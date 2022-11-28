@@ -84,14 +84,13 @@ export default class ListCreate extends Component {
       updateddate: new Date()
     };
     console.log(data);
-    var userCreated = await listsService.create(data)
-
-    try {
-      console.log(userCreated);
-      // e.preventDefault();
-    } catch (error) {
-      console.log(error);
-    }
+  await listsService.create(data)
+  .then(a => {
+    console.log(a);
+  })
+  .catch(a => {console.log(a)})
+  
+  
   }
   render() {
     const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];

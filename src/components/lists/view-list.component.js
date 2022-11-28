@@ -4,28 +4,6 @@ import listsService from "../../services/lists.service";
 import CreateList from "./create-list.component"
 import { Container, Card, Row, Modal, Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
-const Todo = props => (
-
-    <Card key={props.todo._id} style={{ width: '18rem' }} className="m-3 text-center ">
-        <Card.Img src={props.todo.image} />
-        <Card.Body>
-            <Card.Title>{props.todo.name}</Card.Title>
-            <Card.Text>
-                Event Date:<br />
-                {props.todo.set_date}<br />
-
-            </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-            <Row>
-                <Button size="sm" variant="custom" href={"/list/" + props.todo._id}>View List</Button>
-                <Button size="sm" variant="custom" onClick={this.deleteList(props.todo._id)}>Delete</Button>
-            </Row>
-
-        </Card.Footer>
-    </Card>
-
-)
 
 export default class ListView extends Component {
     constructor(props) {
@@ -60,7 +38,7 @@ export default class ListView extends Component {
                         <Card.Title>{currentTodo.name}</Card.Title>
                         <Card.Text>
                             Event Date:<br />
-                            {currentTodo.set_date}<br />
+                            {currentTodo.set_date.substring(0, 10)}<br />
 
                         </Card.Text>
                     </Card.Body>

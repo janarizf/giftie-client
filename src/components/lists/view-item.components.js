@@ -20,17 +20,15 @@ export default class ViewItem extends Component {
             <Card.Img src={this.state.list_data.image} />
             <Card.Title>{this.state.list_data.name}</Card.Title>
             <Card.Body>
-             
               <Card.Text>
-               
-                Website: {this.state.list_data.website} <br/>
-               Category: {this.state.list_data.category}<br/>
-               Images: {this.state.list_data.image}<br/>
-               Note: {this.state.list_data.note}<br/>
-               Price: {this.state.list_data.price}<br/>
-               Quantity: {this.state.list_data.quantity}<br/>
-               Unlimited: {this.state.list_data.unlimited}<br/>
-               Added on: {this.state.list_data.addedon}<br/>
+                Website: {this.state.list_data.website} <br />
+                Category: {this.state.list_data.category}<br />
+                Images: {this.state.list_data.image}<br />
+                Note: {this.state.list_data.note}<br />
+                Price: {this.state.list_data.price}<br />
+                Quantity: {this.state.list_data.quantity}<br />
+                Unlimited: {this.state.list_data.unlimited}<br />
+                Added on: {this.state.list_data.addedon}<br />
               </Card.Text>
             </Card.Body>
           </Card>

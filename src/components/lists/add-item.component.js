@@ -72,10 +72,11 @@ export default class AddItem extends Component {
     let ImagesArray = Object.entries(e.target.files).map((e) =>
       URL.createObjectURL(e[1])
     );
-    console.log(URL.createObjectURL(e.target.files[0]));
+   
     this.setState({
       hasImage: true,
-      imageSrc: ImagesArray
+      imageSrc: ImagesArray,
+      image: e.target.value
     });
   }
 
@@ -116,8 +117,11 @@ export default class AddItem extends Component {
       unlimited: this.state.unlimited,
       addedon: new Date()
     };
+    console.log(data)
+
     this.state.list_data.updatedby = "admin";
     this.state.list_data.updateddate = new Date();
+
     await this.state.list_data.items.push(data)
     await listsService.update(data.list_id, this.state.list_data)
       .then(response => {
@@ -163,9 +167,9 @@ export default class AddItem extends Component {
 
           </Form.Select>
           <Form.Label>Images (optional)</Form.Label>
-          <Form.Control type="file" multiple name="image" value={this.state.image} onChange={this.onChangeImage} />
+          <Form.Control type="file" multiple name="image" onChange={this.onChangeImage} />
 
-          {this.state.hasImage &&
+         {this.state.hasImage &&
             this.state.imageSrc.map((item, index) => {
               return (
                 <div key={item}>
@@ -175,7 +179,10 @@ export default class AddItem extends Component {
                   </button> */}
                 </div>
               );
-            })}
+            })
+          //  &&    <Button variant="custom" >upload</Button>
+            }
+             {this.state.hasImage && <Button variant="custom" >upload</Button>}
           <Form.Label>Note (optional)</Form.Label>
           <Form.Control placeholder="explain what do you prefer for that item" name="note" value={this.state.note} onChange={this.onChangeNote} />
           <Form.Label>Max Pricing (optional)</Form.Label>
@@ -184,7 +191,7 @@ export default class AddItem extends Component {
           <Form.Control type="number" name="quantity" placeholder="0" value={this.state.quantity} onChange={this.onChangeQuantity} />
           <Form.Check type='checkbox' label="Unlimited Item" name="unlimited" value={this.state.unlimited} onChange={this.onChangeUnlimited} />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="custom" type="submit">
           Submit
         </Button>
       </Form>

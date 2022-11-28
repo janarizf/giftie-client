@@ -117,7 +117,29 @@ export default class ItemListView extends Component {
                 console.log(error);
             })
     }
+    async deleteItem(e, a) {
+        console.log(e.target.id);
+        console.log(a.state.list)
+        var filtered = a.state.list.items.filter((a) => a._id !== e.target.id);
+        a.state.list.items = filtered;
+        this.setState({
+            list:a.state.list
+        })
+     await listsService.update(this.state.list._id, this.state.list)
+     .then(   
+        window.location.reload(true)
+        )
+     .catch( error => {console.log(error)})
 
+        /*  var deleted = await listsService.delete(e.target.id)
+         try {
+             console.log(deleted);
+             window.location.reload(true)
+         }
+         catch (error) {
+             console.log(error);
+         } */
+    }
     componentDidMount() {
         this.loadList();
     }
@@ -130,15 +152,15 @@ export default class ItemListView extends Component {
                     <Form className="p-5" onSubmit={this.onSubmit}>
                         <Row>
                             <Col sm>
-                                <Form.Group className="mb-3 text-center">
-                                    List: <Form.Label>{this.state.name} </Form.Label><br/>
-                                   Set Date: <Form.Label>{this.state.set_date} </Form.Label><br/>
-                                    Location: <Form.Label>{this.state.location}</Form.Label><br/>
-                                    Introduction: <Form.Label>{this.state.introduction} </Form.Label><br/>
-                                 Category:  <Form.Label>{this.state.category}</Form.Label><br/>
-                                </Form.Group>
+                                <div className="mb-3 text-center">
+                                    List: {this.state.name} <br />
+                                    Set Date: {this.state.set_date} <br />
+                                    Location: {this.state.location}<br />
+                                    Introduction: {this.state.introduction}<br />
+                                    Category: {this.state.category}<br />
+                                </div>
                             </Col>
-                           {/*  <Col sm>
+                            {/*  <Col sm>
                                 <Form.Control placeholder="Wishlist" name="name" required value={this.state.name} onChange={this.onChangeName} />
                                 <Form.Control type="date" name='set_date' value={this.state.set_date} onChange={this.onChangeSetDate} />
                                 <Form.Control placeholder="Add Location" name="location" value={this.state.location} onChange={this.onChangeLocation} />
@@ -181,7 +203,7 @@ export default class ItemListView extends Component {
                                 <h4>Your Items</h4>
                                 <Row xs={1} md={3}>
                                     <Card className='text-center h-100'>
-                                    <Card.Title></Card.Title>
+                                        <Card.Title></Card.Title>
                                         <Card.Body>
                                             <Card.Text>
                                                 <Link onClick={this.openAddItem}>
@@ -191,7 +213,7 @@ export default class ItemListView extends Component {
                                                 <span>Add Item</span>
                                             </Card.Text>
                                         </Card.Body>
-                                       
+
                                     </Card>
                                     {this.state.items.map(function (d) {
                                         return (
@@ -208,7 +230,10 @@ export default class ItemListView extends Component {
 
                                                     </Card.Body>
                                                     <Card.Footer>
-                                                        <Button onClick={this.openViewItem} id={d._id}>View</Button>
+                                                        <Row>
+                                                            <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button>
+                                                            <Button size="sm" variant="custom" onClick={event => this.deleteItem(event, this)} id={d._id}>Delete</Button>
+                                                        </Row>
                                                     </Card.Footer>
                                                 </Card>
                                             </div>
