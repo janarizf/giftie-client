@@ -4,8 +4,6 @@ import ViewItem from "./view-item.components";
 import listsService from "../../services/lists.service";
 import { Link } from 'react-router-dom';
 import { Card, Button, Nav, Modal, Row, Col, Form, Image } from 'react-bootstrap';
-import btnImg from '../../img/img-placeholder.jpg'
-import { PlusCircle } from 'react-bootstrap-icons';
 import { format } from 'date-fns';
 
 export default class ItemListView extends Component {
@@ -202,7 +200,7 @@ export default class ItemListView extends Component {
                             <Col>
                                 <h4>Your Items</h4>
                                 <Row xs={1} md={3}>
-                                    <Card className='text-center h-100'>
+                                    <Card className='text-center h-100'key={"optionID"}>
                                         <Card.Title></Card.Title>
                                         <Card.Body>
                                             <Card.Text>
@@ -215,10 +213,10 @@ export default class ItemListView extends Component {
                                         </Card.Body>
 
                                     </Card>
-                                    {this.state.items.map(function (d) {
+                                    {this.state.items.map(function (d,index) {
                                         return (
                                             <div>
-                                                <Card key={d._id} className='h-100'>
+                                                <Card key={index} className='h-100'>
                                                     <Card.Img variant="top" src={d.image} />
                                                     <Card.Body>
                                                         <Card.Title>{d.name}</Card.Title>
