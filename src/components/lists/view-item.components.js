@@ -17,13 +17,13 @@ export default class ViewItem extends Component {
       <Form >
         <Form.Group controlId="1">
           <Card className="m-3">
-            <Card.Img src={this.state.list_data.image} />
+            <Card.Img src={"http://localhost:9000/lists/getImage/"+this.state.list_data.image[0].filename} />
             <Card.Title>{this.state.list_data.name}</Card.Title>
             <Card.Body>
-              <Card.Text>
+              <Card.Text> 
                 Website: {this.state.list_data.website} <br />
-                Category: {this.state.list_data.category}<br />
-                Images: {this.state.list_data.image}<br />
+                Category: {this.state.list_data.category_id}<br />
+                Images: {this.state.list_data.image[0].filename}<br />
                 Note: {this.state.list_data.note}<br />
                 Price: {this.state.list_data.price}<br />
                 Quantity: {this.state.list_data.quantity}<br />
@@ -34,6 +34,7 @@ export default class ViewItem extends Component {
           </Card>
         </Form.Group>
         <Button><Facebook /><Messenger /><Instagram /><Twitter /></Button>
+        <Button>Edit</Button>
       </Form>
 
     );

@@ -13,7 +13,7 @@ const SignUp = () => {
         console.log(response);
         var userObj = jwt_decode(response.credential);
         console.log(userObj);
-        setUser(userObj);
+        
 
       
         try {
@@ -22,7 +22,8 @@ const SignUp = () => {
                     .then((existing) => {
                         if (existing) {
                             console.log(existing);
-                            localStorage.setItem('user', JSON.stringify(userObj));
+                            localStorage.setItem('user', JSON.stringify(existing.data));
+                            setUser(existing.data[0]);
                             navigate('/list');
                         }
                      

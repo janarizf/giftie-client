@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Button, Row, Col, Form } from 'react-bootstrap';
+import { Navigate, Link } from 'react-router-dom';
+import { Button, Row, Col, Form, Container } from 'react-bootstrap';
 import listsService from "../../services/lists.service";
 import { format } from 'date-fns';
-
 export default class ListCreate extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +22,9 @@ export default class ListCreate extends Component {
       category: "",
       introduction: "",
       location: "",
-      set_date: format(new Date(), 'yyyy-MM-dd')
+      set_date: format(new Date(), 'yyyy-MM-dd'),
+      redirect: false,
+      id: ""
     }
     console.log(this.state.user);
   }
@@ -68,62 +70,80 @@ export default class ListCreate extends Component {
     });
   }
 
-  async onSubmit(e) {
-    var data = {
-      name: this.state.name,
-      user_id: this.state.user,
-      status: this.state.status,
-      category: this.state.category,
-      introduction: this.state.introduction,
-      location: this.state.location,
-      set_date: this.state.set_date,
-      status_id: 1,
-      createdby: this.state.user,
-      createddate: new Date(),
-      updatedby: this.state.user,
-      updateddate: new Date()
-    };
-    console.log(data);
-  await listsService.create(data)
-  .then(a => {
-    console.log(a);
-  })
-  .catch(a => {console.log(a)})
-  
-  
+  onSubmit(e) {
+    try {
+      e.preventDefault();
+      var data = {
+        name: this.state.name,
+        user_id: this.state.user,
+        status: this.state.status,
+        category: this.state.category,
+        introduction: this.state.introduction,
+        location: this.state.location,
+        set_date: this.state.set_date,
+        status_id: 1,
+        createdby: this.state.user,
+        createddate: new Date(),
+        updatedby: this.state.user,
+        updateddate: new Date()
+      };
+
+      listsService.create(data)
+        .then((respond) => {
+          this.setState({
+            name: respond.data.name,
+            user_id: respond.data.user,
+            status: respond.data.status,
+            category: respond.data.category_id,
+            introduction: respond.data.introduction,
+            location: respond.data.location,
+            set_date: respond.data.set_date,
+            status_id: respond.data.status_id,
+            id: respond.data._id,
+            redirect: true
+          })
+          console.log(respond);
+          alert("Created new wishlist " + respond.data.name)
+        })
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
   render() {
     const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
     return (
-      <Form className="formItem" onSubmit={this.onSubmit}>
-        <Row>
-          {/* <Col sm>
+      <Container>
+      { this.state.redirect && <Navigate to={"/list/" + this.state.id} />}
+        <Form className="formItem" onSubmit={this.onSubmit}>
+          <Row>
+            {/* <Col sm>
             <Button>
               <Image src={btnImg} rounded width='200px' />
             </Button>
           </Col> */}
-          <Col sm>
-            <Form.Control placeholder="Wishlist" name="name" required value={this.state.name} onChange={this.onChangeName} />
-            <Form.Control type="date" name='set_date' value={this.state.set_date} onChange={this.onChangeSetDate} />
-            <Form.Control placeholder="Add Location" name="location" value={this.state.location} onChange={this.onChangeLocation} />
-            <Form.Control placeholder="Introduction" name="introduction" value={this.state.introduction} onChange={this.onChangeIntroduction} />
-            <Form.Select name="list" value={this.state.category} onChange={this.onChangeCategory} required>
-              <option value="">Category</option>
-              {
-                categoryData.map(function (category) {
-                  return <option key={category.id} value={category.id} >{category.value}</option>
-                })
-              }
-            </Form.Select>
-          </Col>
-          <Col sm></Col>
-          <Col sm>
-            <Button variant="primary" type="submit">
-              Save
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+            <Col sm>
+              <Form.Control placeholder="Wishlist" name="name" required value={this.state.name} onChange={this.onChangeName} />
+              <Form.Control type="date" name='set_date' value={this.state.set_date} onChange={this.onChangeSetDate} />
+              <Form.Control placeholder="Add Location" name="location" value={this.state.location} onChange={this.onChangeLocation} />
+              <Form.Control placeholder="Introduction" name="introduction" value={this.state.introduction} onChange={this.onChangeIntroduction} />
+              <Form.Select name="list" value={this.state.category} onChange={this.onChangeCategory} required>
+                <option value="">Category</option>
+                {
+                  categoryData.map(function (category) {
+                    return <option key={category.id} value={category.id} >{category.value}</option>
+                  })
+                }
+              </Form.Select>
+
+              <Button variant="primary" type="submit">
+                Save
+              </Button>
+            
+            </Col>
+          </Row>
+        </Form>
+      </Container>
     )
   }
 }

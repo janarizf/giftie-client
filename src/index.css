@@ -68,6 +68,11 @@ html,
   padding-bottom: 20px;
 }
 
+.card-img{
+  object-fit: cover;
+  width: auto;
+  height: 150px;
+}
 .col-text {
   padding: 80px;
   justify-content: space-evenly;
@@ -90,14 +95,14 @@ html,
 .jumbotron{
   background-color: #10c4a4;
   background-size: cover;
-  padding: 20px;
+  padding: 10px;
   color: #ffffff;
   text-align:left;
 }
 .jumbotron-profile{
   background-image: url("./img/giftie_green.jpg");
   background-size: cover;
-  padding: 20px;
+  padding: 10px;
   color: #ffffff;
   text-align: center;
 }
@@ -154,7 +159,7 @@ html,
   margin-bottom: 5px;
   font-size: 15px;
   background-color: transparent;
-  color: 044237;
+  color: #044237;
   font-family: 'Nunito', sans-serif;
 }
 .formItem option{
@@ -163,8 +168,7 @@ html,
   padding: 5px;
   margin-bottom: 5px;
   font-size: 15px;
-  background-color: #56618f;
-  color:044237;
+  color:#044237;
   font-family: 'Nunito', sans-serif;
 }
 

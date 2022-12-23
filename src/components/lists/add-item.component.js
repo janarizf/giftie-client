@@ -15,7 +15,7 @@ export default class AddItem extends Component {
     this.onChangeQuantity = this.onChangeQuantity.bind(this);
     this.onChangeUnlimited = this.onChangeUnlimited.bind(this);
     this.saveItems = this.saveItems.bind(this);
-
+    this.imageUpload = this.imageUpload.bind(this);
     this.state = {
       list_id: props.listData._id,
       list_data: props.listData,
@@ -105,56 +105,66 @@ export default class AddItem extends Component {
       unlimited: e.target.value
     });
   }
-  imageUpload() {
+  async imageUpload() {
     const selectedFile = document.getElementById("input-file").files[0];
     return listsService.fileupload(selectedFile)
-    .then((res) => 
-    {
-      return res
-    });
+      .then((res) => {
+        return res
+      });
 
   }
-  saveItems() {
+
+  saveItems(e) {
     try {
+      e.preventDefault();
       var data = {
         list_id: this.state.list_id,
         name: this.state.name,
         website: this.state.website,
-        category: this.state.category,
+        category_id: this.state.category,
         image: [],
         note: this.state.note,
         price: this.state.price,
         quantity: this.state.quantity,
         unlimited: this.state.unlimited,
-        addedon: new Date()
+        addedon: new Date(),
+        taken: false
       };
-
-      var imgUploaded = this.imageUpload();
-      imgUploaded.then(function (uploaded) {
-        data.image = uploaded.data;
-        console.log(data.image)
-       // this.state.list_data.updatedby = "admin";
-        //this.state.list_data.updateddate = new Date();
+      if (!this.state.hasImage) {
         this.state.list_data.items.push(data)
-        var response = listsService.update(data.list_id, this.state.list_data)
+        listsService.update(this.state.list_data._id, this.state.list_data)
+          .then((response) => {
+            this.setState({
+              //  list_id: response.data._id,
+              //list_data: response.data,
+              hasImage: false
+            });
+            return;
+          });
+      }
+      else {
+        var imgUploaded = this.imageUpload();
+        imgUploaded.then(function (uploaded) {
 
-        this.setState({
-          id: response.data.id,
-          list_id: response.data.list_id,
-          name: response.data.name,
-          website: response.data.website,
-          category_id: response.data.category_id,
-          image: response.data.image,
-          note: response.data.note,
-          price: response.data.price,
-          quantity: response.data.quantity,
-          unlimited: response.data.unlimited,
-          submitted: true,
-          hasImage: false
-        });
-
-      });
-
+          data.image = [{
+            id: uploaded.data[0].id,
+            filename: uploaded.data[0].filename
+          }];
+          console.log(data.image)
+          // this.state.list_data.updatedby = "admin";
+          //this.state.list_data.updateddate = new Date();
+          this.state.list_data.items.push(data)
+          listsService.update(this.state.list_data._id, this.state.list_data)
+            .then((response) => {
+              console.log(response.data);
+              this.setState({
+                list_id: response.data._id,
+                list_data: response.data,
+                hasImage: false
+              });
+            })
+        }.bind(this));
+      }
     } catch (error) {
       console.log(error);
     }

@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 const NavbarMain = () => {
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const [user, setUser] = useState(true);
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
@@ -21,11 +21,13 @@ const NavbarMain = () => {
     }
 
     useEffect(() => {
-     
+     if (localStorage.getItem('user') != 'undefined') {
         setUser(JSON.parse(localStorage.getItem('user')));
-       
+        isLoggedin = JSON.parse(localStorage.getItem('user'));
+     }
+      
     }, [location]);
-    const isLoggedin = user;
+    var isLoggedin = user;
     return (
 
         <Navbar expand="lg" variant="light" >
@@ -66,7 +68,7 @@ const NavbarMain = () => {
                         {isLoggedin && 
                             <Button className="nav-link" variant="link" onClick={logout} > Sign Out</Button>}
                         {isLoggedin &&
-                            <Image src={user.photo} roundedCircle thumbnail width="50x" />}
+                            <Image src={user.photo} roundedCircle width="50px"height="50px" />}
                     </Nav>
                 </Col>
             </Navbar.Collapse>

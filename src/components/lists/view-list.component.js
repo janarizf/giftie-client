@@ -1,60 +1,74 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
 import listsService from "../../services/lists.service";
 import CreateList from "./create-list.component"
-import { Container, Card, Row, Modal, Button } from 'react-bootstrap';
+import { Container, Card, Row, Modal, Button, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 
-export default class ListView extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            todos: [],
+export default function ListView() {
+    const [listData, setListData] = useState({
+        todos: []
+    })
+    const [modal, setModal] = useState({
+        modalShow: false
+    })
+    const params = useParams();
+    const navigate = useNavigate();
+    useEffect(() => {
+        async function fetchData() {
+            var user = (JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : "Guest");
+            listsService.getByUser(user._id)
+                .then(response => {
+                    setListData({ todos: response.data });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+
+        fetchData();
+
+        return;
+    }, [params.id]);
+
+    function openModal() {
+        setModal({
+            modalShow: true
+
+        });
+    };
+    function closeModal() {
+        setModal({
             modalShow: false
-        };
-    }
-    openModal = () => this.setState({ modalShow: true });
-    closeModal = () => this.setState({ modalShow: false });
-    componentDidMount() {
-        this.loadList();
-    }
-    loadList() {
-        var user = (JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : "Guest");
-        listsService.getByUser(user._id)
-            .then(response => {
-                this.setState({ todos: response.data });
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    }
-    todoList() {
-        return this.state.todos.map(function (currentTodo, i) {
+        });
+    };
+
+    function todoList() {
+        return listData.todos.map(function (currentTodo, i) {
             return (
-                //<Todo todo={currentTodo} key={i} this={this}/>;
-                <Card key={currentTodo._id} style={{ width: '18rem' }} className="m-3 text-center ">
-                    <Card.Img src={currentTodo.image} />
-                    <Card.Body>
-                        <Card.Title>{currentTodo.name}</Card.Title>
-                        <Card.Text>
-                            Event Date:<br />
-                            {currentTodo.set_date.substring(0, 10)}<br />
+                <div>
+                    <Card key={currentTodo._id} className='text-center' >
+                        {/* <Card.Img src={currentTodo.image} /> */}
+                        <Card.Body>
+                            <Card.Title>{currentTodo.name}</Card.Title>
+                            <Card.Text>
+                                Event Date:<br />
+                                {currentTodo.set_date.substring(0, 10)}<br />
 
-                        </Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                        <Row>
-                            <Button size="sm" variant="custom" href={"/list/" + currentTodo._id}>View List</Button>
-                            <Button size="sm" variant="custom" onClick={this.deleteList} id={currentTodo._id}>Delete</Button>
-                        </Row>
+                                <Button size="md" variant="custom" href={"/list/" + currentTodo._id}>View List</Button> <br />
+                                <Button size="md" variant="custom" onClick={deleteList} id={currentTodo._id}>Delete</Button>
 
-                    </Card.Footer>
-                </Card>
+                            </Card.Text>
+                        </Card.Body>
+
+                    </Card>
+                </div>
             )
         }, this)
     }
 
-    async deleteList(e) {
+    async function deleteList(e) {
         console.log(e.target.id);
         var deleted = await listsService.delete(e.target.id)
         try {
@@ -65,38 +79,43 @@ export default class ListView extends Component {
             console.log(error);
         }
     }
-    render() {
-        return (
 
-            <Container>
-                <br />
+    return (
+        <Container>
+            <Col>
                 <h4>Your Lists</h4>
-                <Row xs={1} md={3}>
-                    <Card className='text-center m-3' style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Text>
-                                <Link onClick={this.openModal}>
-                                    <Image src={require('../../img/plus_sign.png')} roundedCircle />
-                                </Link>
-                                <br />
-                                <span>Add List</span>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    {this.todoList()}
+                <Row xs={1} md={2} lg={3} >
+                    <div>
+                        <Card className='text-center' style={{height:'100%'}}>
+                            <Card.Body>
+                                <Card.Text>
+                                    <Link onClick={openModal}>
+                                        <br />
+                                        {/* <Link to={`/listcreate`}> */}
+                                        <Image src={require('../../img/plus_sign.png')} roundedCircle />
+                                        <br />
+                                    </Link>
+                                    <br />
+                                    <span>Add List</span>
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </div>
+                    {todoList()}
                 </Row>
-                <Modal show={this.state.modalShow} onHide={this.closeModal}>
+                <Modal show={modal.modalShow} onHide={closeModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Create a list</Modal.Title>
                     </Modal.Header>
                     <Modal.Body><CreateList /></Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={this.closeModal}>
+                        <Button variant="secondary" onClick={closeModal}>
                             Close
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </Container>
-        );
-    }
+            </Col>
+        </Container>
+    );
+
 }

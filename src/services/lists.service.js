@@ -13,12 +13,20 @@ class ListsDataService {
     return http.get(`/lists/getOne/${id}`);
   }
 
-  create(data) {
-    return http.post("/lists/create", data);
+  async create(data) {
+    return await http.post("/lists/create", data)
+        .then((response)=> {return response})
+        .catch((err) => {
+          console.log(err);
+      });
   }
 
-   update(id, data) {
-    return  http.patch(`/lists/update/${id}`, data);
+  async update(id, data) {
+    return await http.patch(`/lists/update/${id}`, data)
+    .then((response)=> {return response})
+    .catch((err) => {
+      console.log(err);
+  });
   }
    additem(id, data) {
     return  http.put(`/lists/update/${id}`, data);

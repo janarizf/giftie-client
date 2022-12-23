@@ -14,7 +14,7 @@ const Login = () => {
         console.log(response);
         var userObj = jwt_decode(response.credential);
         console.log(userObj);
-        setUser(userObj);
+       
 
         try {
             if (userObj) {
@@ -22,6 +22,7 @@ const Login = () => {
                     .then((existing) => {
                         if (existing.data.length > 0) {
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
+                            setUser(existing.data[0]);
                             navigate('/list');
                         }
                         else {

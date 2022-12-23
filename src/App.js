@@ -10,6 +10,7 @@ import Blog from './pages/blog'
 import List from './pages/list';
 import Gift from './pages/giftideas';
 import ListEdit from './pages/list-edit';
+import ListCreate from './pages/list-create';
 import Login from './components/login/login.component';
 import SignUp from './components/login/signup.component';
 import Footer from './components/footer';
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path="/gift" element={<Gift />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/list" element={<List />} />
+            <Route path="/listcreate" element={<ListCreate />} />
             <Route path="/list/:id" element={<ListEdit />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
