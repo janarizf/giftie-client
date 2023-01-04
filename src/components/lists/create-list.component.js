@@ -24,8 +24,22 @@ export default class ListCreate extends Component {
       location: "",
       set_date: format(new Date(), 'yyyy-MM-dd'),
       redirect: false,
-      id: ""
+      _id: ""
     }
+
+    if (props.listData) {
+      this.state = {
+        name: props.listData.name,
+        status: props.listData.status_id,
+        category: props.listData.category_id,
+        introduction: props.listData.introduction,
+        location: props.listData.location,
+        set_date: format(new Date(props.listData.set_date), 'yyyy-MM-dd'),
+        _id: props.listData._id
+      }
+
+    }
+
     console.log(this.state.user);
   }
 
@@ -72,12 +86,12 @@ export default class ListCreate extends Component {
 
   onSubmit(e) {
     try {
-      e.preventDefault();
+
       var data = {
         name: this.state.name,
         user_id: this.state.user,
         status: this.state.status,
-        category: this.state.category,
+        category_id: this.state.category,
         introduction: this.state.introduction,
         location: this.state.location,
         set_date: this.state.set_date,
@@ -87,24 +101,46 @@ export default class ListCreate extends Component {
         updatedby: this.state.user,
         updateddate: new Date()
       };
-
-      listsService.create(data)
-        .then((respond) => {
-          this.setState({
-            name: respond.data.name,
-            user_id: respond.data.user,
-            status: respond.data.status,
-            category: respond.data.category_id,
-            introduction: respond.data.introduction,
-            location: respond.data.location,
-            set_date: respond.data.set_date,
-            status_id: respond.data.status_id,
-            id: respond.data._id,
-            redirect: true
+      if (this.state._id) {
+        listsService.update(this.state._id, data)
+          .then((respond) => {
+            this.setState({
+              name: respond.data.name,
+              user_id: respond.data.user,
+              status: respond.data.status,
+              category_id: respond.data.category_id,
+              introduction: respond.data.introduction,
+              location: respond.data.location,
+              set_date: respond.data.set_date,
+              status_id: respond.data.status_id,
+              _id: respond.data._id,
+              redirect: true
+            })
+            console.log(respond.data._id);
+            alert("Updated wishlist " + respond.data.name)
           })
-          console.log(respond);
-          alert("Created new wishlist " + respond.data.name)
-        })
+      }
+      else {
+        e.preventDefault();
+        listsService.create(data)
+          .then((respond) => {
+            this.setState({
+              name: respond.data.name,
+              user_id: respond.data.user,
+              status: respond.data.status,
+              category_id: respond.data.category_id,
+              introduction: respond.data.introduction,
+              location: respond.data.location,
+              set_date: respond.data.set_date,
+              status_id: respond.data.status_id,
+              _id: respond.data._id,
+              redirect: true
+            })
+            console.log(respond);
+            alert("Created new wishlist " + respond.data.name)
+          })
+      }
+
     }
     catch (error) {
       console.log(error)
@@ -114,7 +150,7 @@ export default class ListCreate extends Component {
     const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
     return (
       <Container>
-      { this.state.redirect && <Navigate to={"/list/" + this.state.id} />}
+        {this.state.redirect && <Navigate to={"/list/" + this.state._id} />}
         <Form className="formItem" onSubmit={this.onSubmit}>
           <Row>
             {/* <Col sm>
@@ -136,10 +172,10 @@ export default class ListCreate extends Component {
                 }
               </Form.Select>
 
-              <Button variant="primary" type="submit">
+              <Button variant="custom" type="submit">
                 Save
               </Button>
-            
+
             </Col>
           </Row>
         </Form>

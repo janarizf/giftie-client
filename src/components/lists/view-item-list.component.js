@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AddItem from "./add-item.component";
+import EditItem from "./edit-item.component";
 import ViewItem from "./view-item.components";
 import listsService from "../../services/lists.service";
 import { Link } from 'react-router-dom';
@@ -23,6 +24,7 @@ export default class ItemListView extends Component {
             user: this.getUser(),
             addItemShow: false,
             viewItemShow: false,
+            editItemShow: false,
             selectedItem: ""
         };
         this.onChangeName = this.onChangeName.bind(this);
@@ -32,11 +34,15 @@ export default class ItemListView extends Component {
         this.onChangeIntroduction = this.onChangeIntroduction.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+
     }
     openAddItem = () => this.setState({ addItemShow: true });
     closeAddItem = () => this.setState({ addItemShow: false });
     closeViewItem = () => this.setState({ viewItemShow: false });
     openViewItem = (e) => this.setState({ viewItemShow: true, selectedItem: this.getSelectedItem(e.currentTarget.id) });
+    closeEditItem = () => this.setState({editItemShow: false });
+    openEditItem = (e) => this.setState({ editItemShow: true, selectedItem: this.getSelectedItem(e.currentTarget.id) });
+
 
     getSelectedItem(itemId) {
         return this.state.items.filter((a) => a._id === itemId)
@@ -79,6 +85,14 @@ export default class ItemListView extends Component {
         });
     }
 
+    imgSrc(d) {
+        if (d.length > 0) {
+            return "http://localhost:9000/lists/getImage/" + d[0].filename;
+        } else {
+            return require('../../img/giftie_question.png')
+        }
+    }
+
     async onSubmit(e) {
 
         var data = {
@@ -100,8 +114,8 @@ export default class ItemListView extends Component {
             })
 
     }
-    async loadList() {
-        await listsService.get(this.state.listId)
+    loadList() {
+        listsService.get(this.state.listId)
             .then(response => {
                 this.state.list = response.data;
                 this.state.items = response.data.items;
@@ -110,12 +124,16 @@ export default class ItemListView extends Component {
                 this.state.introduction = response.data.introduction;
                 this.state.location = response.data.location;
                 this.state.set_date = format(response.data.set_date, 'yyyy-MM-dd');
-            })
+                console.log(response.data.items)
+                alert("test")
+            }
+
+            )
             .catch(function (error) {
                 console.log(error);
             })
     }
-    async deleteItem(e, a) {
+    deleteItem(e, a) {
         console.log(e.target.id);
         console.log(a.state.list)
         var filtered = a.state.list.items.filter((a) => a._id !== e.target.id);
@@ -123,20 +141,12 @@ export default class ItemListView extends Component {
         this.setState({
             list: a.state.list
         })
-        await listsService.update(this.state.list._id, this.state.list)
+        listsService.update(this.state.list._id, this.state.list)
             .then(
                 window.location.reload(true)
             )
             .catch(error => { console.log(error) })
 
-        /*  var deleted = await listsService.delete(e.target.id)
-         try {
-             console.log(deleted);
-             window.location.reload(true)
-         }
-         catch (error) {
-             console.log(error);
-         } */
     }
     componentDidMount() {
         this.loadList();
@@ -185,14 +195,15 @@ export default class ItemListView extends Component {
                                         return (
                                             <div>
                                                 <Card key={index} className='text-center'>
-                                                     <Card.Body>
-                                                        <Card.Img variant="top" src={"http://localhost:9000/lists/getImage/"+d.image[0].filename} className="card-img"/>
+                                                    <Card.Body>
+                                                        <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
                                                         <Card.Title>{d.name}</Card.Title>
                                                         <Card.Text>
-                                                           Note: {d.note}<br />
-                                                           Category: {d.category_id}<br />
-                                                           Quantity: {d.quantity}<br />
+                                                            Note: {d.note}<br />
+                                                            Category: {d.category_id}<br />
+                                                            Quantity: {d.quantity}<br />
                                                             <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button><br />
+                                                            <Button size="sm" variant="custom" onClick={this.openEditItem} id={d._id}>Edit</Button>
                                                             <Button size="sm" variant="custom" onClick={event => this.deleteItem(event, this)} id={d._id}>Delete</Button>
                                                         </Card.Text>
                                                     </Card.Body>
@@ -216,11 +227,14 @@ export default class ItemListView extends Component {
                     <Modal.Body>
                         <AddItem listData={this.state.list} />
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.closeAddItem}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
+                </Modal >
+                <Modal show={this.state.editItemShow} onHide={this.closeEditItem} >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit Item</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <EditItem listData={this.state.list} itemData={this.state.selectedItem[0]}/>
+                    </Modal.Body>
                 </Modal >
                 <Modal show={this.state.viewItemShow} onHide={this.closeViewItem} >
                     <Modal.Header closeButton>
@@ -230,11 +244,6 @@ export default class ItemListView extends Component {
                         <ViewItem itemData={this.state.selectedItem} />
 
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.closeViewItem}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
                 </Modal>
             </Container>
         );

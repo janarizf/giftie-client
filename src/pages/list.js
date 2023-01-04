@@ -62,11 +62,6 @@ export default class List extends Component {
                         <Modal.Title>Add an item to your list</Modal.Title>
                     </Modal.Header>
                     <Modal.Body><AddItem /></Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.closeModal}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
                 </Modal>
             </Container>
         );

@@ -2,18 +2,33 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import listsService from "../services/lists.service";
 import ItemListView from "../components/lists/view-item-list.component";
-import { Container, Col, Row, Form,Button } from 'react-bootstrap';
+import CreateList from "../components/lists/create-list.component"
+import { Container, Col, Row, Form,Button, Modal } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 export default function ListEdit() {
   const [listData, setListData] = useState({
     listData: []
   })
+  const [modal, setModal] = useState({
+    modalShow: false
+})
   const [category, setCategory] = useState(true)
 
 
   const params = useParams();
   const navigate = useNavigate();
 
+  function openModal() {
+    setModal({
+        modalShow: true
+
+    });
+};
+function closeModal() {
+    setModal({
+        modalShow: false
+    });
+};
 
   useEffect(() => {
 
@@ -65,7 +80,7 @@ export default function ListEdit() {
                <h5> Location: {listData.location}</h5> 
                <h5>Introduction: {listData.introduction}</h5> 
                <h5> Category: {category}</h5> 
-               <Button size="md" variant="custom">Edit</Button> 
+               <Button size="md" variant="custom" onClick={openModal}>Edit</Button> 
               </div>
             </Col>
           </Row>
@@ -73,6 +88,12 @@ export default function ListEdit() {
 
       </div>
       <ItemListView listId={params.id} listData={listData} />
+      <Modal show={modal.modalShow} onHide={closeModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit list</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body><CreateList listData={listData}/></Modal.Body>
+                </Modal>
     </Container>
   );
 

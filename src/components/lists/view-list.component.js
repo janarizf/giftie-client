@@ -58,7 +58,6 @@ export default function ListView() {
 
                                 <Button size="md" variant="custom" href={"/list/" + currentTodo._id}>View List</Button> <br />
                                 <Button size="md" variant="custom" onClick={deleteList} id={currentTodo._id}>Delete</Button>
-
                             </Card.Text>
                         </Card.Body>
 

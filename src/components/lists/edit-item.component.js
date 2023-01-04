@@ -16,17 +16,19 @@ export default class AddItem extends Component {
     this.onChangeUnlimited = this.onChangeUnlimited.bind(this);
     this.saveItems = this.saveItems.bind(this);
     this.imageUpload = this.imageUpload.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
     this.state = {
       list_id: props.listData._id,
       list_data: props.listData,
-      name: "",
-      website: "",
-      category: "",
-      image: [],
-      note: "",
-      price: 0,
-      quantity: 1,
-      unlimited: false,
+      item_data: props.itemData,
+      name: props.itemData.name,
+      website: props.itemData.website,
+      category: props.itemData.category_id,
+      image: props.itemData.image,
+      note: props.itemData.note,
+      price: props.itemData.price,
+      quantity: props.itemData.quantity,
+      unlimited: props.itemData.unlimited,
       hasImage: false,
       imageSrc: [],
       imageUpload: [],
@@ -53,12 +55,19 @@ export default class AddItem extends Component {
     });
   }
 
-  deleteImage(e) {
-    const ImagesArray = this.state.imageSrc.filter((item, index) => index !== e);
+  deleteImage() {
     this.setState({
-      hasImage: true,
-      imageSrc: ImagesArray
+      image: []
     });
+  }
+
+  imgSrc() {
+    console.log(this.state.image);
+    if (this.state.image.length > 0) {
+      return "http://localhost:9000/lists/getImage/" + this.state.image[0].filename;
+    } else {
+      return ""
+    }
   }
 
   async onChangeImage(e) {
@@ -123,7 +132,7 @@ export default class AddItem extends Component {
         name: this.state.name,
         website: this.state.website,
         category_id: this.state.category,
-        image: [],
+        image: this.state.image,
         note: this.state.note,
         price: this.state.price,
         quantity: this.state.quantity,
@@ -131,7 +140,7 @@ export default class AddItem extends Component {
         addedon: new Date(),
         taken: false
       };
-      if (!this.state.hasImage) {
+      if (this.state.image.length == 0) {
         this.state.list_data.items.push(data)
         listsService.update(this.state.list_data._id, this.state.list_data)
           .then((response) => {
@@ -144,17 +153,19 @@ export default class AddItem extends Component {
           });
       }
       else {
-        var imgUploaded = this.imageUpload();
+      /*   var imgUploaded = this.imageUpload();
         imgUploaded.then(function (uploaded) {
 
           data.image = [{
             id: uploaded.data[0].id,
             filename: uploaded.data[0].filename
           }];
-          console.log(data.image)
+          console.log(data.image) */
           // this.state.list_data.updatedby = "admin";
           //this.state.list_data.updateddate = new Date();
-          this.state.list_data.items.push(data)
+         var objIndex = this.state.list_data.items.findIndex((obj => obj._id == this.state.item_data._id));
+      console.log(objIndex);
+         this.state.list_data.items[objIndex] = data;
           listsService.update(this.state.list_data._id, this.state.list_data)
             .then((response) => {
               console.log(response.data);
@@ -164,7 +175,7 @@ export default class AddItem extends Component {
                 hasImage: false
               });
             })
-        }.bind(this));
+       // }.bind(this));
       }
     } catch (error) {
       console.log(error);
@@ -193,26 +204,26 @@ export default class AddItem extends Component {
             }
 
           </Form.Select>
-          <Form.Label>Images (optional)</Form.Label>
-          <Form.Control type="file" accept=".png, .jpg, .jpeg" disabled={false}  name="image" id="input-file" onChange={this.onChangeImage} />
+          <Form.Label>Images (optional)</Form.Label> <br />
 
-          {this.state.hasImage &&
-            this.state.imageSrc.map((item, index) => {
-              return (
-                <div key={index}>
-                  <img src={item} alt="" width="100" height="auto" />
-                  {/*  <button type="button" onClick={() => this.deleteImage(index)}>
-                    delete
-                  </button> */}
-                </div>
-              );
-            })
+          {this.state.image.length == 0 &&
+            <Form.Control type="file" accept=".png, .jpg, .jpeg" disabled={false} name="image" id="input-file" onChange={this.onChangeImage} />
           }
+          {this.state.image.length > 0 &&
+            <Form.Label>
+              <img src={this.imgSrc()} alt="" width="100" height="auto" />
+              <Button variant="outline-danger" size="sm" onClick={this.deleteImage}>Delete</Button>
+
+            </Form.Label>}
+
+
+          <br />
+
           {/* {this.state.hasImage && <Button variant="custom" onClick={this.imageUpload}>upload</Button>}<br/> */}
           <Form.Label>Note (optional)</Form.Label>
           <Form.Control placeholder="explain what do you prefer for that item" name="note" disabled={false} value={this.state.note} onChange={this.onChangeNote} />
           <Form.Label>Max Pricing (optional)</Form.Label>
-          <Form.Control type="number" name="price" value={this.state.price}  disabled={false} onChange={this.onChangePrice} />
+          <Form.Control type="number" name="price" value={this.state.price} disabled={false} onChange={this.onChangePrice} />
           <Form.Label>Quantity</Form.Label>
           <Form.Control type="number" name="quantity" placeholder="0" disabled={false} value={this.state.quantity} onChange={this.onChangeQuantity} />
           <Form.Check type='checkbox' label="Unlimited Item" name="unlimited" disabled={false} value={this.state.unlimited} onChange={this.onChangeUnlimited} />
