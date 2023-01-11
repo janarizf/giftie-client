@@ -3,15 +3,29 @@ import { useParams, useNavigate } from "react-router";
 import listsService from "../services/lists.service";
 import ItemListView from "../components/lists/view-item-list.component";
 import CreateList from "../components/lists/create-list.component"
-import { Container, Col, Row, Form,Button, Modal } from 'react-bootstrap';
+import { Container, Col, Row, Form, Button, Modal } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton,
+  FacebookMessengerShareButton,
+  FacebookMessengerIcon,
+  FacebookIcon,
+  TwitterIcon,
+  EmailIcon
+} from "react-share";
+
 export default function ListEdit() {
   const [listData, setListData] = useState({
     listData: []
   })
   const [modal, setModal] = useState({
     modalShow: false
-})
+  })
+  const [shareUrl, setUrl] = useState({
+    shareUrl: 'www.google.com'
+  })
   const [category, setCategory] = useState(true)
 
 
@@ -20,15 +34,15 @@ export default function ListEdit() {
 
   function openModal() {
     setModal({
-        modalShow: true
+      modalShow: true
 
     });
-};
-function closeModal() {
+  };
+  function closeModal() {
     setModal({
-        modalShow: false
+      modalShow: false
     });
-};
+  };
 
   useEffect(() => {
 
@@ -50,7 +64,7 @@ function closeModal() {
         navigate("/");
         return;
       }
-
+      setUrl(window.location.href)
       setListData(record)
       getCategory(response.data.category_id)
     }
@@ -71,16 +85,42 @@ function closeModal() {
         <Form className="p-3" >
           <Row>
             <Col sm={4} className="text-center">
-              <Image fluid src={require('../img/giftie_question.png')} alt="..."/>
+              <Image fluid src={require('../img/giftie_question.png')} alt="..." />
             </Col>
             <Col sm={8}>
               <div className="my-5" >
-               <h3> List: {listData.name} </h3>
-               <h5>Set Date: {listData.set_date && listData.set_date.substring(0, 10)}</h5> 
-               <h5> Location: {listData.location}</h5> 
-               <h5>Introduction: {listData.introduction}</h5> 
-               <h5> Category: {category}</h5> 
-               <Button size="md" variant="custom" onClick={openModal}>Edit</Button> 
+                <h3> List: {listData.name} </h3>
+                <h5>Set Date: {listData.set_date && listData.set_date.substring(0, 10)}</h5>
+                <h5> Location: {listData.location}</h5>
+                <h5>Introduction: {listData.introduction}</h5>
+                <h5> Category: {category}</h5>
+                <Button size="md" variant="custom" onClick={openModal}>Edit</Button>
+                <div>
+                  <EmailShareButton
+                    url={shareUrl}
+                    quote={'Link Share'}
+                  >
+                    <EmailIcon size={32} round />
+                  </EmailShareButton>
+                  <FacebookShareButton
+                    url={shareUrl}
+                    quote={'FB Share'}
+                  >
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
+                  <FacebookMessengerShareButton
+                    url={shareUrl}
+                    appId="1991129724610007"
+                  >
+                    <FacebookMessengerIcon size={32} round />
+                  </FacebookMessengerShareButton>
+                  <TwitterShareButton
+                    url={shareUrl}
+                    quote={'Twitter Share'}
+                  >
+                    <TwitterIcon size={32} round />
+                  </TwitterShareButton>
+                </div>
               </div>
             </Col>
           </Row>
@@ -89,11 +129,11 @@ function closeModal() {
       </div>
       <ItemListView listId={params.id} listData={listData} />
       <Modal show={modal.modalShow} onHide={closeModal}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Edit list</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body><CreateList listData={listData}/></Modal.Body>
-                </Modal>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit list</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><CreateList listData={listData} /></Modal.Body>
+      </Modal>
     </Container>
   );
 
