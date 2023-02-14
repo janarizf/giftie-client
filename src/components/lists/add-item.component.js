@@ -31,7 +31,8 @@ export default class AddItem extends Component {
       imageSrc: [],
       imageUpload: [],
       base64Image: "",
-      isEdit: false
+      isEdit: false,
+      link_img: ""
     }
   }
 
@@ -43,7 +44,8 @@ export default class AddItem extends Component {
 
   onChangeWebsite(e) {
     this.setState({
-      website: e.target.value
+      website: e.target.value,
+      link_img: e.target.value
     });
   }
 
@@ -183,6 +185,11 @@ export default class AddItem extends Component {
           <Form.Control placeholder="e.g. toys, chocolates, essentials etc.." disabled={this.state.isEdit} name="name" required value={this.state.name} onChange={this.onChangeName} />
           <Form.Label>Website item link (optional)</Form.Label>
           <Form.Control placeholder="https://" name="website" value={this.state.website} disabled={false} onChange={this.onChangeWebsite} />
+          {this.state.link_img &&
+                <div>
+                  <img src={this.state.link_img} alt="" width="100" height="auto" />
+                </div>  
+          }
           <Form.Label>Item Category</Form.Label>
           <Form.Select value={this.state.category} onChange={this.onChangeCategory} disabled={false} required >
             <option key="0" value="">Category</option>
