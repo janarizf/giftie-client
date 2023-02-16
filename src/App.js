@@ -11,6 +11,7 @@ import List from './pages/list';
 import Gift from './pages/giftideas';
 import ListEdit from './pages/list-edit';
 import ListCreate from './pages/list-create';
+import Test from './pages/test'
 import Login from './components/login/login.component';
 import SignUp from './components/login/signup.component';
 import Footer from './components/footer';
@@ -34,6 +35,7 @@ class App extends Component {
             <Route path="/list/:id" element={<ListEdit />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/test" element={<Test />} />
           </Routes>
           <Footer/>
         </Container>
