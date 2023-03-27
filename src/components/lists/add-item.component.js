@@ -176,7 +176,8 @@ export default class AddItem extends Component {
 
   }
   render() {
-    const itemCategoryData = [{ id: 1, value: "Clothes" }, { id: 2, value: "Gadgets" }, { id: 3, value: "Food" }, { id: 4, value: "Appliances" }, { id: 5, value: "Others" }]; return (
+    const itemCategoryData = [{ id: 1, value: "Clothes" }, { id: 2, value: "Gadgets" }, { id: 3, value: "Food" }, { id: 4, value: "Appliances" }, { id: 5, value: "Others" }]; 
+    return (
       <Form onSubmit={this.saveItems} encType="multipart/form-data">
         <Form.Group>
           <Form.Label>Add to List</Form.Label>

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Card, Button, Nav, Container, Modal, Row, Col } from 'react-bootstrap';
+import { Card, Button, Nav, Container, Modal, Row, Col, Tab, Tabs } from 'react-bootstrap';
 import AddItem from "../components/lists/add-item.component";
 import ListView from "../components/lists/view-list.component";
+import ProfileMainView from "../components/profile/profile.component"
 import Image from 'react-bootstrap/Image'
 
 export default class List extends Component {
@@ -34,26 +35,30 @@ export default class List extends Component {
                 <Card >
                     <Card.Body>
                         <Row>
-                            <Col><Nav variant="tabs" defaultActiveKey="#lists">
-                                <Nav.Item>
-                                    <Nav.Link href="#Profile">Profile</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link href="#lists">Lists</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link href="#groups">Group</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link href="#settings">Settings</Nav.Link>
-                                </Nav.Item>
-                            </Nav>
+                            <Col>
+                            <Tabs
+                                  defaultActiveKey="lists"
+                                  id="uncontrolled-tab-example"
+                                  className="mb-3"
+                                >
+                                <Tab eventKey="profile" title="Profile">
+                                <ProfileMainView />
+                                </Tab>
+                                <Tab eventKey="lists" title="Lists">
+                                <ListView />
+                                </Tab>
+                                <Tab eventKey="groups" title="Groups">
+                                <ListView />
+                                </Tab>
+                                <Tab eventKey="settings" title="Settings">
+                                <ListView />
+                                </Tab>
+                                </Tabs>
+
                             </Col>
 
                         </Row>
-                        <Row>
-                            <ListView />
-                        </Row>
+                      
                     </Card.Body>
                 </Card>
 

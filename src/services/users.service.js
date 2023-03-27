@@ -10,31 +10,28 @@ class UsersDataService {
 
     return http.post(`/users/create/`,data);
   }
+  get(id) {
+    return http.get(`/users/getOne/${id}`);
+  }
+  async update(id, data) {
+    return await http.patch(`/users/update/${id}`, data)
+    .then((response)=> {return response})
+    .catch((err) => {
+      console.log(err);
+  });
+  }
 
   getAll() {
-    return http.get("/lists/getAll/");
+    return http.get("/users/getAll/");
   }
 
-  get(id) {
-    return http.get(`/lists/getOne/${id}`);
-  }
-
-  create(data) {
-    return http.post("/lists/create", data);
-  }
-
-  update(id, data) {
-    return http.patch(`/lists/update/${id}`, data);
-  }
-  additem(id, data) {
-    return http.put(`/lists/update/${id}`, data);
-  }
+  
   delete(id) {
-    return http.delete(`/lists/delete/${id}`);
+    return http.delete(`/users/delete/${id}`);
   }
 
   deleteAll() {
-    return http.delete(`/lists`);
+    return http.delete(`/users`);
   }
 
   findByEmail(email) {
