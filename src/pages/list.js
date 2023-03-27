@@ -3,6 +3,7 @@ import { Card, Button, Nav, Container, Modal, Row, Col, Tab, Tabs } from 'react-
 import AddItem from "../components/lists/add-item.component";
 import ListView from "../components/lists/view-list.component";
 import ProfileMainView from "../components/profile/profile.component"
+import GroupMainView from "../components/groups/group.component";
 import Image from 'react-bootstrap/Image'
 
 export default class List extends Component {
@@ -48,7 +49,7 @@ export default class List extends Component {
                                 <ListView />
                                 </Tab>
                                 <Tab eventKey="groups" title="Groups">
-                                <ListView />
+                                <GroupMainView />
                                 </Tab>
                                 <Tab eventKey="settings" title="Settings">
                                 <ListView />
