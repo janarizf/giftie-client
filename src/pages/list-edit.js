@@ -81,7 +81,7 @@ export default function ListEdit() {
   return (
 
     <Container>
-      <div className="jumbotron jumbotron-fluid">
+      <Row className="jumbotron jumbotron-fluid">
         <Form className="p-3" >
           <Row>
             <Col sm={4} className="text-center">
@@ -126,8 +126,9 @@ export default function ListEdit() {
           </Row>
         </Form>
 
-      </div>
+      </Row>
       <ItemListView listId={params.id} listData={listData} />
+
       <Modal show={modal.modalShow} onHide={closeModal}>
         <Modal.Header closeButton>
           <Modal.Title>Edit list</Modal.Title>

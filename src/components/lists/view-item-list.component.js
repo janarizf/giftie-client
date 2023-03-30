@@ -40,7 +40,7 @@ export default class ItemListView extends Component {
     closeAddItem = () => this.setState({ addItemShow: false });
     closeViewItem = () => this.setState({ viewItemShow: false });
     openViewItem = (e) => this.setState({ viewItemShow: true, selectedItem: this.getSelectedItem(e.currentTarget.id) });
-    closeEditItem = () => this.setState({editItemShow: false });
+    closeEditItem = () => this.setState({ editItemShow: false });
     openEditItem = (e) => this.setState({ editItemShow: true, selectedItem: this.getSelectedItem(e.currentTarget.id) });
 
 
@@ -155,71 +155,68 @@ export default class ItemListView extends Component {
     render() {
         const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
         return (
-            <Container>
+            <Container className="container-main">
+                <Row >
+                   
+                        <Col>
+                        <Nav variant="tabs" defaultActiveKey="#items">
+                            <Nav.Item>
+                                <Nav.Link href="#items">Items</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link href="#settings">Settings</Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                        </Col>
 
-                <Card >
-                    <Card.Body>
-                        <Row>
-                            <Col><Nav variant="tabs" defaultActiveKey="#items">
-                                <Nav.Item>
-                                    <Nav.Link href="#items">Items</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link href="#settings">Settings</Nav.Link>
-                                </Nav.Item>
-                            </Nav>
-                            </Col>
-
-                        </Row>
-                        <Row>
-                            <Col>
-                                <h4>Your Items</h4>
-                                <Row xs={1} md={2} lg={3}>
-                                    <div>
-                                        <Card className='text-center' key={"optionID"} style={{ height: '100%' }}>
-                                            <Card.Body>
-                                                <Card.Text className='my-5'>
-                                                    <Link onClick={this.openAddItem}>
-                                                        <br />
-                                                        <Image src={require('../../img/plus_sign.png')} roundedCircle />
-                                                        <br />
-                                                    </Link>
+                    <Row>
+                        <Col>
+                            <h4>Your Items</h4>
+                            <Row xs={1} md={2} lg={3}>
+                                <div className='p-1'>
+                                    <Card className='text-center' key={"optionID"} style={{ height: '100%' }}>
+                                        <Card.Body>
+                                            <Card.Text className='my-5'>
+                                                <Link onClick={this.openAddItem}>
                                                     <br />
-                                                    <span>Add Item</span>
-                                                </Card.Text>
-                                            </Card.Body>
+                                                    <Image src={require('../../img/plus_sign.png')} roundedCircle />
+                                                    <br />
+                                                </Link>
+                                                <br />
+                                                <span>Add Item</span>
+                                            </Card.Text>
+                                        </Card.Body>
 
-                                        </Card>
-                                    </div>
-                                    {this.state.items.map(function (d, index) {
-                                        return (
-                                            <div>
-                                                <Card key={index} className='text-center'>
-                                                    <Card.Body>
-                                                        <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
-                                                        <Card.Title>{d.name}</Card.Title>
-                                                        <Card.Text>
-                                                            Note: {d.note}<br />
-                                                            Category: {d.category_id}<br />
-                                                            Quantity: {d.quantity}<br />
-                                                            <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button><br />
-                                                            <Button size="sm" variant="custom" onClick={this.openEditItem} id={d._id}>Edit</Button>
-                                                            <Button size="sm" variant="custom" onClick={event => this.deleteItem(event, this)} id={d._id}>Delete</Button>
-                                                        </Card.Text>
-                                                    </Card.Body>
+                                    </Card>
+                                </div>
+                                {this.state.items.map(function (d, index) {
+                                    return (
+                                        <div className='p-1'>
+                                            <Card key={index} className='text-center'>
+                                                <Card.Body>
+                                                    <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
+                                                    <Card.Title>{d.name}</Card.Title>
+                                                    <Card.Text>
+                                                        Note: {d.note}<br />
+                                                        Category: {d.category_id}<br />
+                                                        Quantity: {d.quantity}<br />
+                                                        <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button><br />
+                                                        <Button size="sm" variant="custom" onClick={this.openEditItem} id={d._id}>Edit</Button>
+                                                        <Button size="sm" variant="custom" onClick={event => this.deleteItem(event, this)} id={d._id}>Delete</Button>
+                                                    </Card.Text>
+                                                </Card.Body>
 
 
 
-                                                </Card>
-                                            </div>
-                                        )
+                                            </Card>
+                                        </div>
+                                    )
 
-                                    }, this)}
-                                </ Row>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
+                                }, this)}
+                            </ Row>
+                        </Col>
+                    </Row>
+                </Row>
                 <Modal show={this.state.addItemShow} onHide={this.closeAddItem} >
                     <Modal.Header closeButton>
                         <Modal.Title>Add an item to your list</Modal.Title>
@@ -233,7 +230,7 @@ export default class ItemListView extends Component {
                         <Modal.Title>Edit Item</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <EditItem listData={this.state.list} itemData={this.state.selectedItem[0]}/>
+                        <EditItem listData={this.state.list} itemData={this.state.selectedItem[0]} />
                     </Modal.Body>
                 </Modal >
                 <Modal show={this.state.viewItemShow} onHide={this.closeViewItem} >
@@ -245,6 +242,7 @@ export default class ItemListView extends Component {
 
                     </Modal.Body>
                 </Modal>
+
             </Container>
         );
     }

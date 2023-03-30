@@ -26,10 +26,10 @@ class App extends Component {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/help" element={<Help />} />
             <Route path="/about" element={<About />} />
             <Route path="/gift" element={<Gift />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/help" element={<Help />} />
             <Route path="/list" element={<List />} />
             <Route path="/listcreate" element={<ListCreate />} />
             <Route path="/list/:id" element={<ListEdit />} />

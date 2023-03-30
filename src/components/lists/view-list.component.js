@@ -47,7 +47,7 @@ export default function ListView() {
     function todoList() {
         return listData.todos.map(function (currentTodo, i) {
             return (
-                <div>
+                <div  className='p-1'>
                     <Card key={currentTodo._id} className='text-center' >
                         {/* <Card.Img src={currentTodo.image} /> */}
                         <Card.Body>
@@ -81,11 +81,11 @@ export default function ListView() {
     }
 
     return (
-        <Container>
+        <Container  className='p-3'>
             <Col>
                 <h4>Your Lists</h4>
-                <Row xs={1} md={2} lg={3} >
-                    <div>
+                <Row xs={1} md={2} lg={3}>
+                    <div  className='p-1'>
                         <Card className='text-center' style={{ height: '100%' }}>
                             <Card.Body>
                                 <Card.Text>

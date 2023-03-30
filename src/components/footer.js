@@ -26,19 +26,22 @@ function Footer() {
                     <Row>
                         <span>Subscribe for more updates</span>
                     </Row>
+                    <Form >
+                        <Row>
+                            <Col>
+                                <Form.Control placeholder="Enter email" />
+                            </Col><Col>
+                                <Button variant="custom">Subscribe</Button>
+                            </Col>
+                        </Row>
+                    </Form>
                     <Row>
-                        <Form className="justify-content-between">
-                            <Form.Control
-                                placeholder="Enter email"
-                            />
-                            <Button variant="custom">Subscribe</Button>
-                        </Form>
-                    </Row>
                     <span>Giftie | 2022 | Terms & Conditions | Privacy Policy</span>
+                    </Row>
                 </Col>
 
                 <Col>
-                    <img src={require('../img/giftie_icon_white.png')} title="Giftie" alt="Giftie" className="float-md-end" width="30%" height="auto" />
+                    <img src={require('../img/giftie_icon_white.png')} title="Giftie" alt="Giftie" className="float-md-end" height="auto" />
                 </Col>
             </Row>
 
