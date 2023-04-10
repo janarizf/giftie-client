@@ -14,10 +14,10 @@ export default class home extends Component {
                   <h1>Great gifts – Always.</h1>
                   <h5>Giftie is the Ultimate Wish List Maker to help you</h5>
                   <h5>give and receive great gifts for any celebration.</h5>
-                  <Button size="lg" href="/list" variant='custom'>How it Works  <ArrowRightCircle color="white" /></Button>
+                  <Button size="lg" href="/account" variant='custom'>How it Works  <ArrowRightCircle color="white" /></Button>
                 </Col>
                 <Col>
-                  <img src={require('../img/girl_gift.png')} className="img-responsive" width="100%" height="auto" />
+                  <Image className="img-banner" src={require('../img/girl_gift.png')}/>
                 </Col>
               </Row>
             </Container>

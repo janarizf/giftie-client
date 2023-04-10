@@ -7,7 +7,7 @@ function Footer() {
             <Row>
                 <Col>
                     <Row>
-                        <Col><Link className="nav-link" to={'/list'}>
+                        <Col><Link className="nav-link" to={'/account'}>
                             My List
                         </Link></Col>
                         <Col><Link className="nav-link" to={'/blog'}>

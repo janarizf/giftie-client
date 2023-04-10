@@ -27,7 +27,7 @@ const SignUp = () => {
                             console.log(existing);
                             localStorage.setItem('user', JSON.stringify(existing.data));
                             setUser(existing.data[0]);
-                            navigate('/list');
+                            navigate('/account');
                         }
 
                     })
@@ -53,7 +53,7 @@ const SignUp = () => {
                             console.log(existing);
                             localStorage.setItem('user', JSON.stringify(existing.data));
                             setUser(existing.data[0]);
-                            navigate('/list');
+                            navigate('/account');
                         }
 
                     })

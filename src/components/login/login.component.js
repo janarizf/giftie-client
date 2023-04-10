@@ -21,7 +21,7 @@ const Login = () => {
         console.log(guestData);
         localStorage.setItem('user', JSON.stringify(guestData));
         setUser(guestData);
-        navigate('/list');
+        navigate('/account');
     }
 
     const fbSuccess = async (response) => {
@@ -41,7 +41,7 @@ const Login = () => {
                         if (existing.data.length > 0) {
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
-                            navigate('/list');
+                            navigate('/account');
                         }
                         else {
                             navigate('/signup');
@@ -71,7 +71,7 @@ const Login = () => {
                         if (existing.data.length > 0) {
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
-                            navigate('/list');
+                            navigate('/account');
                         }
                         else {
                             navigate('/signup');

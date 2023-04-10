@@ -81,10 +81,18 @@ html,
 }
 
 .col-text {
+  color: #ffffff;
   padding: 3rem;
   justify-content: space-evenly;
   display:block;
 }
+
+.col-text h1,
+.col-text h2, 
+.col-text h5{
+  color: #ffffff;
+}
+
 .row-text {
   padding: 3rem;
   justify-content: space-evenly;
@@ -203,6 +211,11 @@ background: #f3f3f3;
   
 }
 
+.img-banner
+{
+  margin-bottom: -48px;
+}
+
 .loginContainer .rightCol{
   background-image: url("./img/log_in.jpg");
  /* Full height */
@@ -233,4 +246,8 @@ background: #f3f3f3;
   margin: auto;
   width: auto;
   padding: 100px;
+}
+
+.tab-list {
+  margin-top: -40px;
 }

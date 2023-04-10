@@ -4,7 +4,7 @@ import EditItem from "./edit-item.component";
 import ViewItem from "./view-item.components";
 import listsService from "../../services/lists.service";
 import { Link } from 'react-router-dom';
-import { Card, Button, Nav, Modal, Row, Col, Form, Image, Container } from 'react-bootstrap';
+import { Card, Button, Nav, Modal, Row, Col, Form, Image, Container, Tab, Tabs } from 'react-bootstrap';
 import { format } from 'date-fns';
 
 export default class ItemListView extends Component {
@@ -159,14 +159,20 @@ export default class ItemListView extends Component {
                 <Row >
                    
                         <Col>
-                        <Nav variant="tabs" defaultActiveKey="#items">
-                            <Nav.Item>
-                                <Nav.Link href="#items">Items</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link href="#settings">Settings</Nav.Link>
-                            </Nav.Item>
-                        </Nav>
+                        <Tabs
+                            defaultActiveKey="items"
+                            id="uncontrolled-tab-example"
+                            className="mb-3 tab-list"
+                        >
+                            <Tab eventKey="items" title="Items">
+                              
+                            </Tab>
+                            <Tab eventKey="settings" title="Settings">
+                               
+                            </Tab>
+                        
+                        </Tabs>
+                     
                         </Col>
 
                     <Row>

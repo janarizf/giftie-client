@@ -52,7 +52,7 @@ const NavbarMain = () => {
                         <Link className="nav-link" to={'/help'}>
                             Help
                         </Link>
-                        {isLoggedin &&   <Link className="nav-link" to={'/list'}>
+                        {isLoggedin &&   <Link className="nav-link" to={'/account'}>
                             Account
                         </Link>}
 
