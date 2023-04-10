@@ -146,7 +146,7 @@ export default function GroupsEdit() {
                   </FacebookShareButton>
                   <FacebookMessengerShareButton
                     url={shareUrl}
-                    appId="1991129724610007"
+                    appId="1787998954935008"
                   >
                     <FacebookMessengerIcon size={32} round />
                   </FacebookMessengerShareButton>
