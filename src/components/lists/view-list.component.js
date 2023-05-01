@@ -47,7 +47,7 @@ export default function ListView() {
     function todoList() {
         return listData.todos.map(function (currentTodo, i) {
             return (
-                <div  className='p-1'>
+                <div className='p-1'>
                     <Card key={currentTodo._id} className='text-center' >
                         {/* <Card.Img src={currentTodo.image} /> */}
                         <Card.Body>
@@ -56,9 +56,13 @@ export default function ListView() {
                                 Event Date:<br />
                                 {currentTodo.set_date.substring(0, 10)}<br />
 
-                                <Button size="md" variant="custom" href={"/list/" + currentTodo._id}>View List</Button> <br />
-                                <Button size="md" variant="custom" onClick={deleteList} id={currentTodo._id}>Delete</Button>
-                               
+                                <div className="dropup">
+                                    <button className="dropbtn">...</button>
+                                    <div className="dropup-content">
+                                        <Button size="md" variant="custom" href={"/list/" + currentTodo._id}>View List</Button> <br />
+                                        <Button size="md" variant="custom" onClick={deleteList} id={currentTodo._id}>Delete</Button>
+                                    </div>
+                                </div>
                             </Card.Text>
                         </Card.Body>
 
@@ -81,11 +85,11 @@ export default function ListView() {
     }
 
     return (
-        <Container  className='p-3'>
+        <Container className='p-3'>
             <Col>
                 <h4>Your Lists</h4>
                 <Row xs={1} md={2} lg={3}>
-                    <div  className='p-1'>
+                    <div className='p-1'>
                         <Card className='text-center' style={{ height: '100%' }}>
                             <Card.Body>
                                 <Card.Text>

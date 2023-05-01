@@ -4,7 +4,7 @@ import EditItem from "./edit-item.component";
 import ViewItem from "./view-item.components";
 import listsService from "../../services/lists.service";
 import { Link } from 'react-router-dom';
-import { Card, Button, Nav, Modal, Row, Col, Form, Image, Container, Tab, Tabs, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Card, Button, Modal, Row, Col, Image, Tab, Tabs } from 'react-bootstrap';
 import { format } from 'date-fns';
 
 export default class ItemListView extends Component {

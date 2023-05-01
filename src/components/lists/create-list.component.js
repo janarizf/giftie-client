@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Button, Row, Col, Form, Container } from 'react-bootstrap';
 import listsService from "../../services/lists.service";
 import { format } from 'date-fns';
