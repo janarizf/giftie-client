@@ -26,7 +26,7 @@ const SignUp = () => {
                         if (existing) {
                             console.log(existing);
                             localStorage.setItem('user', JSON.stringify(existing.data));
-                            setUser(existing.data[0]);
+                            setUser(existing.data);
                             navigate('/list');
                         }
 

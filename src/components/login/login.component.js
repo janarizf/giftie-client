@@ -69,8 +69,8 @@ const Login = () => {
                 await usersService.findByEmail(userObj.email)
                     .then((existing) => {
                         if (existing.data.length > 0) {
-                            localStorage.setItem('user', JSON.stringify(existing.data[0]));
-                            setUser(existing.data[0]);
+                            localStorage.setItem('user', JSON.stringify(existing.data));
+                            setUser(existing.data);
                             navigate('/list');
                         }
                         else {
