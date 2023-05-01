@@ -20,7 +20,14 @@ h6,
 label,
 span,
 table {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito ExtraBold', sans-serif;
+  color: #044237;
+}
+
+p{
+font-family: 'Nunito Sans Regular', sans-serif;
+font-size: 16px;
+color: #044237;
 }
 
 body,
@@ -34,7 +41,6 @@ html,
 
 .navbar-light {
   background-color: #ffffff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   font-family: 'Nunito', sans-serif;
   font-weight: 400;
 }
@@ -73,15 +79,41 @@ html,
   width: auto;
   height: 150px;
 }
+
 .col-text {
-  padding: 80px;
+  color: #ffffff;
+  padding: 3rem;
   justify-content: space-evenly;
-  display: block;
+  display:block;
+}
+
+.col-text h1,
+.col-text h2, 
+.col-text h5{
+  color: #ffffff;
+}
+
+.row-text {
+  padding: 3rem;
+  justify-content: space-evenly;
+  display:block;
+}
+
+.container-main
+{
+background: #f3f3f3;
+}
+.container-green-bg
+{
+  color: #ffffff;
+  background-image: url("./img/giftie_green.jpg");
+  background-size: cover;
+  padding: 3rem;
 }
 
 .footer {
   background: #10c4a4;
-  padding: 30px;
+  padding: 20px;
   color: #ffffff;
 }
 
@@ -95,15 +127,14 @@ html,
 .jumbotron{
   background-color: #10c4a4;
   background-size: cover;
-  padding: 10px;
   color: #ffffff;
   text-align:left;
 }
 .jumbotron-profile{
+  color: #ffffff;
   background-image: url("./img/giftie_green.jpg");
   background-size: cover;
-  padding: 10px;
-  color: #ffffff;
+  padding: 3rem;
   text-align: center;
 }
 
@@ -144,12 +175,12 @@ html,
   margin-bottom: 5px;
   font-size: 15px;
   background-color: transparent;
-  color: 044237;
+  color: #044237;
   font-family: 'Nunito', sans-serif;
 }
 
 .formItem input::placeholder {
-  color:044237;
+  color: #044237;
 }
 
 .formItem select{
@@ -172,6 +203,18 @@ html,
   font-family: 'Nunito', sans-serif;
 }
 
+.img-box
+{
+  max-width: 100%; 
+  min-width: 100%;
+  height: auto;
+  
+}
+
+.img-banner
+{
+  margin-bottom: -48px;
+}
 
 .loginContainer .rightCol{
   background-image: url("./img/log_in.jpg");
@@ -203,4 +246,8 @@ html,
   margin: auto;
   width: auto;
   padding: 100px;
+}
+
+.tab-list {
+  margin-top: -40px;
 }

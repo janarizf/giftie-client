@@ -7,11 +7,10 @@ import Home from './pages/home'
 import Help from './pages/help'
 import About from './pages/about'
 import Blog from './pages/blog'
-import List from './pages/list';
+import Account from './pages/account';
 import Gift from './pages/giftideas';
+import GroupsEdit from "./components/groups/edit-group.component"
 import ListEdit from './pages/list-edit';
-import ListCreate from './pages/list-create';
-import Test from './pages/test'
 import Login from './components/login/login.component';
 import SignUp from './components/login/signup.component';
 import Footer from './components/footer';
@@ -26,16 +25,15 @@ class App extends Component {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/help" element={<Help />} />
             <Route path="/about" element={<About />} />
             <Route path="/gift" element={<Gift />} />
             <Route path="/blog" element={<Blog />} />
-            <Route path="/list" element={<List />} />
-            <Route path="/listcreate" element={<ListCreate />} />
+            <Route path="/help" element={<Help />} />
+            <Route path="/account" element={<Account />} />
             <Route path="/list/:id" element={<ListEdit />} />
+            <Route path="/groups/:id" element={<GroupsEdit />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/test" element={<Test />} />
           </Routes>
           <Footer/>
         </Container>

@@ -40,9 +40,6 @@ const NavbarMain = () => {
                         <Link className="nav-link" to={'/home'}>
                             Home
                         </Link>
-                        <Link className="nav-link" to={'/help'}>
-                            Help
-                        </Link>
                         <Link className="nav-link" to={'/gift'}>
                             Gift Ideas
                         </Link>
@@ -52,7 +49,10 @@ const NavbarMain = () => {
                         <Link className="nav-link" to={'/blog'}>
                             Blog
                         </Link>
-                        {isLoggedin &&   <Link className="nav-link" to={'/list'}>
+                        <Link className="nav-link" to={'/help'}>
+                            Help
+                        </Link>
+                        {isLoggedin &&   <Link className="nav-link" to={'/account'}>
                             Account
                         </Link>}
 

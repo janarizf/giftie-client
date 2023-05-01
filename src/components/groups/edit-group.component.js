@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import listsService from "../services/lists.service";
-import ItemListView from "../components/lists/view-item-list.component";
-import CreateList from "../components/lists/create-list.component"
-import { Container, Col, Row, Form, Button, Modal } from 'react-bootstrap';
+import { Container, Col, Row, Form, Button, Modal, Tab, Tabs, Card, ListGroup } from 'react-bootstrap';
+import groupsService from "../../services/groups.service";
+import listsService from "../../services/lists.service";
+import AddGroup from "../../components/groups/add-group.component"
 import Image from 'react-bootstrap/Image'
 import {
   EmailShareButton,
@@ -16,9 +16,14 @@ import {
   EmailIcon
 } from "react-share";
 
-export default function ListEdit() {
+
+export default function GroupsEdit() {
+  const [groupData, groupListData] = useState({
+    groupData: []
+  })
   const [listData, setListData] = useState({
-    listData: []
+    listId: "",
+    listName: ""
   })
   const [modal, setModal] = useState({
     modalShow: false
@@ -50,7 +55,7 @@ export default function ListEdit() {
 
       const id = params.id.toString();
 
-      const response = await listsService.get(params.id.toString())
+      const response = await groupsService.get(params.id.toString())
 
       if (!response) {
         const message = `An error has occured: ${response.statusText}`;
@@ -64,20 +69,54 @@ export default function ListEdit() {
         navigate("/");
         return;
       }
-      setUrl(window.location.href)
-      setListData(record)
-      getCategory(response.data.category_id)
+      setUrl(window.location.href);
+      console.log(record);
+      groupListData(record);
+
+      var listDT = [];
+      record.lists.forEach(id => {
+        listsService.get(id)
+          .then(list => {
+            listDT.push({
+              listId: list.data._id,
+              listName: list.data.name
+            });
+            setListData({ listDT });
+          })
+
+      });
+
     }
     async function getCategory(category) {
-      const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
-      const cat = categoryData.filter(a => a.id == category);
+      const statusData = [{ id: 1, value: "New" }, { id: 2, value: "Closed" }, { id: 3, value: "Ongoing" }];
+      const typeData = [{ id: 1, value: "Christmas" }, { id: 2, value: "Birthday" }, { id: 3, value: "Wedding" }, { id: 4, value: "Others" }];
+      const cat = statusData.filter(a => a.id == category);
       setCategory(cat[0].value);
     }
     fetchData();
 
 
     return;
-  }, [params.id, navigate]);
+  }, []);
+
+
+  function todoList() {
+    if (listData.length > 0) {
+      return listData.map(function (currentId, i) {
+
+        return (
+          <div className='p-1'>
+            <ListGroup>
+              <ListGroup.Item action href="#link1">
+                {currentId}
+              </ListGroup.Item>
+            </ListGroup>
+          </div>
+        )
+      }, listData)
+    }
+  }
+
   return (
 
     <Container>
@@ -85,15 +124,12 @@ export default function ListEdit() {
         <Form className="p-3" >
           <Row>
             <Col sm={4} className="text-center">
-              <Image fluid src={require('../img/giftie_question.png')} alt="..." />
+              <Image fluid src={require('../../img/giftie_question.png')} alt="..." />
             </Col>
             <Col sm={8}>
               <div className="my-5" >
-                <h3> List: {listData.name} </h3>
-                <h5>Set Date: {listData.set_date && listData.set_date.substring(0, 10)}</h5>
-                <h5> Location: {listData.location}</h5>
-                <h5>Introduction: {listData.introduction}</h5>
-                <h5> Category: {category}</h5>
+                <h3> Group: {groupData.groupname} </h3>
+
                 <Button size="md" variant="custom" onClick={openModal}>Edit</Button>
                 <div>
                   <EmailShareButton
@@ -127,13 +163,37 @@ export default function ListEdit() {
         </Form>
 
       </Row>
-      <ItemListView listId={params.id} listData={listData} />
+      <Container>
+        <Row >
 
+          <Col>
+            <Tabs
+              defaultActiveKey="lists"
+              id="uncontrolled-tab-example"
+              className="mb-3 tab-list"
+            >
+              <Tab eventKey="lists" title="Lists">
+               
+              </Tab>
+              <Tab eventKey="members" title="Members">
+
+              </Tab>
+              <Tab eventKey="settings" title="Settings">
+
+              </Tab>
+
+            </Tabs>
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+
+      </Container>
       <Modal show={modal.modalShow} onHide={closeModal}>
         <Modal.Header closeButton>
           <Modal.Title>Edit list</Modal.Title>
         </Modal.Header>
-        <Modal.Body><CreateList listData={listData} /></Modal.Body>
+        <Modal.Body><AddGroup groupData={groupData} /></Modal.Body>
       </Modal>
     </Container>
   );

@@ -1,19 +1,29 @@
 import React, { Component } from "react";
-import { Container, Card,CardGroup } from 'react-bootstrap';
+import { Container, Card, CardGroup, Row, Col, Form, Button } from 'react-bootstrap';
 
 export default class Gift extends Component {
-  render() {
-    return (
-      <Container>
-
-        <Card>
-          <Card.Header> <h4>Gift Ideas</h4></Card.Header>
-          <Card.Body>
-            <h5>Want some inspiration? Browse through our Gift Ideas and instantly add to your list using our Add to List button</h5>
-
-          </Card.Body>
-        </Card>
-        <CardGroup>
+    render() {
+        return (
+            <Container className="container-main">
+                <Row className="row-text text-center">
+                    <h2>Gift Ideas</h2>
+                    <p>
+                        Want some inspiration? Browse through<br />
+                        our Gift Ideas and instantly add to your<br />
+                        list using our Add to List button
+                    </p>
+                </Row>
+                <Form >
+                    <Row className="row-text text-center">
+                        <Col>
+                            <Form.Control placeholder="Find the great gift" />
+                        </Col>
+                        <Col>
+                            <Button variant="custom">Search</Button>
+                        </Col>
+                    </Row>
+                </Form>
+                <CardGroup>
                     <Card>
                         <Card.Img variant="top" src="https://picsum.photos/200/200" />
                         <Card.Body>
@@ -55,7 +65,7 @@ export default class Gift extends Component {
                         </Card.Footer>
                     </Card>
                 </CardGroup>
-      </Container>
-    );
-  }
+            </Container>
+        );
+    }
 }

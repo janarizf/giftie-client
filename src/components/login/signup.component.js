@@ -53,7 +53,7 @@ const SignUp = () => {
                             console.log(existing);
                             localStorage.setItem('user', JSON.stringify(existing.data));
                             setUser(existing.data[0]);
-                            navigate('/list');
+                            navigate('/account');
                         }
 
                     })
@@ -92,7 +92,7 @@ const SignUp = () => {
                         width="300px"
                     />
                     <FacebookLogin
-                        appId="1991129724610007"
+                        appId="1787998954935008"
                         style={{
                             backgroundColor: '#4267b2',
                             color: '#fff',
