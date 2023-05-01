@@ -4,7 +4,7 @@ import EditItem from "./edit-item.component";
 import ViewItem from "./view-item.components";
 import listsService from "../../services/lists.service";
 import { Link } from 'react-router-dom';
-import { Card, Button, Nav, Modal, Row, Col, Form, Image, Container, Tab, Tabs } from 'react-bootstrap';
+import { Card, Button, Nav, Modal, Row, Col, Form, Image, Container, Tab, Tabs, DropdownButton, Dropdown } from 'react-bootstrap';
 import { format } from 'date-fns';
 
 export default class ItemListView extends Component {
@@ -123,9 +123,9 @@ export default class ItemListView extends Component {
                 this.state.category = response.data.category;
                 this.state.introduction = response.data.introduction;
                 this.state.location = response.data.location;
-                this.state.set_date = format(response.data.set_date, 'yyyy-MM-dd');
+                this.state.set_date = response.data.set_date.substring(0, 10)//format(response.data.set_date, 'yyyy-MM-dd');
                 console.log(response.data.items)
-                alert("test")
+
             }
 
             )
@@ -134,17 +134,19 @@ export default class ItemListView extends Component {
             })
     }
     deleteItem(e, a) {
+        e.preventDefault();
         console.log(e.target.id);
         console.log(a.state.list)
-        var filtered = a.state.list.items.filter((a) => a._id !== e.target.id);
+        var filtered = a.state.list.items.filter((item) => item._id != e.target.id);
         a.state.list.items = filtered;
-        this.setState({
-            list: a.state.list
-        })
+
         listsService.update(this.state.list._id, this.state.list)
-            .then(
+            .then((respond) => {
+                this.setState({
+                    list: respond.data
+                })
                 window.location.reload(true)
-            )
+            })
             .catch(error => { console.log(error) })
 
     }
@@ -155,74 +157,81 @@ export default class ItemListView extends Component {
     render() {
         const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
         return (
-            <Container className="container-main">
-                <Row >
-                   
-                        <Col>
-                        <Tabs
-                            defaultActiveKey="items"
-                            id="uncontrolled-tab-example"
-                            className="mb-3 tab-list"
-                        >
-                            <Tab eventKey="items" title="Items">
-                              
-                            </Tab>
-                            <Tab eventKey="settings" title="Settings">
-                               
-                            </Tab>
-                        
-                        </Tabs>
-                     
-                        </Col>
+            <Row className="container-main">
 
-                    <Row>
-                        <Col>
-                            <h4>Your Items</h4>
-                            <Row xs={1} md={2} lg={3}>
-                                <div className='p-1'>
-                                    <Card className='text-center' key={"optionID"} style={{ height: '100%' }}>
-                                        <Card.Body>
-                                            <Card.Text className='my-5'>
-                                                <Link onClick={this.openAddItem}>
-                                                    <br />
-                                                    <Image src={require('../../img/plus_sign.png')} roundedCircle />
-                                                    <br />
-                                                </Link>
-                                                <br />
-                                                <span>Add Item</span>
-                                            </Card.Text>
-                                        </Card.Body>
-
-                                    </Card>
-                                </div>
-                                {this.state.items.map(function (d, index) {
-                                    return (
+                <Col>
+                    <Tabs
+                        defaultActiveKey="items"
+                        id="uncontrolled-tab-example"
+                        className="mb-3 tab-list"
+                    >
+                        <Tab eventKey="items" title="Items">
+                            <Row className='p-3'>
+                                <Col>
+                                    <h4>Your Items</h4>
+                                    <Row xs={1} md={2} lg={3}>
                                         <div className='p-1'>
-                                            <Card key={index} className='text-center'>
+                                            <Card className='text-center' key={"optionID"} style={{ height: '100%' }}>
                                                 <Card.Body>
-                                                    <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
-                                                    <Card.Title>{d.name}</Card.Title>
-                                                    <Card.Text>
-                                                        Note: {d.note}<br />
-                                                        Category: {d.category_id}<br />
-                                                        Quantity: {d.quantity}<br />
-                                                        <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button><br />
-                                                        <Button size="sm" variant="custom" onClick={this.openEditItem} id={d._id}>Edit</Button>
-                                                        <Button size="sm" variant="custom" onClick={event => this.deleteItem(event, this)} id={d._id}>Delete</Button>
+                                                    <Card.Text className='my-5'>
+                                                        <Link onClick={this.openAddItem}>
+                                                            <br />
+                                                            <Image src={require('../../img/plus_sign.png')} roundedCircle />
+                                                            <br />
+                                                        </Link>
+                                                        <br />
+                                                        <span>Add Item</span>
                                                     </Card.Text>
                                                 </Card.Body>
 
-
-
                                             </Card>
                                         </div>
-                                    )
+                                        {this.state.items.map(function (d, index) {
+                                            return (
+                                                <div className='p-1'>
+                                                    <Card key={index} className='text-center card-item'>
+                                                        <Card.Body>
+                                                            <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
+                                                            <Card.Title>{d.name}</Card.Title>
+                                                            <Card.Text>
+                                                                Note: {d.note}<br />
+                                                                Category: {d.category_id}<br />
+                                                                Quantity: {d.quantity}<br />
 
-                                }, this)}
-                            </ Row>
-                        </Col>
-                    </Row>
-                </Row>
+                                                                <div className="dropup">
+                                                                    <button className="dropbtn">...</button>
+                                                                    <div className="dropup-content">
+                                                                        <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button>
+                                                                        <Button size="sm" variant="custom" onClick={event => this.deleteItem(event, this)} id={d._id}>Delete</Button>
+                                                                        <Button size="sm" variant="custom" id={d._id}>Share</Button>
+
+                                                                    </div>
+                                                                </div>
+                                                            </Card.Text>
+
+                                                        </Card.Body>
+
+
+
+                                                    </Card>
+                                                </div>
+                                            )
+
+                                        }, this)}
+                                    </ Row>
+                                </Col>
+                            </Row>
+                        </Tab>
+                        <Tab eventKey="settings" title="Settings">
+
+                        </Tab>
+
+                    </Tabs>
+
+                </Col>
+
+
+
                 <Modal show={this.state.addItemShow} onHide={this.closeAddItem} >
                     <Modal.Header closeButton>
                         <Modal.Title>Add an item to your list</Modal.Title>
@@ -248,8 +257,8 @@ export default class ItemListView extends Component {
 
                     </Modal.Body>
                 </Modal>
-
-            </Container>
+                
+            </Row>
         );
     }
 }

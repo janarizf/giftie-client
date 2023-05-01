@@ -138,11 +138,12 @@ export default class AddItem extends Component {
         listsService.update(this.state.list_data._id, this.state.list_data)
           .then((response) => {
             this.setState({
-              //  list_id: response.data._id,
-              //list_data: response.data,
+              list_id: response.data._id,
+              list_data: response.data,
               hasImage: false
             });
-            return;
+            console.log(response.data._id);
+            alert("Added item " + data.name)
           });
       }
       else {
@@ -165,6 +166,9 @@ export default class AddItem extends Component {
                 list_data: response.data,
                 hasImage: false
               });
+
+              console.log(response.data._id);
+              alert("Added item " + data.name)
             })
         }.bind(this));
       }
@@ -176,7 +180,7 @@ export default class AddItem extends Component {
 
   }
   render() {
-    const itemCategoryData = [{ id: 1, value: "Clothes" }, { id: 2, value: "Gadgets" }, { id: 3, value: "Food" }, { id: 4, value: "Appliances" }, { id: 5, value: "Others" }]; 
+    const itemCategoryData = [{ id: 1, value: "Clothes" }, { id: 2, value: "Gadgets" }, { id: 3, value: "Food" }, { id: 4, value: "Appliances" }, { id: 5, value: "Others" }];
     return (
       <Form onSubmit={this.saveItems} encType="multipart/form-data">
         <Form.Group>
@@ -187,9 +191,9 @@ export default class AddItem extends Component {
           <Form.Label>Website item link (optional)</Form.Label>
           <Form.Control placeholder="https://" name="website" value={this.state.website} disabled={false} onChange={this.onChangeWebsite} />
           {this.state.link_img &&
-                <div>
-                  <img src={this.state.link_img} alt="" width="100" height="auto" />
-                </div>  
+            <div>
+              <img src={this.state.link_img} alt="" width="100" height="auto" />
+            </div>
           }
           <Form.Label>Item Category</Form.Label>
           <Form.Select value={this.state.category} onChange={this.onChangeCategory} disabled={false} required >
@@ -202,7 +206,7 @@ export default class AddItem extends Component {
 
           </Form.Select>
           <Form.Label>Images (optional)</Form.Label>
-          <Form.Control type="file" accept=".png, .jpg, .jpeg" disabled={false}  name="image" id="input-file" onChange={this.onChangeImage} />
+          <Form.Control type="file" accept=".png, .jpg, .jpeg" disabled={false} name="image" id="input-file" onChange={this.onChangeImage} />
 
           {this.state.hasImage &&
             this.state.imageSrc.map((item, index) => {
@@ -220,7 +224,7 @@ export default class AddItem extends Component {
           <Form.Label>Note (optional)</Form.Label>
           <Form.Control placeholder="explain what do you prefer for that item" name="note" disabled={false} value={this.state.note} onChange={this.onChangeNote} />
           <Form.Label>Max Pricing (optional)</Form.Label>
-          <Form.Control type="number" name="price" value={this.state.price}  disabled={false} onChange={this.onChangePrice} />
+          <Form.Control type="number" name="price" value={this.state.price} disabled={false} onChange={this.onChangePrice} />
           <Form.Label>Quantity</Form.Label>
           <Form.Control type="number" name="quantity" placeholder="0" disabled={false} value={this.state.quantity} onChange={this.onChangeQuantity} />
           <Form.Check type='checkbox' label="Unlimited Item" name="unlimited" disabled={false} value={this.state.unlimited} onChange={this.onChangeUnlimited} />

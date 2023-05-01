@@ -87,6 +87,7 @@ export default class ListCreate extends Component {
   onSubmit(e) {
     try {
 
+      e.preventDefault();
       var data = {
         name: this.state.name,
         user_id: this.state.user,
@@ -114,14 +115,14 @@ export default class ListCreate extends Component {
               set_date: respond.data.set_date,
               status_id: respond.data.status_id,
               _id: respond.data._id,
-              redirect: true
+              redirect: false
             })
             console.log(respond.data._id);
             alert("Updated wishlist " + respond.data.name)
+            window.location.reload(true)
           })
       }
       else {
-        e.preventDefault();
         listsService.create(data)
           .then((respond) => {
             this.setState({
