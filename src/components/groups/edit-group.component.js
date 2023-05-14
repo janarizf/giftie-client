@@ -3,7 +3,9 @@ import { useParams, useNavigate } from "react-router";
 import { Container, Col, Row, Form, Button, Modal, Tab, Tabs, Card, ListGroup } from 'react-bootstrap';
 import groupsService from "../../services/groups.service";
 import listsService from "../../services/lists.service";
-import AddGroup from "../../components/groups/add-group.component"
+import AddGroup from "./add-group.component"
+import ListView from "../../components/lists/view-list.component";
+import GroupMembersView from "./group-members.component"
 import Image from 'react-bootstrap/Image'
 import {
   EmailShareButton,
@@ -173,10 +175,10 @@ export default function GroupsEdit() {
               className="mb-3 tab-list"
             >
               <Tab eventKey="lists" title="Lists">
-               
+                <ListView />
               </Tab>
               <Tab eventKey="members" title="Members">
-
+                <GroupMembersView />
               </Tab>
               <Tab eventKey="settings" title="Settings">
 

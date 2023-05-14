@@ -74,6 +74,7 @@ const Login = () => {
                             navigate('/account');
                         }
                         else {
+                            alert("User does not exist.");
                             navigate('/signup');
                         }
                     })

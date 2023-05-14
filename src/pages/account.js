@@ -39,10 +39,10 @@ export default class Account extends Component {
                             id="uncontrolled-tab-example"
                             className="mb-3 tab-list"
                         >
-                            <Tab eventKey="profile" title="Profile">
+                            <Tab  eventKey="profile" title="Profile">
                                 <ProfileMainView />
                             </Tab>
-                            <Tab eventKey="lists" title="Lists">
+                            <Tab  eventKey="lists" title="Lists">
                                 <ListView />
                             </Tab>
                             <Tab eventKey="groups" title="Groups">

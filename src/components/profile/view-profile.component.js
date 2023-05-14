@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import { Container, Form, Button, Col, Row } from 'react-bootstrap';
 import usersService from "../../services/users.service";
 export default class ProfileView extends Component {
@@ -12,7 +13,8 @@ export default class ProfileView extends Component {
       email: "",
       photo: "",
       isView: true,
-      isEdit: false
+      isEdit: false,
+      isGuest: false
     };
     this.loadUser = this.loadUser.bind(this);
     this.onChangeFirstName = this.onChangeFirstName.bind(this);
@@ -64,16 +66,26 @@ export default class ProfileView extends Component {
     if (localStorage.getItem('user') !== 'undefined') {
       var us = (JSON.parse(localStorage.getItem('user')));
       console.log(us);
-      this.setState({
-        _id: us._id,
-        firstname: us.firstname,
-        lastname: us.lastname,
-        username: us.username,
-        email: us.email,
-        photo: us.photo
-      }, () => {
-        console.log(this.state);
-      });
+      if (us.firstname === "Guest") {
+        this.setState({
+          firstname: us.firstname,
+          isGuest: true
+        }, () => {
+          console.log(this.state);
+        });
+      }
+      else {
+        this.setState({
+          _id: us._id,
+          firstname: us.firstname,
+          lastname: us.lastname,
+          username: us.username,
+          email: us.email,
+          photo: us.photo
+        }, () => {
+          console.log(this.state);
+        });
+      }
     }
   }
   componentDidMount() {
@@ -84,8 +96,8 @@ export default class ProfileView extends Component {
   render() {
     return (
       <Container>
-<h4> Account Info</h4>
-        <Form >
+        <h4> Account Info</h4>
+        <Form>
           <Row className="m-3">
             <Col sm={2}>
               <Form.Label>Email</Form.Label>
@@ -135,7 +147,9 @@ export default class ProfileView extends Component {
           }
 
         </Form>
-
+        {this.state.isGuest && <h5> Dont have an account?  <Link to={'/signup'}>
+          Create one now.
+        </Link></h5>}
       </Container>
     )
   };

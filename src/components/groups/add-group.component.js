@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Select from 'react-select'
 import { Navigate, Link } from 'react-router-dom';
 import { Button, Container, Form } from 'react-bootstrap';
 import groupsService from "../../services/groups.service";
@@ -70,8 +71,8 @@ export default class AddGroup extends Component {
         });
     }
     onChangeList(e) {
-        const options = [...e.target.selectedOptions];
-        const values = options.map(option => option.value);
+       // const options = [...e.target.selectedOptions];
+        const values = e.map(option => option.value);
         this.setState({
             lists: values
         });
@@ -91,15 +92,21 @@ export default class AddGroup extends Component {
     async loadList(user) {
         listsService.getByUser(user._id)
             .then(response => {
+                const newArray = response.data.map(el => {
+                    return {
+                        value: el._id,
+                        label: el.name
+                    }
+                })
                 this.setState({
-                    listsData: response.data
+                    listsData: newArray
                 });
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
-    
+
     async saveGroup(e) {
         e.preventDefault();
         var data = {
@@ -197,14 +204,16 @@ export default class AddGroup extends Component {
 
                         </Form.Select>
                         <Form.Label>List</Form.Label>
-                        <Form.Select name="selectList" value={this.state.lists} onChange={this.onChangeList} disabled={false} multiple>
-                            {
-                                this.state.listsData.map(function (status, index) {
-                                    return <option key={index} value={status._id} >{status.name}</option>
-                                })
-                            }
+                        <Select
 
-                        </Form.Select>
+                            isMulti={true}
+                            name="colors"
+                            options={this.state.listsData}
+                            onChange={this.onChangeList}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+
+                        />
                         <Form.Check
                             type="switch"
                             id="custom-switch"

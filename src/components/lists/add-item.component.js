@@ -131,7 +131,9 @@ export default class AddItem extends Component {
         quantity: this.state.quantity,
         unlimited: this.state.unlimited,
         addedon: new Date(),
-        taken: false
+        taken: false,
+        reservedby : "",
+        reserved : false
       };
       if (!this.state.hasImage) {
         this.state.list_data.items.push(data)
@@ -143,7 +145,8 @@ export default class AddItem extends Component {
               hasImage: false
             });
             console.log(response.data._id);
-            alert("Added item " + data.name)
+            alert("Added item " + data.name);
+            window.location.reload(true);
           });
       }
       else {
@@ -168,7 +171,8 @@ export default class AddItem extends Component {
               });
 
               console.log(response.data._id);
-              alert("Added item " + data.name)
+              alert("Added item " + data.name);
+              window.location.reload(true);
             })
         }.bind(this));
       }

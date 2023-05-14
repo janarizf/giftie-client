@@ -24,10 +24,10 @@ const SignUp = () => {
                 await usersService.signUp(userObj)
                     .then((existing) => {
                         if (existing) {
-                            console.log(existing);
+                            console.log("existing");
                             localStorage.setItem('user', JSON.stringify(existing.data));
                             setUser(existing.data);
-                            navigate('/list');
+                            navigate('/account');
                         }
 
                     })
@@ -47,19 +47,36 @@ const SignUp = () => {
         console.log(userObj);
         try {
             if (userObj) {
-                await usersService.signUp(userObj)
+                await usersService.findByEmail(userObj.email)
                     .then((existing) => {
-                        if (existing) {
-                            console.log(existing);
-                            localStorage.setItem('user', JSON.stringify(existing.data));
+                        if (existing.data.length > 0) {
+                            console.log("existing");
+                            localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
+                            alert("User Existing. Logging In");
                             navigate('/account');
                         }
+                        else {
+                            usersService.signUp(userObj)
+                                .then((user) => {
+                                    if (user.data) {
+                                        console.log(user.data);
+                                        localStorage.setItem('user', JSON.stringify(user.data));
+                                        setUser(user.data);
+                                        navigate('/account');
+                                    }
 
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                })
+                        }
                     })
                     .catch(function (error) {
                         console.log(error);
                     })
+
+
 
             }
 

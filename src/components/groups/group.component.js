@@ -2,26 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import groupsService from "../../services/groups.service";
 import { Link } from 'react-router-dom';
-import GroupsView from "./edit-group.component"
 import AddGroup from "./add-group.component"
 import { Container, Card, Row, Modal, Button, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 
 export default function GroupMainView() {
-    const [listData, setListData] = useState({
-        todos: []
+    const [groupData, setgroupData] = useState({
+        groups: []
     })
+
+    const [deleteData, setdeleteData] = useState({
+        data: []
+    })
+
     const [modal, setModal] = useState({
         modalShow: false
     })
     const params = useParams();
-    const navigate = useNavigate();
     useEffect(() => {
         async function fetchData() {
             var user = (JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : "Guest");
             groupsService.getByUser(user._id)
                 .then(response => {
-                    setListData({ todos: response.data });
+                    setgroupData({ groups: response.data });
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -29,7 +32,7 @@ export default function GroupMainView() {
         }
         fetchData();
         return;
-    }, [params.id]);
+    }, [params.id, deleteData]);
 
     function openModal() {
         setModal({
@@ -42,8 +45,8 @@ export default function GroupMainView() {
         });
     };
 
-    function todoList() {
-        return listData.todos.map(function (currentTodo, i) {
+    function groupList() {
+        return groupData.groups.map(function (currentTodo, i) {
             return (
                 <div className='p-1'>
                     <Card key={currentTodo._id} className='text-center' >
@@ -66,7 +69,8 @@ export default function GroupMainView() {
         var deleted = await groupsService.delete(e.target.id)
         try {
             console.log(deleted);
-            window.location.reload(true)
+            setdeleteData({ data: deleted.data });
+            // window.location.reload(true)
         }
         catch (error) {
             console.log(error);
@@ -94,7 +98,7 @@ export default function GroupMainView() {
                             </Card.Body>
                         </Card>
                     </div>
-                    {todoList()}
+                    {groupList()}
                 </Row>
                 <Modal show={modal.modalShow} onHide={closeModal}>
                     <Modal.Header closeButton>
