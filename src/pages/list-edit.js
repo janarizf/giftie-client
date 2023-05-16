@@ -85,7 +85,8 @@ export default function ListEdit() {
         <Form className="p-3" >
           <Row>
             <Col sm={4} className="text-center">
-              <Image fluid src={require('../img/giftie_question.png')} alt="..." />
+              <Image fluid src={require('../img/giftie_question.png')} alt="..." /><br />
+              <Button size="sm" variant="custom"  onClick={openModal}>Upload Image</Button>
             </Col>
             <Col sm={8}>
               <div className="my-5" >

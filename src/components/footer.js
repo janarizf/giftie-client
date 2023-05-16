@@ -26,17 +26,19 @@ function Footer() {
                     <Row>
                         <span>Subscribe for more updates</span>
                     </Row>
-                    <Form >
-                        <Row>
-                            <Col>
-                                <Form.Control placeholder="Enter email" />
-                            </Col><Col>
-                                <Button variant="custom">Subscribe</Button>
-                            </Col>
-                        </Row>
+                    <Form className="custom-search">
+
+                        <Form.Control
+                            className="custom-search-input"
+                            type="search"
+                            placeholder="Enter email"
+                            aria-label="Search"
+                        />
+                        <Button className="custom-search-botton">Subscribe</Button>
+
                     </Form>
                     <Row>
-                    <span>Giftie | 2022 | Terms & Conditions | Privacy Policy</span>
+                        <span>Giftie | 2022 | Terms & Conditions | Privacy Policy</span>
                     </Row>
                 </Col>
 

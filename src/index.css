@@ -135,8 +135,14 @@ html,
   color: #ffffff;
 }
 
+.row-headings {
+  justify-content:space-evenly;
+  display:block;
+  padding: 1rem;
+}
+
 .row-text {
-  padding: 3rem;
+  padding: 2rem;
   justify-content: space-evenly;
   display:block;
 }

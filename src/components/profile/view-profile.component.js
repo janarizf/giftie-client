@@ -98,7 +98,9 @@ export default class ProfileView extends Component {
       <Container>
         <h4> Account Info</h4>
         <Form>
+        <Button size="sm" variant="custom">Upload Image</Button>
           <Row className="m-3">
+       
             <Col sm={2}>
               <Form.Label>Email</Form.Label>
             </Col>

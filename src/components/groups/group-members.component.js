@@ -1,19 +1,57 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
-import { Container, Col, Row, Form, Button, Modal, Tab, Tabs, Card, ListGroup } from 'react-bootstrap';
+import React, { Component } from "react";
+import { Container, ListGroup, Button, Image } from 'react-bootstrap';
 import groupsService from "../../services/groups.service";
-import listsService from "../../services/lists.service";
-import AddGroup from "./add-group.component"
-import ListView from "../../components/lists/view-list.component";
-import Image from 'react-bootstrap/Image'
+import { Link } from 'react-router-dom';
+
+export default class GroupMembersView extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            groupId: props.groupid,
+            group: [],
+            members: []
+        }
+    }
+    loadGroup() {
+        groupsService.get(this.state.groupId)
+            .then(response => {
+                this.setState({
+                    group: response.data,
+                    members: response.data.members
+                })
+                console.log(response.data.members)
+            }
+            )
+            .catch(function (error) {
+                console.log(error);
+            })
+
+    }
+    componentDidMount() {
+        this.loadGroup();
+    }
+    render() {
+        return (
+            <Container>
+
+                <h4> Members: <Link onClick={(() => alert("add"))}>
+                    <Image src={require('../../img/plus_sign.png')} roundedCircle width={'25px'}/>
+                </Link></h4>
+
+                <h6>Group Owner: {this.state.group.createdby}</h6>
+                <ListGroup>
+                    {this.state.members.map(function (member, index) {
+                        return (
+                            <ListGroup.Item key={index} action onClick={() => alert('haha')} as="li">
+                                {member.name}
+                            </ListGroup.Item>
+                        )
+                    })}
 
 
 
-export default function GroupMembersView() {
-
-    return (
-        <Container>
-
-        </Container>
-    )
+                </ListGroup>
+            </Container>
+        )
+    }
 }

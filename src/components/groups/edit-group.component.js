@@ -101,24 +101,6 @@ export default function GroupsEdit() {
     return;
   }, []);
 
-
-  function todoList() {
-    if (listData.length > 0) {
-      return listData.map(function (currentId, i) {
-
-        return (
-          <div className='p-1'>
-            <ListGroup>
-              <ListGroup.Item action href="#link1">
-                {currentId}
-              </ListGroup.Item>
-            </ListGroup>
-          </div>
-        )
-      }, listData)
-    }
-  }
-
   return (
 
     <Container>
@@ -178,7 +160,7 @@ export default function GroupsEdit() {
                 <ListView />
               </Tab>
               <Tab eventKey="members" title="Members">
-                <GroupMembersView />
+                <GroupMembersView groupid={params.id} />
               </Tab>
               <Tab eventKey="settings" title="Settings">
 
