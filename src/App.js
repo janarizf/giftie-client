@@ -15,6 +15,7 @@ import Login from './components/login/login.component';
 import SignUp from './components/login/signup.component';
 import Footer from './components/footer';
 import NavbarMain from './components/navbar/navbar';
+
 class App extends Component {
  
   render() {

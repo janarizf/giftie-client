@@ -41,7 +41,8 @@ export default class ItemListView extends Component {
     }
     imgSrc(d) {
         if (d.length > 0) {
-            return "http://localhost:9000/lists/getImage/" + d[0].filename;
+            const apiurl = process.env.REACT_APP_APIURL;
+            return apiurl + "lists/getImage/" + d[0].filename;
         } else {
             return require('../../img/giftie_question.png')
         }
@@ -146,8 +147,9 @@ export default class ItemListView extends Component {
                                             return (
                                                 <div className='p-1'>
                                                     <Card key={index} className='text-center card-item'>
+                                                        <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
                                                         <Card.Body>
-                                                            <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
+
                                                             <Card.Title>{d.name}</Card.Title>
                                                             <Card.Text>
                                                                 Note: {d.note}<br />
@@ -260,6 +262,7 @@ export default class ItemListView extends Component {
 
                     </Modal.Body>
                 </Modal>
+                
 
             </Row>
         );

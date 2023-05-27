@@ -34,7 +34,7 @@ export default class GroupMembersView extends Component {
         return (
             <Container>
 
-                <h4> Members: <Link onClick={(() => alert("add"))}>
+                <h4> Members: <Link onClick={(() => alert("Send Email/Link"))}>
                     <Image src={require('../../img/plus_sign.png')} roundedCircle width={'25px'}/>
                 </Link></h4>
 

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Container, Card, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Card, Row, Col, Form, Button, Modal } from 'react-bootstrap';
 import listsService from "../services/lists.service";
+
+
 
 export default class Gift extends Component {
     constructor(props) {
@@ -11,6 +13,9 @@ export default class Gift extends Component {
         }
 
     }
+    openAddItem = () => this.setState({ addItemShow: true });
+    closeAddItem = () => this.setState({ addItemShow: false });
+
     componentDidMount() {
         this.getItems();
     }
@@ -25,7 +30,8 @@ export default class Gift extends Component {
     }
     imgSrc(d) {
         if (d.length > 0) {
-            return "http://localhost:9000/lists/getImage/" + d[0].filename;
+            const apiurl = process.env.REACT_APP_APIURL;
+            return apiurl + "lists/getImage/" + d[0].filename;
         } else {
             return require('../img/giftie_question.png')
         }
@@ -34,7 +40,6 @@ export default class Gift extends Component {
     render() {
         return (
             <Container className="container-main p-5">
-
                 <Col>
                     <Row className="row-text text-center">
                         <h2>Gift Ideas</h2>
@@ -53,7 +58,7 @@ export default class Gift extends Component {
                                 placeholder="Find the great gift"
                                 aria-label="Search"
                             />
-                            <Button className="custom-search-botton">Search</Button>
+                            <Button className="custom-search-botton" >Search</Button>
 
                         </Form>
                     </Row>
@@ -63,23 +68,53 @@ export default class Gift extends Component {
                             return (
                                 <div className='p-4'>
                                     <Card key={index} className='text-center card-item'>
+                                        <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
                                         <Card.Body>
-                                            <Card.Img variant="top" src={require('../img/giftie_question.png')} className="card-img" />
+
                                             <Card.Title>{d.name}</Card.Title>
 
                                             <Card.Text>
 
                                                 {d.category_id}<br />
-                                                <Button size="sm" variant="custom">Add to List</Button>
+                                                <Button size="sm" variant="custom" onClick={this.openAddItem}>Add to List</Button>
                                             </Card.Text>
                                         </Card.Body>
 
                                     </Card>
                                 </div>
                             )
-                        })}
+                        }, this)}
                     </Row>
                 </Col>
+                <Modal show={this.state.addItemShow} onHide={this.closeAddItem} >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add item to your list</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Check
+                                type={'radio'}
+                                id={`default-radio`}
+                                label={`New`}
+                                name="list"
+                            />
+                            <Form.Check
+                                type={'radio'}
+                                id={`default-radio`}
+                                label={`Existing`}
+                                name="list"
+                            />
+                            <Form.Select aria-label="Default select example">
+                                <option>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </Form.Select>
+                        </Form>
+
+
+                    </Modal.Body>
+                </Modal >
             </Container>
         );
     }

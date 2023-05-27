@@ -157,7 +157,7 @@ export default function GroupsEdit() {
               className="mb-3 tab-list"
             >
               <Tab eventKey="lists" title="Lists">
-                <ListView />
+                <ListView listData={listData}/>
               </Tab>
               <Tab eventKey="members" title="Members">
                 <GroupMembersView groupid={params.id} />

@@ -1,0 +1,28 @@
+ {"data":[
+  {
+    "itemCategoryData" :[
+      { "id": 1, "value": "Clothes" }, 
+      { "id": 2, "value": "Gadgets" }, 
+      { "id": 3, "value": "Food" }, 
+      { "id": 4, "value": "Appliances" }, 
+      { "id": 5, "value": "Others" }
+    ]
+  },
+{  
+  "categoryData" : [
+      {"id": 1, "value": "Birthday" },
+      { "id": 2, "value": "Wedding" }, 
+      { "id": 3, "value": "Christmas" }, 
+      { "id": 4, "value": "Baby Shower" }, 
+      { "id": 5, "value": "Housewarming" }, 
+      { "id": 6, "value": "Others" }
+    ]
+  },
+ { 
+  "statusData" : [
+      { "id": 1, "value": "New" }, 
+      { "id": 2, "value": "Closed" }, 
+      { "id": 3, "value": "Ongoing" }
+    ]
+  }
+ ]}

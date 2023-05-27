@@ -212,7 +212,7 @@ export default class AddGroup extends Component {
                             onChange={this.onChangeList}
                             className="basic-multi-select"
                             classNamePrefix="select"
-
+                            defaultValue={this.state.listsData}
                         />
                         <Form.Check
                             type="switch"
