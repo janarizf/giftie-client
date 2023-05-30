@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-import { Container, Form, Button, Col, Row } from 'react-bootstrap';
+import { Container, Form, Button, Col, Row, Image } from 'react-bootstrap';
 import usersService from "../../services/users.service";
+import listsService from "../../services/lists.service";
 export default class ProfileView extends Component {
   constructor(props) {
     super(props);
@@ -11,17 +12,51 @@ export default class ProfileView extends Component {
       lastname: "",
       username: "",
       email: "",
-      photo: "",
+      photo: [],
       isView: true,
       isEdit: false,
-      isGuest: false
+      isGuest: false,
+      hasImage: false,
+      imageSrc: [],
+      imageUpload: []
     };
     this.loadUser = this.loadUser.bind(this);
+    this.onChangeImage = this.onChangeImage.bind(this);
     this.onChangeFirstName = this.onChangeFirstName.bind(this);
     this.onChangeLastName = this.onChangeLastName.bind(this);
     this.onChangeUserName = this.onChangeUserName.bind(this);
     this.saveUser = this.saveUser.bind(this);
     this.updateUser = this.updateUser.bind(this);
+    this.imageUpload = this.imageUpload.bind(this);
+  }
+  onChangeImage(e) {
+    let ImagesArray = Object.entries(e.target.files).map((e) => {
+      if (e[1].type !== "image/png" && e[1].type !== "image/jpeg") {
+        window.alert("File is not supported. You must use .png or .jpg ");
+        return false;
+      }
+      if (e[1].size > 10e6) {
+        window.alert("Please upload a file smaller than 10 MB");
+        return false;
+      }
+      return URL.createObjectURL(e[1]);
+    });
+
+    console.log(e.target.files);
+    console.log(ImagesArray);
+    this.setState({
+      hasImage: true,
+      imageSrc: ImagesArray,
+      imageUpload: e.target.files
+    });
+  }
+  async imageUpload() {
+    const selectedFile = document.getElementById("input-file").files[0];
+    return listsService.fileupload(selectedFile)
+      .then((res) => {
+        return res
+      });
+
   }
   onChangeFirstName(e) {
     this.setState({
@@ -39,10 +74,7 @@ export default class ProfileView extends Component {
     });
   }
   async saveUser(e) {
-    this.setState({
-      isView: true,
-      isEdit: false
-    });
+
     var userData = await usersService.get(this.state._id);
     console.log("user data");
     console.log(userData);
@@ -51,8 +83,52 @@ export default class ProfileView extends Component {
     userData.data.username = this.state.username;
     userData.data.updatedby = this.state.firstname + " " + this.state.lastname;
     userData.data.updateddate = new Date();
-    var updatedUser = await usersService.update(this.state._id, userData.data)
-    localStorage.setItem('user', JSON.stringify(updatedUser.data));
+
+    if (this.state.hasImage) {
+      var imgUploaded = this.imageUpload();
+      imgUploaded.then(function (uploaded) {
+        const apiurl = process.env.REACT_APP_APIURL;
+        const imgSrc = apiurl + "lists/getImage/" + uploaded.data[0].filename;
+        console.log(userData.data.photo)
+        console.log(imgSrc);
+        userData.data.photo = imgSrc;
+        usersService.update(this.state._id, userData.data)
+          .then((updatedUser) => {
+            localStorage.setItem('user', JSON.stringify(updatedUser.data));
+            this.setState({
+              isView: true,
+              isEdit: false,
+              hasImage: false,
+              firstname: updatedUser.data.firstname,
+              lastname: updatedUser.data.lastname,
+              username: updatedUser.data.username,
+              email: updatedUser.data.email,
+              photo: updatedUser.data.photo
+            });
+          })
+
+      }.bind(this));
+    }
+    else {
+      usersService.update(this.state._id, userData.data)
+        .then((updatedUser) => {
+          localStorage.setItem('user', JSON.stringify(updatedUser.data));
+          this.setState({
+            isView: true,
+            isEdit: false,
+            hasImage: false,
+            firstname: updatedUser.data.firstname,
+            lastname: updatedUser.data.lastname,
+            username: updatedUser.data.username,
+            email: updatedUser.data.email,
+            photo: updatedUser.data.photo
+          });
+        })
+
+
+    }
+
+
   }
 
   updateUser(e) {
@@ -98,9 +174,29 @@ export default class ProfileView extends Component {
       <Container>
         <h4> Account Info</h4>
         <Form>
-        <Button size="sm" variant="custom">Upload Image</Button>
+
           <Row className="m-3">
-       
+            <Col sm={2}>
+              <Form.Label>Photo</Form.Label>
+            </Col>
+            <Col sm={10}>
+              <Form.Control type="file" accept=".png, .jpg, .jpeg" disabled={this.state.isView} name="photo" id="input-file" onChange={this.onChangeImage} />
+              {this.state.hasImage &&
+                this.state.imageSrc.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <Image src={item} fluid />
+                      {/*  <button type="button" onClick={() => this.deleteImage(index)}>
+                    delete
+                  </button> */}
+                    </div>
+                  );
+                })
+              }
+            </Col>
+
+          </Row>
+          <Row className="m-3">
             <Col sm={2}>
               <Form.Label>Email</Form.Label>
             </Col>

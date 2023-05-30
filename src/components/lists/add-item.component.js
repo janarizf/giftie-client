@@ -66,7 +66,7 @@ export default class AddItem extends Component {
   async onChangeImage(e) {
     let ImagesArray = Object.entries(e.target.files).map((e) => {
       if (e[1].type !== "image/png" && e[1].type !== "image/jpeg") {
-        window.alert("File does not support. You must use .png or .jpg ");
+        window.alert("File is not supported. You must use .png or .jpg ");
         return false;
       }
       if (e[1].size > 10e6) {
