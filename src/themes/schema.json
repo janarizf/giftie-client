@@ -1,0 +1,48 @@
+[{
+    "data" : {
+      "default" : {
+        "id": "T_007",
+        "name": "Default",
+        "colors": {
+          "body": "#10c4a4",
+          "text": "#ffffff"
+        },
+        "background": "http://localhost:3000/giftie_green.jpg"
+      },
+      "baby_shower" : {
+        "id": "T_007",
+        "name": "Baby Shower",
+        "colors": {
+          "body": "#ffcfe8",
+          "text": "#ffffff"
+        }
+      },
+      "wedding" : {
+        "id": "T_007",
+        "name": "Wedding",
+        "colors": {
+          "body": "#598850",
+          "text": "#ffffff"
+        }
+      },
+      "birthday" : {
+        "id": "T_007",
+        "name": "birthday",
+        "colors": {
+          "body": "#10c4a4",
+          "text": "#ffffff"
+        },
+      "background": "http://localhost:3000/giftie_blue.jpg"
+      },
+      "christmas" : {
+        "id": "T_007",
+        "name": "christmas",
+        "colors": {
+          "body": "#9d1f3f",
+          "text": "#ffffff"
+        }
+      }
+    }
+  
+}]
+  

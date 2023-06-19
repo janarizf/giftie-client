@@ -10,11 +10,30 @@ export default class Gift extends Component {
         console.log()
         this.state = {
             items: [],
+            filteredItems:[],
+            searchQuery: ""
         }
-
+        this.onChangeFilter = this.onChangeFilter.bind(this);
+        this.searchFilter = this.searchFilter.bind(this);
     }
     openAddItem = () => this.setState({ addItemShow: true });
     closeAddItem = () => this.setState({ addItemShow: false });
+
+    onChangeFilter(e) {
+        this.setState({
+            searchQuery: e.target.value
+        });
+    }
+
+    searchFilter() {
+        const filteredItems = this.state.items.filter((item) =>
+            item.name.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+        );
+
+        this.setState({
+            filteredItems: filteredItems
+        })
+    }
 
     componentDidMount() {
         this.getItems();
@@ -25,7 +44,7 @@ export default class Gift extends Component {
         for (const list of lists.data) {
             allItems.push(...list.items);
         }
-        this.setState({ items: allItems });
+        this.setState({ items: allItems, filteredItems: allItems });
         console.log(allItems);
     }
     imgSrc(d) {
@@ -57,14 +76,15 @@ export default class Gift extends Component {
                                 type="search"
                                 placeholder="Find the great gift"
                                 aria-label="Search"
+                                onChange={this.onChangeFilter}
                             />
-                            <Button className="custom-search-botton" >Search</Button>
+                            <Button className="custom-search-botton" onClick={this.searchFilter}>Search</Button>
 
                         </Form>
                     </Row>
                     <Row xs={1} md={3} lg={4}>
 
-                        {this.state.items.map(function (d, index) {
+                        {this.state.filteredItems.map(function (d, index) {
                             return (
                                 <div className='p-4'>
                                     <Card key={index} className='text-center card-item'>

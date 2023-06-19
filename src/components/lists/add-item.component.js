@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form,Figure } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 import listsService from "../../services/lists.service";
 export default class AddItem extends Component {
@@ -216,7 +216,9 @@ export default class AddItem extends Component {
             this.state.imageSrc.map((item, index) => {
               return (
                 <div key={index}>
-                  <img src={item} alt="" width="100" height="auto" />
+                   <Figure>
+                            <Figure.Image src={item} width={150} height={150} />
+                          </Figure>
                   {/*  <button type="button" onClick={() => this.deleteImage(index)}>
                     delete
                   </button> */}

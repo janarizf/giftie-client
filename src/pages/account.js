@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { Card, Button, Nav, Container, Modal, Row, Col, Tab, Tabs } from 'react-bootstrap';
+import { Card, Button, Nav, Container, Modal, Row, Col, Tab, Tabs, Figure } from 'react-bootstrap';
 import AddItem from "../components/lists/add-item.component";
 import ListView from "../components/lists/view-list.component";
 import ProfileMainView from "../components/profile/profile.component"
 import GroupMainView from "../components/groups/group.component";
 import Image from 'react-bootstrap/Image'
+import GetCurrentUser from '../helper'
+
+
 
 export default class Account extends Component {
     constructor(props) {
@@ -16,24 +19,35 @@ export default class Account extends Component {
 
     }
     componentWillMount = () => {
+        var user = GetCurrentUser();
+
         this.setState({
             user: JSON.parse(localStorage.getItem('user'))
         })
         console.log(this.state.user);
         console.log(this.state.user.photo);
-    }
 
+
+    }
     render() {
         return (
             <Container>
-                {this.state.user && <Row className="jumbotron-profile">
-                    <Row sm={6} className="justify-content-md-center">
-                        <Image src={this.state.user.photo} roundedCircle />
+                <Row className="jumbotron-profile">
+                    <Row sm={3} className="justify-content-md-center">
+                        {this.state.user && <Figure >
+                            <Figure.Image
+                                fluid
+                                width={'auto'}
+                                height={100}
+                                alt={this.state.user.firstname}
+                                src={this.state.user.photo}
+                            />
+                        </Figure>}
                     </Row>
                     <Row sm={6} className="justify-content-md-center">
-                        <h4> {this.state.user.firstname}  {this.state.user.lastname}</h4>
+                        {this.state.user && <h4> {this.state.user.firstname}  {this.state.user.lastname}</h4>}
                     </Row>
-                </Row>}
+                </Row>
 
                 <Row className="container-main">
                     <Col>
@@ -63,4 +77,5 @@ export default class Account extends Component {
             </Container>
         );
     }
+
 }

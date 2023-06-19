@@ -56,7 +56,6 @@ class ListsDataService {
       .then((res) => 
       { 
         console.log(res);
-        alert(res);
         return res;
       });
      return response;

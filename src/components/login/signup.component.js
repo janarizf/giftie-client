@@ -54,7 +54,7 @@ const SignUp = () => {
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
                             alert("User Existing. Logging In");
-                            navigate('/account');
+                            navigate('/account');;
                         }
                         else {
                             usersService.signUp(userObj)
@@ -80,13 +80,6 @@ const SignUp = () => {
 
             }
 
-            //findByEmail
-            // dispatch({ type: "AUTH", data: { result, token } });
-            //check if existing user
-            // if not insert new user
-            //else user is already exisitng, sign in
-            //get user ID
-
         } catch (error) {
             console.log(error);
         }
@@ -109,7 +102,7 @@ const SignUp = () => {
                         width="300px"
                     />
                     <FacebookLogin
-                        appId="1787998954935008"
+                        appId="918913549214786"
                         style={{
                             backgroundColor: '#4267b2',
                             color: '#fff',

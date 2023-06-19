@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
 import listsService from "../../services/lists.service";
 import CreateList from "./create-list.component"
-import { Container, Card, Row, Modal, Button, Col } from 'react-bootstrap';
+import { Container, Card, Row, Modal, Button, Col, Form } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 
 export default function ListView() {
@@ -13,8 +13,13 @@ export default function ListView() {
     const [modal, setModal] = useState({
         modalShow: false
     })
+    const [sortField, setSortField] = useState({
+        sortField: "name"
+    })
+    const [sortOrder, setSortOrder] = useState({
+        sortOrder: true
+    })
     const params = useParams();
-    const navigate = useNavigate();
     useEffect(() => {
         async function fetchData() {
             var user = (JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : "Guest");
@@ -43,7 +48,24 @@ export default function ListView() {
             modalShow: false
         });
     };
-
+    const sortItemsByField = () => {
+        const sortedItems =  listData.todos.sort((a, b) => {
+          // Access the field value within each object
+          const fieldValueA = a[sortField.sortField].toLowerCase();
+          const fieldValueB = b[sortField.sortField].toLowerCase();
+    
+          // Customize the comparison logic based on your sorting requirements
+          if (fieldValueA < fieldValueB) {
+            return sortOrder.sortOrder ? -1 : 1;
+          }
+          if (fieldValueA > fieldValueB) {
+            return sortOrder.sortOrder ? 1 : -1
+          }
+          return 0; // fieldValueA and fieldValueB are considered equal
+        });
+    
+        return sortedItems;
+      };
     function todoList() {
         return listData.todos.map(function (currentTodo, i) {
             return (
@@ -83,11 +105,19 @@ export default function ListView() {
             console.log(error);
         }
     }
-
+    async function sortList(field) {
+        sortField.sortField = field;
+        sortOrder.sortOrder = !sortOrder.sortOrder;
+        const sortedItems = sortItemsByField();
+        setListData({ todos: sortedItems });
+    }
     return (
         <Container className='p-3'>
             <Col>
                 <h4>Your Lists</h4>
+                <Form>
+                 Sort By:   <Button variant="custom" onClick={(() => sortList("name"))}>List</Button> <Button  variant="custom" onClick={(() => sortList("category_id"))}>Category</Button> <Button variant="custom" onClick={(() => sortList("set_date"))}>Event Date</Button>
+                </Form>
                 <Row xs={1} md={2} lg={3}>
                     <div className='p-1'>
                         <Card className='text-center' style={{ height: '100%' }}>

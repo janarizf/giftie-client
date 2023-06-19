@@ -24,6 +24,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-bootstrap-icons": "^1.9.1",
+    "react-bootstrap-table-next": "^4.0.3",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-redux": "^8.0.5",
@@ -33,6 +34,7 @@
     "react-share": "^4.4.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.2",
+    "styled-components": "^6.0.0-rc.3",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },
@@ -64,5 +66,8 @@
   "main": "index.js",
   "author": "",
   "license": "ISC",
-  "homepage": "."
+  "homepage": ".",
+  "devDependencies": {
+    "json-loader": "^0.5.7"
+  }
 }

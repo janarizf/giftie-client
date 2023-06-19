@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Navigate } from 'react-router-dom';
-import { Button, Row, Col, Form, Container } from 'react-bootstrap';
+import { Button, Row, Col, Form, Container, Image } from 'react-bootstrap';
 import listsService from "../../services/lists.service";
+import { ImgUpload, CheckImgFile } from "../../helper"
 import { format } from 'date-fns';
 export default class ListCreate extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class ListCreate extends Component {
     this.onChangeIntroduction = this.onChangeIntroduction.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeImage = this.onChangeImage.bind(this);
 
     this.state = {
       user: this.getUser(),
@@ -23,8 +25,13 @@ export default class ListCreate extends Component {
       introduction: "",
       location: "",
       set_date: format(new Date(), 'yyyy-MM-dd'),
+      image: "",
       redirect: false,
-      _id: ""
+      _id: "",
+      hasImage: false,
+      imageSrc: [],
+      imageUpload: [],
+      themes: "default"
     }
 
     if (props.listData) {
@@ -83,7 +90,17 @@ export default class ListCreate extends Component {
       set_date: e.target.value
     });
   }
-
+  onChangeImage(e) {
+    CheckImgFile(e, function (ImagesArray) {
+      console.log(e.target.files);
+      console.log(ImagesArray);
+      this.setState({
+        hasImage: true,
+        imageSrc: ImagesArray,
+        imageUpload: e.target.files
+      });
+    }.bind(this))
+  }
   onSubmit(e) {
     try {
 
@@ -100,12 +117,17 @@ export default class ListCreate extends Component {
         createdby: this.state.user,
         createddate: new Date(),
         updatedby: this.state.user,
-        updateddate: new Date()
+        updateddate: new Date(),
+        themes: this.state.themes
       };
+
+
       if (this.state._id) {
+
         listsService.update(this.state._id, data)
           .then((respond) => {
             this.setState({
+              image: "",
               name: respond.data.name,
               user_id: respond.data.user,
               status: respond.data.status,
@@ -123,9 +145,12 @@ export default class ListCreate extends Component {
           })
       }
       else {
+
         listsService.create(data)
           .then((respond) => {
+
             this.setState({
+              image: respond.data.image,
               name: respond.data.name,
               user_id: respond.data.user,
               status: respond.data.status,
@@ -140,6 +165,8 @@ export default class ListCreate extends Component {
             console.log(respond);
             alert("Created new wishlist " + respond.data.name)
           })
+
+
       }
 
     }

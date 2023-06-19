@@ -21,11 +21,11 @@ const NavbarMain = () => {
     }
 
     useEffect(() => {
-     if (localStorage.getItem('user') != 'undefined') {
-        setUser(JSON.parse(localStorage.getItem('user')));
-        isLoggedin = JSON.parse(localStorage.getItem('user'));
-     }
-      
+        if (localStorage.getItem('user') != 'undefined') {
+            setUser(JSON.parse(localStorage.getItem('user')));
+            isLoggedin = JSON.parse(localStorage.getItem('user'));
+        }
+
     }, [location]);
     var isLoggedin = user;
     return (
@@ -52,9 +52,9 @@ const NavbarMain = () => {
                         <Link className="nav-link" to={'/help'}>
                             Help
                         </Link>
-                        {isLoggedin &&   <Link className="nav-link" to={'/account'}>
+                        <Link className="nav-link" to={'/account'}>
                             Account
-                        </Link>}
+                        </Link>
 
                     </Nav>
                 </Col>
@@ -64,11 +64,11 @@ const NavbarMain = () => {
                         {isLoggedin == null && <Link className="nav-link" to={'/login'}>
                             Login
                         </Link>}
-
-                        {isLoggedin && 
+                        {isLoggedin && isLoggedin.name == "Guest" && <Link className="nav-link" to={'/signup'}>Signup</Link>}
+                        {isLoggedin && isLoggedin.name != "Guest" &&
                             <Button className="nav-link" variant="link" onClick={logout} > Sign Out</Button>}
                         {isLoggedin &&
-                            <Image src={user.photo} roundedCircle width="50px"height="50px" />}
+                            <Image src={user.photo} roundedCircle width="50px" height="50px" />}
                     </Nav>
                 </Col>
             </Navbar.Collapse>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AddItem from "./add-item.component";
 import EditItem from "./edit-item.component";
 import ViewItem from "./view-item.components";
+import ListSetting from "./settings.component";
 import listsService from "../../services/lists.service";
 import { Link } from 'react-router-dom';
 import { Card, Button, Modal, Row, Col, Image, Tab, Tabs } from 'react-bootstrap';
@@ -228,7 +229,7 @@ export default class ItemListView extends Component {
                             </Row>
                         </Tab>
                         <Tab eventKey="settings" title="Settings">
-
+                            <ListSetting listId={this.state.listId}/>
                         </Tab>
 
                     </Tabs>
@@ -262,7 +263,7 @@ export default class ItemListView extends Component {
 
                     </Modal.Body>
                 </Modal>
-                
+
 
             </Row>
         );
