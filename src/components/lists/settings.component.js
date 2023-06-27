@@ -253,7 +253,7 @@ export default class ListSetting extends Component {
                 </Col>
                 <Col sm={10}>
                   <Form.Control type="file" accept=".png, .jpg, .jpeg" name="photo" id="input-file" onChange={this.onChangeImage} />
-                  {this.state.image}
+                  {this.state.image && this.state.imageSrc}
                   {this.state.hasImage &&
                     this.state.imageSrc.map((item, index) => {
                       return (

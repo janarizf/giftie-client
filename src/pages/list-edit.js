@@ -141,7 +141,7 @@ export default function ListEdit() {
                     </FacebookShareButton>
                     <FacebookMessengerShareButton
                       url={shareUrl}
-                      appId="1787998954935008"
+                      appId="1020487169127522"
                     >
                       <FacebookMessengerIcon size={32} round />
                     </FacebookMessengerShareButton>

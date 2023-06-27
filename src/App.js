@@ -31,8 +31,10 @@ class App extends Component {
             <Route path="/blog" element={<Blog />} />
             <Route path="/help" element={<Help />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/list/:id/item/:id" element={<ListEdit />} />
             <Route path="/list/:id" element={<ListEdit />} />
             <Route path="/groups/:id" element={<GroupsEdit />} />
+            <Route path="/groups/:id/invite" element={<GroupsEdit />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>

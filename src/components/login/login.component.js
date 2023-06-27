@@ -118,7 +118,7 @@ const Login = () => {
                         width="300px"
                     />
                     <FacebookLogin
-                        appId="918913549214786"
+                        appId="1020487169127522"
                         style={{
                             backgroundColor: '#4267b2',
                             color: '#fff',
