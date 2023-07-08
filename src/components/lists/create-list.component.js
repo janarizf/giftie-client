@@ -31,7 +31,8 @@ export default class ListCreate extends Component {
       hasImage: false,
       imageSrc: [],
       imageUpload: [],
-      themes: "default"
+      themes: "default",
+      private: true
     }
 
     if (props.listData) {
@@ -85,6 +86,12 @@ export default class ListCreate extends Component {
     });
   }
 
+  onChangePrivate(e) {
+    this.setState({
+      private: e.target.value
+    });
+  }
+
   onChangeSetDate(e) {
     this.setState({
       set_date: e.target.value
@@ -118,7 +125,8 @@ export default class ListCreate extends Component {
         createddate: new Date(),
         updatedby: this.state.user,
         updateddate: new Date(),
-        themes: this.state.themes
+        themes: this.state.themes,
+        private: this.state.private
       };
 
 
@@ -199,7 +207,8 @@ export default class ListCreate extends Component {
                   })
                 }
               </Form.Select>
-
+              <Form.Check type='switch' label="Private" name="private" value={this.state.private} onChange={this.onChangePrivate} />
+  
               <Button variant="custom" type="submit">
                 Save
               </Button>

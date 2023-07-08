@@ -34,7 +34,7 @@ export default class ItemListView extends Component {
 
 
     getSelectedItem(itemId) {
-        return this.state.items.filter((a) => a._id === itemId)
+        return this.state.items.filter((a) => a._id == itemId)
     }
     getUser() {
         var userObj = JSON.parse(localStorage.getItem('user'));

@@ -19,6 +19,8 @@ export default class ListSetting extends Component {
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeImage = this.onChangeImage.bind(this);
+    this.onChangePrivate = this.onChangePrivate.bind(this);
+    this.onChangethemes = this.onChangethemes.bind(this);
 
     this.state = {
       _id: props.listId,
@@ -35,7 +37,8 @@ export default class ListSetting extends Component {
       imageSrc: [],
       imageUpload: [],
       themes: "",
-      radioValue: ""
+      private: true
+
     }
 
     if (props.listData) {
@@ -93,6 +96,16 @@ export default class ListSetting extends Component {
       set_date: e.target.value
     });
   }
+  onChangethemes(e) {
+    this.setState({
+      themes: e.target.value
+    });
+  }
+  onChangePrivate(e) {
+    this.setState({
+      private: e.target.value
+    });
+  }
   onChangeImage(e) {
     CheckImgFile(e, function (ImagesArray) {
       console.log(e.target.files);
@@ -119,9 +132,10 @@ export default class ListSetting extends Component {
           category: response.data.category_id,
           introduction: response.data.introduction,
           location: response.data.location,
-          themes: response.data.themes
+          themes: response.data.themes,
+          private: response.data.private
         })
-        if (response.data.image) {
+        if (response.data.image.length > 0) {
           this.setState({
             hasImage: true,
             imageSrc: [response.data.image],
@@ -147,40 +161,67 @@ export default class ListSetting extends Component {
         location: this.state.location,
         set_date: this.state.set_date,
         themes: this.state.themes,
+        private: this.state.private,
         status_id: 1,
-
         updatedby: this.state.user,
         updateddate: new Date(),
-        themes: this.state.themes
       };
 
 
       if (this.state._id) {
-        ImgUpload(this.state.imageUpload[0], function (uploaded) {
-          const apiurl = process.env.REACT_APP_APIURL;
-          data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
-        })
-
-        listsService.update(this.state._id, data)
-          .then((respond) => {
-            this.setState({
-              image: respond.data.image,
-              name: respond.data.name,
-              user_id: respond.data.user,
-              status: respond.data.status,
-              category_id: respond.data.category_id,
-              introduction: respond.data.introduction,
-              location: respond.data.location,
-              set_date: respond.data.set_date,
-              status_id: respond.data.status_id,
-              themes: respond.data.themes,
-              _id: respond.data._id
+        if (this.state.hasImage) {
+          ImgUpload(this.state.imageUpload[0], function (uploaded) {
+            const apiurl = process.env.REACT_APP_APIURL;
+            data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
+            listsService.update(this.state._id, data)
+              .then((respond) => {
+                this.setState({
+                  image: respond.data.image,
+                  name: respond.data.name,
+                  user_id: respond.data.user,
+                  status: respond.data.status,
+                  category_id: respond.data.category_id,
+                  introduction: respond.data.introduction,
+                  location: respond.data.location,
+                  set_date: respond.data.set_date,
+                  status_id: respond.data.status_id,
+                  themes: respond.data.themes,
+                  private: respond.data.private,
+                  _id: respond.data._id
+                })
+                console.log(respond.data._id);
+                alert("Updated wishlist " + respond.data.name)
+                this.loadList();
+                window.location.reload();
+              })
+          }.bind(this))
+        }
+        else {
+          listsService.update(this.state._id, data)
+            .then((respond) => {
+              this.setState({
+                image: respond.data.image,
+                name: respond.data.name,
+                user_id: respond.data.user,
+                status: respond.data.status,
+                category_id: respond.data.category_id,
+                introduction: respond.data.introduction,
+                location: respond.data.location,
+                set_date: respond.data.set_date,
+                status_id: respond.data.status_id,
+                themes: respond.data.themes,
+                private: respond.data.private,
+                _id: respond.data._id
+              })
+              console.log(respond.data._id);
+              alert("Updated wishlist " + respond.data.name)
+              this.loadList();
+              window.location.reload();
             })
-            console.log(respond.data._id);
-            alert("Updated wishlist " + respond.data.name)
-            this.loadList();
-            window.location.reload();
-          })
+        }
+
+
+
       }
 
     }
@@ -220,7 +261,7 @@ export default class ListSetting extends Component {
                         name={radio.name}
                         value={radio.value}
                         checked={this.state.themes === radio.value}
-                        onChange={(e) => this.setState({ themes: e.currentTarget.value })}>
+                        onChange={this.onChangethemes}>
                         {radio.name}
                       </ToggleButton>
                     ))}
@@ -311,7 +352,14 @@ export default class ListSetting extends Component {
                   </Form.Select>
                 </Col>
               </Row>
-
+              <Row className="m-3">
+                <Col sm={2}>
+                  <Form.Label>  Private:</Form.Label>
+                </Col>
+                <Col sm={10}>
+                  <Form.Check type='switch' id="privateBool" name="private" checked={this.state.private} onChange={this.onChangePrivate} />
+                </Col>
+              </Row>
 
               <Button variant="custom" type="submit">
                 Save

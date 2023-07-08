@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Form,Figure } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 import listsService from "../../services/lists.service";
+import { ImgUpload, CheckImgFile } from "../../helper"
 export default class AddItem extends Component {
   constructor(props) {
     super(props);
@@ -150,9 +151,11 @@ export default class AddItem extends Component {
           });
       }
       else {
-        var imgUploaded = this.imageUpload();
-        imgUploaded.then(function (uploaded) {
 
+        ImgUpload(this.state.imageUpload[0], function (uploaded) {
+          //const apiurl = process.env.REACT_APP_APIURL;
+        //  data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
+          
           data.image = [{
             id: uploaded.data[0].id,
             filename: uploaded.data[0].filename
@@ -179,8 +182,6 @@ export default class AddItem extends Component {
     } catch (error) {
       console.log(error);
     }
-    ///await not working for images
-
 
   }
   render() {

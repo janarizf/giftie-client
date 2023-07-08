@@ -72,7 +72,7 @@ export default function ListEdit() {
         return;
       }
       setUrl(window.location.href)
-      if (record.image.length === 0) {
+      if (record.image.length == 0) {
         record.image = require('../img/giftie_question.png');
       }
       if (record.themes) {
@@ -97,7 +97,7 @@ export default function ListEdit() {
     }
     async function getCategory(category) {
       const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
-      const cat = categoryData.filter(a => a.id === category);
+      const cat = categoryData.filter(a => a.id == category);
       setCategory(cat[0].value);
     }
     fetchData();
