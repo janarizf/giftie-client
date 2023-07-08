@@ -15,6 +15,8 @@ export default class ListCreate extends Component {
     this.onChangeIntroduction = this.onChangeIntroduction.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    
+    this.onChangePrivate = this.onChangePrivate.bind(this);
     this.onChangeImage = this.onChangeImage.bind(this);
 
     this.state = {
@@ -88,7 +90,7 @@ export default class ListCreate extends Component {
 
   onChangePrivate(e) {
     this.setState({
-      private: e.target.value
+      private: e.target.checked
     });
   }
 
@@ -207,7 +209,7 @@ export default class ListCreate extends Component {
                   })
                 }
               </Form.Select>
-              <Form.Check type='switch' label="Private" name="private" value={this.state.private} onChange={this.onChangePrivate} />
+              <Form.Check type='switch' id="privateBool" name="private" checked={this.state.private} onChange={this.onChangePrivate} />
   
               <Button variant="custom" type="submit">
                 Save

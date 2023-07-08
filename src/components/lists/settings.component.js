@@ -103,7 +103,7 @@ export default class ListSetting extends Component {
   }
   onChangePrivate(e) {
     this.setState({
-      private: e.target.value
+      private: e.target.checked
     });
   }
   onChangeImage(e) {
