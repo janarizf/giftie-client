@@ -90,12 +90,8 @@ export default class Gift extends Component {
                                     <Card key={index} className='text-center card-item'>
                                         <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
                                         <Card.Body>
-
                                             <Card.Title>{d.name}</Card.Title>
-
                                             <Card.Text>
-
-                                                {d.category_id}<br />
                                                 <Button size="sm" variant="custom" onClick={this.openAddItem}>Add to List</Button>
                                             </Card.Text>
                                         </Card.Body>

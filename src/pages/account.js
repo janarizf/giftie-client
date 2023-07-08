@@ -34,18 +34,17 @@ export default class Account extends Component {
             <Container>
                 <Row className="jumbotron-profile">
                     <Row sm={3} className="justify-content-md-center">
-                        {this.state.user && <Figure >
+                        {this.state.user && <Figure>
                             <Figure.Image
-                                fluid
-                                width={'auto'}
-                                height={100}
+                                  width={150}
+                                  height={'auto'}
                                 alt={this.state.user.firstname}
                                 src={this.state.user.photo}
                             />
                         </Figure>}
                     </Row>
                     <Row sm={6} className="justify-content-md-center">
-                        {this.state.user && <h4> {this.state.user.firstname}  {this.state.user.lastname}</h4>}
+                        {this.state.user && <h4> {this.state.user.firstname} {this.state.user.lastname}</h4>}
                     </Row>
                 </Row>
 

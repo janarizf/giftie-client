@@ -146,6 +146,7 @@ export default class ListSetting extends Component {
         introduction: this.state.introduction,
         location: this.state.location,
         set_date: this.state.set_date,
+        themes: this.state.themes,
         status_id: 1,
 
         updatedby: this.state.user,
@@ -172,6 +173,7 @@ export default class ListSetting extends Component {
               location: respond.data.location,
               set_date: respond.data.set_date,
               status_id: respond.data.status_id,
+              themes: respond.data.themes,
               _id: respond.data._id
             })
             console.log(respond.data._id);
