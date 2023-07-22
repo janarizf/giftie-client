@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { Button, Form,Figure } from 'react-bootstrap';
+import { Button, Form, Figure, Spinner } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 import listsService from "../../services/lists.service";
 import { ImgUpload, CheckImgFile } from "../../helper"
+
+
 export default class AddItem extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +19,7 @@ export default class AddItem extends Component {
     this.onChangeUnlimited = this.onChangeUnlimited.bind(this);
     this.saveItems = this.saveItems.bind(this);
     this.imageUpload = this.imageUpload.bind(this);
+    this.scrapeImg = this.scrapeImg.bind(this);
     this.state = {
       list_id: props.listData._id,
       list_data: props.listData,
@@ -33,7 +36,8 @@ export default class AddItem extends Component {
       imageUpload: [],
       base64Image: "",
       isEdit: false,
-      link_img: ""
+      link_img: "",
+      loading: false
     }
   }
 
@@ -43,12 +47,31 @@ export default class AddItem extends Component {
     });
   }
 
-  onChangeWebsite(e) {
+  async onChangeWebsite(e) {
     this.setState({
-      website: e.target.value,
-      link_img: e.target.value
+      website: e.target.value
     });
   }
+
+  async scrapeImg() {
+    if (this.state.website !== "") {
+      this.setState({
+        loading: true
+      });
+      await listsService.getImg(encodeURIComponent(this.state.website))
+        .then((response) => {
+          this.setState({
+            link_img: response.data,
+            loading: false
+          });
+
+          this.handleUpload(response.data);
+
+          console.log(response.data);
+        });
+    }
+  }
+
 
   onChangeCategory(e) {
     this.setState({
@@ -59,7 +82,7 @@ export default class AddItem extends Component {
   deleteImage(e) {
     const ImagesArray = this.state.imageSrc.filter((item, index) => index !== e);
     this.setState({
-      hasImage: true,
+      hasImage: false,
       imageSrc: ImagesArray
     });
   }
@@ -117,7 +140,28 @@ export default class AddItem extends Component {
       });
 
   }
+  async handleUpload(imageUrl) {
+    try {
+      // Fetch the image data from the provided URL
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
 
+      // Create a File object from the Blob with a predefined filename
+      const filename = imageUrl.split('/').pop(); // Extract filename from URL
+      const uploadedFile = new File([blob], filename, { type: blob.type });
+
+      var files = [];
+      files.push(uploadedFile);
+      // Now you can use the 'uploadedFile' to upload to the server or perform further actions
+      this.setState({
+        hasImage: true,
+        imageUpload: files
+      });
+
+    } catch (error) {
+      console.error('Error fetching or uploading the image:', error);
+    }
+  };
   saveItems(e) {
     try {
       e.preventDefault();
@@ -133,8 +177,8 @@ export default class AddItem extends Component {
         unlimited: this.state.unlimited,
         addedon: new Date(),
         taken: false,
-        reservedby : "",
-        reserved : false
+        reservedby: "",
+        reserved: false
       };
       if (!this.state.hasImage) {
         this.state.list_data.items.push(data)
@@ -154,8 +198,8 @@ export default class AddItem extends Component {
 
         ImgUpload(this.state.imageUpload[0], function (uploaded) {
           //const apiurl = process.env.REACT_APP_APIURL;
-        //  data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
-          
+          //  data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
+
           data.image = [{
             id: uploaded.data[0].id,
             filename: uploaded.data[0].filename
@@ -195,11 +239,18 @@ export default class AddItem extends Component {
           <Form.Control placeholder="e.g. toys, chocolates, essentials etc.." disabled={this.state.isEdit} name="name" required value={this.state.name} onChange={this.onChangeName} />
           <Form.Label>Website item link (optional)</Form.Label>
           <Form.Control placeholder="https://" name="website" value={this.state.website} disabled={false} onChange={this.onChangeWebsite} />
-          {this.state.link_img &&
-            <div>
-              <img src={this.state.link_img} alt="" width="100" height="auto" />
-            </div>
-          }
+          <Button size="sm" variant="custom" onClick={() => this.scrapeImg()} disabled={this.state.loading}>
+            Get Image
+            {this.state.loading && <Spinner
+              as="span"
+              animation="border"
+              role="status"
+              aria-hidden="true"
+            />}
+          </Button>
+
+          <br />
+
           <Form.Label>Item Category</Form.Label>
           <Form.Select value={this.state.category} onChange={this.onChangeCategory} disabled={false} required >
             <option key="0" value="">Category</option>
@@ -212,14 +263,18 @@ export default class AddItem extends Component {
           </Form.Select>
           <Form.Label>Images (optional)</Form.Label>
           <Form.Control type="file" accept=".png, .jpg, .jpeg" disabled={false} name="image" id="input-file" onChange={this.onChangeImage} />
-
+          {this.state.link_img &&
+            <div>
+              <img src={this.state.link_img} alt="" width="100" height="auto" />
+            </div>
+          }
           {this.state.hasImage &&
             this.state.imageSrc.map((item, index) => {
               return (
                 <div key={index}>
-                   <Figure>
-                            <Figure.Image src={item} width={150} height={150} />
-                          </Figure>
+                  <Figure>
+                    <Figure.Image src={item} width={150} height={150} />
+                  </Figure>
                   {/*  <button type="button" onClick={() => this.deleteImage(index)}>
                     delete
                   </button> */}

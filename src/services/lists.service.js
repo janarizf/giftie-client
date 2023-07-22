@@ -13,6 +13,14 @@ class ListsDataService {
     return http.get(`/lists/getOne/${id}`);
   }
 
+   getImg(url) {
+    return  http.get(`/imgscraper/getimg/${url}`);
+  }
+  convertImg(file) {
+    return  http.get(`/imgscraper/convertImg/${file}`);
+  }
+
+
   async create(data) {
     return await http.post("/lists/create", data)
         .then((response)=> {return response})

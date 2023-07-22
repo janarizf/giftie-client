@@ -32,16 +32,23 @@
 .btn-custom {
   background-color: #ab1066;
   border: none;
-  color: rgb(255, 255, 255);
+  color: #ffffff;
   padding: 10px 10px;
   text-align: center;
-  text-decoration: none;
+  text-decoration:solid;
   display: inline-block;
   margin: 4px 4px;
   cursor: pointer;
   border-radius: 25px;
   min-width: 10em;
 }
+
+.btn-custom:hover {
+  color: #ffffff;
+  background-color: #044237;
+}
+
+
 .custom-search {
   position: relative;
 }
