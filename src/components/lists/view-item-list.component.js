@@ -31,8 +31,6 @@ export default class ItemListView extends Component {
     closeViewItem = () => this.setState({ viewItemShow: false });
     openViewItem = (e) => this.setState({ viewItemShow: true, selectedItem: this.getSelectedItem(e.currentTarget.id) });
 
-
-
     getSelectedItem(itemId) {
         return this.state.items.filter((a) => a._id == itemId)
     }
@@ -125,7 +123,7 @@ export default class ItemListView extends Component {
                     >
                         <Tab eventKey="items" title="Items">
                             <Row className='p-3'>
-                                <Col>
+                            {!this.state.viewItemShow && <Col>
                                     <h4>Your Items</h4>
                                     <Row xs={1} md={2} lg={3}>
                                         <div className='p-1'>
@@ -181,7 +179,10 @@ export default class ItemListView extends Component {
 
                                         }, this)}
                                     </ Row>
-                                </Col>
+                                </Col>}
+                                {this.state.viewItemShow && <Col>
+                                    <EditItem listData={this.state.list} itemData={this.state.selectedItem[0]} />
+                                </Col>}
                             </Row>
                         </Tab>
                         <Tab eventKey="reserved" title="Reserved">
@@ -229,7 +230,7 @@ export default class ItemListView extends Component {
                             </Row>
                         </Tab>
                         <Tab eventKey="settings" title="Settings">
-                            <ListSetting listId={this.state.listId}/>
+                            <ListSetting listId={this.state.listId} />
                         </Tab>
 
                     </Tabs>
@@ -254,7 +255,7 @@ export default class ItemListView extends Component {
                         <EditItem listData={this.state.list} itemData={this.state.selectedItem[0]} />
                     </Modal.Body>
                 </Modal >
-                <Modal show={this.state.viewItemShow} onHide={this.closeViewItem} >
+                <Modal show={false} onHide={this.closeViewItem} >
                     <Modal.Header closeButton>
                         <Modal.Title>Item</Modal.Title>
                     </Modal.Header>

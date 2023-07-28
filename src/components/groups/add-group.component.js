@@ -17,6 +17,7 @@ export default class AddGroup extends Component {
             status: "",
             lists: [],
             members: [],
+            invited: [],
             redirect: false,
             listsData: []
         };
@@ -117,6 +118,7 @@ export default class AddGroup extends Component {
             status: this.state.status,
             lists: this.state.lists,
             members: this.state.members,
+            invited:  this.state.invited,
             private: this.state.private,
             createdby: this.state.owner,
             createddate: new Date(),
@@ -136,6 +138,7 @@ export default class AddGroup extends Component {
                         status: respond.data.status,
                         lists: respond.data.lists,
                         members: respond.data.members,
+                        invited:  respond.data.invited,
                         redirect: true
 
                     })
@@ -156,6 +159,7 @@ export default class AddGroup extends Component {
                         status: respond.data.status,
                         lists: respond.data.lists,
                         members: respond.data.members,
+                        invited:  respond.data.invited,
                         redirect: true
 
                     })

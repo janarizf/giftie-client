@@ -137,7 +137,6 @@ export default class ListSetting extends Component {
         })
         if (response.data.image.length > 0) {
           this.setState({
-            hasImage: true,
             imageSrc: [response.data.image],
           })
         }

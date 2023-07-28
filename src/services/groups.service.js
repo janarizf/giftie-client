@@ -20,6 +20,13 @@ class GroupsDataService {
           console.log(err);
       });
   }
+  async sendInvite(data) {
+    return await http.post("/groups/sendinvite", data)
+        .then((response)=> {return response})
+        .catch((err) => {
+          console.log(err);
+      });
+  }
 
   async update(id, data) {
     return await http.patch(`/groups/update/${id}`, data)
