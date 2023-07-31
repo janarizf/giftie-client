@@ -22,10 +22,10 @@ export function CheckImgFile(file, callback) {
     callback(ImagesArray);
 }
 
-export function ConvertToImg() {
+export function addUserToGroup(groupId) {
 
 }
-
+ 
 export default function GetCurrentUser() {
     let currentUser = JSON.parse(localStorage.getItem('user'))
     if (!currentUser) {

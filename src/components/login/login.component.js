@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import jwt_decode from "jwt-decode";
 import usersService from "../../services/users.service";
+import { addUserToGroup } from "../../helper"
 const Login = () => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
+    const params = useParams();
+    const groups = params.id.toString();
 
+    function addToGroup(params) {
+        addUserToGroup(params, function () {
+           
+        }.bind(this))
+    }
 
     const guestLogin = () => {
         var guestData = {
@@ -41,7 +49,14 @@ const Login = () => {
                         if (existing.data.length > 0) {
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
+
+                            if (groups) {
+                                addToGroup(groups)
+                            }
                             navigate('/account');
+                        }
+                        else if (groups) {
+                            navigate('/invitesignup/' + groups);
                         }
                         else {
                             navigate('/signup');
@@ -71,7 +86,13 @@ const Login = () => {
                         if (existing.data.length > 0) {
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
+                            if (groups) {
+                                addToGroup(groups)
+                            }
                             navigate('/account');
+                        }
+                        else if (groups) {
+                            navigate('/invitesignup' + groups);
                         }
                         else {
                             alert("User does not exist.");
@@ -140,7 +161,7 @@ const Login = () => {
                     <br />
 
                     <Button size="md" variant="custom" onClick={guestLogin}
-                        style={{width: '300px'}}>Guest</Button>
+                        style={{ width: '300px' }}>Guest</Button>
 
                 </Col>
                 <Col className='rightCol'>

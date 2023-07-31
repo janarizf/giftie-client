@@ -37,6 +37,8 @@ class App extends Component {
             <Route path="/groups/:id/invite" element={<GroupsEdit />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/invitelogin/:id" element={<Login />} />
+            <Route path="/invitesignup/:id" element={<SignUp />} />
           </Routes>
           <Footer/>
         </Container>

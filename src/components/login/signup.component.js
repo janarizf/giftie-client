@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { Col, Container, Row } from 'react-bootstrap';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import jwt_decode from "jwt-decode";
 import usersService from "../../services/users.service";
+import {addUserToGroup } from "../../helper"
 const SignUp = () => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
+    const params = useParams();
+    const groups = params.id.toString();
 
     const fbSuccess = async (response) => {
         console.log('Get FB Profile Success!', response);
