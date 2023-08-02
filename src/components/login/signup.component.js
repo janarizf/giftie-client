@@ -10,7 +10,7 @@ const SignUp = () => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
     const params = useParams();
-    const groups = params.id.toString();
+    const groups = params.id ? params.id.toString() : params.id;
 
     const fbSuccess = async (response) => {
         console.log('Get FB Profile Success!', response);

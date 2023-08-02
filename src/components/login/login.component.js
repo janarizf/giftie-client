@@ -10,7 +10,7 @@ const Login = () => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
     const params = useParams();
-    const groups = params.id.toString();
+    const groups = params.id ? params.id.toString() : params.id;
 
     function addToGroup(params) {
         addUserToGroup(params, function () {
