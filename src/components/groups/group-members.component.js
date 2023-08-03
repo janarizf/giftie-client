@@ -63,16 +63,16 @@ export default class GroupMembersView extends Component {
                 </Row>
                 <h6>Group Owner: {this.state.group.createdby}</h6>
                 <Row>
-                    <ListGroup>
+                    <Row>
                         {this.state.members.map(function (member, index) {
                             return (
-                                <ListGroup.Item key={index} action onClick={() => alert('haha')} as="li">
+                                <Row key={index}>
                                     {member.name}
-                                </ListGroup.Item>
+                                </Row>
                             )
                         })}
 
-                    </ListGroup>
+                    </Row>
                 </Row>
                 <Row>
                 <h5>Invited:</h5>

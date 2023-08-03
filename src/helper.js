@@ -1,4 +1,5 @@
 import listsService from "./services/lists.service";
+import groupsService from "./services/groups.service";
 
 export function ImgUpload(selectedFile, callback) {
     return listsService.fileupload(selectedFile)
@@ -22,8 +23,11 @@ export function CheckImgFile(file, callback) {
     callback(ImagesArray);
 }
 
-export function addUserToGroup(groupId) {
-
+export async function addUserToGroup(data, callback) {
+    return groupsService.addMember(data)
+    .then((res) => {
+        return callback(res);
+    });
 }
  
 export default function GetCurrentUser() {

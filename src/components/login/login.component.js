@@ -12,12 +12,6 @@ const Login = () => {
     const params = useParams();
     const groups = params.id ? params.id.toString() : params.id;
 
-    function addToGroup(params) {
-        addUserToGroup(params, function () {
-           
-        }.bind(this))
-    }
-
     const guestLogin = () => {
         var guestData = {
             _id: Math.floor(100000 + Math.random() * 900000),
@@ -51,7 +45,15 @@ const Login = () => {
                             setUser(existing.data[0]);
 
                             if (groups) {
-                                addToGroup(groups)
+                                const data = {
+                                    user_id: existing.data[0]._id,
+                                    name: existing.data[0].firstname + " " + existing.data[0].lastname,
+                                    email: existing.data[0].email,
+                                    group_id: groups
+                                };
+                                addUserToGroup(data, function () {
+           
+                                }.bind(this))
                             }
                             navigate('/account');
                         }
@@ -87,7 +89,15 @@ const Login = () => {
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
                             if (groups) {
-                                addToGroup(groups)
+                                const data = {
+                                    user_id: existing.data[0]._id,
+                                    name: existing.data[0].firstname + " " + existing.data[0].lastname,
+                                    email: existing.data[0].email,
+                                    group_id: groups
+                                };
+                                addUserToGroup(data, function () {
+           
+                                }.bind(this))
                             }
                             navigate('/account');
                         }
