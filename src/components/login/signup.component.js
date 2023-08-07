@@ -26,6 +26,7 @@ const SignUp = () => {
             if (userObj) {
                 await usersService.signUp(userObj)
                     .then((existing) => {
+                        alert("User Existing. Logging In");
                         if (existing) {
                             console.log("existing");
                             localStorage.setItem('user', JSON.stringify(existing.data));

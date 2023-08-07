@@ -30,7 +30,7 @@ const NavbarMain = () => {
     var isLoggedin = user;
     return (
 
-        <Navbar expand="lg">
+        <Navbar expand="lg" className="p-0">
             <Navbar.Brand href="/home"><img src={require('../../img/giftie_logo.png')} weign="40" height="40" /></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">

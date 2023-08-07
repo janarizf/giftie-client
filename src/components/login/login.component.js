@@ -41,7 +41,7 @@ const Login = () => {
                 await usersService.findByEmail(userObj.email)
                     .then((existing) => {
                         if (existing.data.length > 0) {
-                            alert("User Existing. Logging In");
+                           
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
 
@@ -87,7 +87,7 @@ const Login = () => {
                 await usersService.findByEmail(userObj.email)
                     .then((existing) => {
                         if (existing.data.length > 0) {
-                            alert("User Existing. Logging In");
+                         
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
                             if (groups) {

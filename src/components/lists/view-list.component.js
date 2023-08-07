@@ -109,11 +109,11 @@ export default function ListView() {
             console.log(error);
         }
     }
-     function sortList(field) {
-        const sortedItems = SortItemsByField(field,!sortOrder.sortOrder,listData.todos)
+    function sortList(field) {
+        const sortedItems = SortItemsByField(field, !sortOrder.sortOrder, listData.todos)
         setListData({ todos: sortedItems });
-        setSortOrder({sortOrder: !sortOrder.sortOrder});
-        setSortField({sortField: field});
+        setSortOrder({ sortOrder: !sortOrder.sortOrder });
+        setSortField({ sortField: field });
     }
     return (
         <Container className='p-3'>
