@@ -10,6 +10,11 @@ export const Container = styled.div`
   padding: 40px 60px;
   background-image: url(${backgroundImage});
   background-size: contain;
+
+  @media (max-width: 550px) {
+    height: auto;
+    padding: 40px 30px;
+  }
 `;
 
 export const Logo = styled.img`
@@ -19,18 +24,29 @@ export const Logo = styled.img`
 `;
 
 export const Wrapper = styled.div`
-  display: flex;
+  display: grid;
   align-items: center;
+  grid-template-columns: 2fr 1fr;
   gap: 20px;
   height: 100%;
+
+  @media (max-width: 1250px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
 `;
 export const LeftContainer = styled.div`
-  width: 70%;
-  margin-bottom: 40px;
+  margin: 0 0 40px;
+
+  @media (max-width: 800px) {
+    margin: 80px 0 20px;
+  }
 `;
 
 export const RightContainer = styled.div`
-  width: 30%;
   height: 100%;
   padding-bottom: 20px;
 `;
@@ -46,6 +62,10 @@ export const FormContainer = styled.div`
   flex-direction: column;
   padding: 20px 70px;
   position: relative;
+
+  @media (max-width: 1400px) {
+    padding: 30px;
+  }
 `;
 
 export const Heading = styled.div`
@@ -109,4 +129,10 @@ export const StyledForm = styled(Form)`
 export const FormFooter = styled.div`
   position: absolute;
   bottom: 20px;
+
+  @media (max-width: 800px) {
+    position: relative;
+    bottom: 0;
+    margin-top: 15px;
+  }
 `;
