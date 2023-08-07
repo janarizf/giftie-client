@@ -4,9 +4,10 @@ import EditItem from "./edit-item.component";
 import ViewItem from "./view-item.components";
 import ListSetting from "./settings.component";
 import listsService from "../../services/lists.service";
+import { SortItemsByField } from "../../helper";
 import { Link } from 'react-router-dom';
-import { Card, Button, Modal, Row, Col, Image, Tab, Tabs } from 'react-bootstrap';
-import { format } from 'date-fns';
+import { Card, Button, Modal, Row, Col, Image, Tab, Tabs, Form } from 'react-bootstrap';
+
 
 export default class ItemListView extends Component {
     constructor(props) {
@@ -22,7 +23,9 @@ export default class ItemListView extends Component {
             viewItemShow: false,
             editItemShow: false,
             selectedItem: "",
-            reservedText: "Reserve Item"
+            reservedText: "Reserve Item",
+            sortField: "name",
+            sortOrder: true
         };
 
     }
@@ -107,6 +110,12 @@ export default class ItemListView extends Component {
             .catch(error => { console.log(error) })
     }
 
+    sortItems(field) {
+        const sortedItems = SortItemsByField(field,!this.state.sortOrder,this.state.items)
+        this.setState({ items: sortedItems,
+            sortOrder:!this.state.sortOrder});
+    };
+
     componentDidMount() {
         this.loadList();
     }
@@ -123,10 +132,13 @@ export default class ItemListView extends Component {
                     >
                         <Tab eventKey="items" title="Items">
                             <Row className='p-3'>
-                            {!this.state.viewItemShow && <Col>
+                                {!this.state.viewItemShow && <Col>
                                     <h4>Your Items</h4>
+                                    <Form>
+                                        Sort By:   <Button size="sm" variant="custom" onClick={(() => this.sortItems("name"))}>Item Name</Button> <Button size="sm" variant="custom" onClick={(() => this.sortItems("category_id"))}>Category</Button>
+                                    </Form>
                                     <Row xs={1} md={2} lg={3}>
-                                        <div className='p-1'>
+                                        <div className='p-3'>
                                             <Card className='text-center' key={"optionID"} style={{ height: '100%' }}>
                                                 <Card.Body>
                                                     <Card.Text className='my-5'>
@@ -144,7 +156,7 @@ export default class ItemListView extends Component {
                                         </div>
                                         {this.state.items.map(function (d, index) {
                                             return (
-                                                <div className='p-1'>
+                                                <div className='p-3'>
                                                     <Card key={index} className='text-center card-item'>
                                                         <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
                                                         <Card.Body>
@@ -155,18 +167,18 @@ export default class ItemListView extends Component {
                                                                 Category: {d.category_id}<br />
                                                                 Quantity: {d.quantity}<br />
 
-                                                                <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button><br />
+                                                                <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button>
                                                                 <Button size="sm" variant="custom" onClick={event => this.reserveItem(event, this)} id={d._id}>{(d.reserved ? "Unreserve Item" : "Reserve Item")}</Button><br />
 
                                                             </Card.Text>
 
                                                             <div className="dropup">
-                                                                <button className="dropbtn">...</button>
+                                                                <button className="dropbtn">
+                                                                    <Image src={require('../../img/ellipsis-icon.png')} height={'30px'} />
+                                                                </button>
                                                                 <div className="dropup-content">
-
                                                                     <Button size="sm" variant="custom" onClick={event => this.deleteItem(event, this)} id={d._id}>Delete</Button>
                                                                     <Button size="sm" variant="custom" id={d._id}>Share</Button>
-
                                                                 </div>
                                                             </div>
                                                         </Card.Body>
@@ -192,7 +204,7 @@ export default class ItemListView extends Component {
                                     <Row xs={1} md={2} lg={3}>
                                         {this.state.reservedtems.map(function (d, index) {
                                             return (
-                                                <div className='p-1'>
+                                                <div className='p-3'>
                                                     <Card key={index} className='text-center card-item'>
                                                         <Card.Body>
                                                             <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
-import listsService from "../../services/lists.service";
-import CreateList from "./create-list.component"
 import { Container, Card, Row, Modal, Button, Col, Form } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
+
+import listsService from "../../services/lists.service";
+import CreateList from "./create-list.component"
+import { SortItemsByField } from "../../helper";
+
 
 export default function ListView() {
     const [listData, setListData] = useState({
@@ -49,43 +52,44 @@ export default function ListView() {
         });
     };
     const sortItemsByField = () => {
-        const sortedItems =  listData.todos.sort((a, b) => {
-          // Access the field value within each object
-          const fieldValueA = a[sortField.sortField].toLowerCase();
-          const fieldValueB = b[sortField.sortField].toLowerCase();
-    
-          // Customize the comparison logic based on your sorting requirements
-          if (fieldValueA < fieldValueB) {
-            return sortOrder.sortOrder ? -1 : 1;
-          }
-          if (fieldValueA > fieldValueB) {
-            return sortOrder.sortOrder ? 1 : -1
-          }
-          return 0; // fieldValueA and fieldValueB are considered equal
+        const sortedItems = listData.todos.sort((a, b) => {
+            // Access the field value within each object
+            const fieldValueA = a[sortField.sortField].toLowerCase();
+            const fieldValueB = b[sortField.sortField].toLowerCase();
+
+            // Customize the comparison logic based on your sorting requirements
+            if (fieldValueA < fieldValueB) {
+                return sortOrder.sortOrder ? -1 : 1;
+            }
+            if (fieldValueA > fieldValueB) {
+                return sortOrder.sortOrder ? 1 : -1
+            }
+            return 0; // fieldValueA and fieldValueB are considered equal
         });
-    
+
         return sortedItems;
-      };
+    };
     function todoList() {
         return listData.todos.map(function (currentTodo, i) {
             return (
-                <div className='p-1'>
-                    <Card key={currentTodo._id} className='text-center' >
+                <div className='p-3'>
+                    <Card key={currentTodo._id} className='text-center card-item' >
                         {/* <Card.Img src={currentTodo.image} /> */}
                         <Card.Body>
                             <Card.Title>{currentTodo.name}</Card.Title>
                             <Card.Text>
                                 Event Date:<br />
                                 {currentTodo.set_date.substring(0, 10)}<br />
-
-                                <div className="dropup">
-                                    <button className="dropbtn">...</button>
-                                    <div className="dropup-content">
-                                        <Button size="md" variant="custom" href={"/list/" + currentTodo._id}>View List</Button> <br />
-                                        <Button size="md" variant="custom" onClick={deleteList} id={currentTodo._id}>Delete</Button>
-                                    </div>
-                                </div>
                             </Card.Text>
+                            <div className="dropup">
+                                <button className="dropbtn">
+                                    <Image src={require('../../img/ellipsis-icon.png')} height={'30px'} />
+                                </button>
+                                <div className="dropup-content">
+                                    <Button size="sm" variant="custom" href={"/list/" + currentTodo._id}>View List</Button>
+                                    <Button size="sm" variant="custom" onClick={deleteList} id={currentTodo._id}>Delete</Button>
+                                </div>
+                            </div>
                         </Card.Body>
 
                     </Card>
@@ -105,21 +109,21 @@ export default function ListView() {
             console.log(error);
         }
     }
-    async function sortList(field) {
-        sortField.sortField = field;
-        sortOrder.sortOrder = !sortOrder.sortOrder;
-        const sortedItems = sortItemsByField();
+     function sortList(field) {
+        const sortedItems = SortItemsByField(field,!sortOrder.sortOrder,listData.todos)
         setListData({ todos: sortedItems });
+        setSortOrder({sortOrder: !sortOrder.sortOrder});
+        setSortField({sortField: field});
     }
     return (
         <Container className='p-3'>
             <Col>
                 <h4>Your Lists</h4>
                 <Form>
-                 Sort By:   <Button variant="custom" onClick={(() => sortList("name"))}>List</Button> <Button  variant="custom" onClick={(() => sortList("category_id"))}>Category</Button> <Button variant="custom" onClick={(() => sortList("set_date"))}>Event Date</Button>
+                    Sort By:   <Button size="sm" variant="custom" onClick={(() => sortList("name"))}>List</Button> <Button size="sm" variant="custom" onClick={(() => sortList("category_id"))}>Category</Button> <Button size="sm" variant="custom" onClick={(() => sortList("set_date"))}>Event Date</Button>
                 </Form>
                 <Row xs={1} md={2} lg={3}>
-                    <div className='p-1'>
+                    <div className='p-3'>
                         <Card className='text-center' style={{ height: '100%' }}>
                             <Card.Body>
                                 <Card.Text>

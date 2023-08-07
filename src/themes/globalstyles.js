@@ -12,6 +12,7 @@ export const GlobalStyles = createGlobalStyle`
     background-image: url(${({ theme }) => theme.images.header});
     color: ${({ theme }) => theme.colors.text};
     background-size: cover;
+    background-position: bottom; 
     text-align: center;
     text-align:left;
   
@@ -32,6 +33,7 @@ export const GlobalStyles = createGlobalStyle`
     background: ${({ theme }) => theme.colors.body};
     background-image: url(${({ theme }) => theme.images.header});
     background-size: cover;
+    background-position: bottom; 
     padding: 20px;
     color: #ffffff;
   }
@@ -39,5 +41,6 @@ export const GlobalStyles = createGlobalStyle`
   {
     background-image: url(${({ theme }) => theme.images.background});
     background-size: cover;
+    background-position: bottom; 
   }
 `;

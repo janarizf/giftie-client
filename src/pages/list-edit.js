@@ -7,14 +7,12 @@ import ItemListView from "../components/lists/view-item-list.component";
 import CreateList from "../components/lists/create-list.component"
 import Footer from '../components/footer';
 import { Container, Col, Row, Form, Modal, Figure, Button } from 'react-bootstrap';
-
+import Image from 'react-bootstrap/Image'
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from '../themes/globalstyles';
 
 import { default_theme, baby_shower, wedding, birthday, christmas } from "../themes/theme.style";
 
-
-import Image from 'react-bootstrap/Image'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -27,7 +25,7 @@ import {
 } from "react-share";
 
 export default function ListEdit() {
-  const [listData, setListData] = useState( [] )
+  const [listData, setListData] = useState([])
   const [modal, setModal] = useState({
     modalShow: false
   })
@@ -112,17 +110,17 @@ export default function ListEdit() {
     <Container>
       {<ThemeProvider theme={selectedTheme}>
         <GlobalStyles />
-
         <Row className="jumbotron-list">
           <Form className="p-3" >
             <Row>
-              <Col sm={4} className="my-5 text-center">
-                <Figure>
-                  <Figure.Image src={listData.image} width={200} height={200} />
-                </Figure>
+              <Col sm={4} className="my-1 text-center">
+                <Image
+                  src={listData.image}
+                  style={{ width: 200, height: 200, borderRadius: 200}}
+                />
               </Col>
               <Col sm={8}>
-                <div className="my-5" >
+                <div className="my-4" >
                   <h3> List: {listData.name} </h3>
                   <h5>Set Date: {listData.set_date && listData.set_date.substring(0, 10)}</h5>
                   <h5> Location: {listData.location}</h5>
@@ -169,7 +167,7 @@ export default function ListEdit() {
           </Modal.Header>
           <Modal.Body><CreateList listData={listData} /></Modal.Body>
         </Modal>
-        
+
       </ThemeProvider>}
     </Container>
 

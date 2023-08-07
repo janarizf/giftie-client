@@ -23,21 +23,21 @@ export const baby_shower = {
     images:
     {
         header: "",
-        background: "",
+        background: "https://giftie-backend.herokuapp.com/lists/getImage/1691433060064-20.png",
     }
 };
 export const wedding = {
     name: "wedding",
     category: "wedding",
     colors: {
-        header: "#598850",
-        body: "#ffcfe8",
+        header: "#f49696",
+        body: "#f49696",
         text: "#ffffff"
     },
     images:
     {
         header: "",
-        background: "",
+        background: "https://giftie-backend.herokuapp.com/lists/getImage/1691427689985-7.png",
     }
 };
 export const birthday = {

@@ -36,7 +36,7 @@ const NavbarMain = () => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Col ></Col>
                 <Col xs={8}>
-                    <Nav className="me-auto">
+                    <Nav className="me-auto m-2">
                         <Link className="nav-link" to={'/home'}>
                             Home
                         </Link>
@@ -59,7 +59,7 @@ const NavbarMain = () => {
                     </Nav>
                 </Col>
                 <Col>
-                    <Nav>
+                    <Nav className="me-auto m-2">
                         {/* <Link className="nav-link" to={'/list'} ><PlusCircle color="gray" /> Create a list</Link> */}
                         {isLoggedin == null && <Link className="nav-link" to={'/login'}>
                             Login

@@ -5,7 +5,7 @@ import { Col, Container, Row, Button } from 'react-bootstrap';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import jwt_decode from "jwt-decode";
 import usersService from "../../services/users.service";
-import { addUserToGroup } from "../../helper"
+import { AddUserToGroup } from "../../helper"
 const Login = () => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
@@ -52,7 +52,7 @@ const Login = () => {
                                     email: existing.data[0].email,
                                     group_id: groups
                                 };
-                                addUserToGroup(data, function () {
+                                AddUserToGroup(data, function () {
            
                                 }.bind(this))
                             }
@@ -97,7 +97,7 @@ const Login = () => {
                                     email: existing.data[0].email,
                                     group_id: groups
                                 };
-                                addUserToGroup(data, function () {
+                                AddUserToGroup(data, function () {
            
                                 }.bind(this))
                             }
