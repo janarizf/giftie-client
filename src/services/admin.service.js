@@ -59,6 +59,21 @@ class AdminDataService {
     //featured list
     //manage links
 
+    async getAllListCategories() {
+        return await http.get("/admin/getAllListCategories")
+        .then((response) => { return response })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+
+    async getAllThemes() {
+        return await http.get("/admin/getAllThemes")
+        .then((response) => { return response })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
 }
 
 export default new AdminDataService();

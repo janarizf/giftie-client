@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
+import { Link } from 'react-router-dom';
 import listsService from "../services/lists.service";
+import adminService from "../services/admin.service";
 import ItemListView from "../components/lists/view-item-list.component";
 import CreateList from "../components/lists/create-list.component"
-import { Container, Col, Row, Form, Modal, Figure } from 'react-bootstrap';
+import Footer from '../components/footer';
+import { Container, Col, Row, Form, Modal, Figure, Button } from 'react-bootstrap';
 
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from '../themes/globalstyles';
@@ -24,9 +27,7 @@ import {
 } from "react-share";
 
 export default function ListEdit() {
-  const [listData, setListData] = useState({
-    listData: []
-  })
+  const [listData, setListData] = useState( [] )
   const [modal, setModal] = useState({
     modalShow: false
   })
@@ -76,6 +77,7 @@ export default function ListEdit() {
         record.image = require('../img/giftie_question.png');
       }
       if (record.themes) {
+        //TODO: update code using themes from admin module. get all themes then filter.
         if (record.themes.toString().includes("birthday")) {
           setSelectedTheme(birthday);
         }
@@ -96,9 +98,10 @@ export default function ListEdit() {
       getCategory(response.data.category_id)
     }
     async function getCategory(category) {
-      const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
-      const cat = categoryData.filter(a => a.id == category);
-      setCategory(cat[0].value);
+      // const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
+      const categoryData = await adminService.getAllListCategories()
+      const cat = categoryData.data.filter(a => a._id == category);
+      setCategory(cat[0].category);
     }
     fetchData();
 
@@ -166,7 +169,7 @@ export default function ListEdit() {
           </Modal.Header>
           <Modal.Body><CreateList listData={listData} /></Modal.Body>
         </Modal>
-
+        
       </ThemeProvider>}
     </Container>
 

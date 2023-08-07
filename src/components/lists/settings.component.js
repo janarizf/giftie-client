@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { Navigate } from 'react-router-dom';
 import { Button, Row, Col, Form, Container, Image, ToggleButton, ButtonGroup, Figure } from 'react-bootstrap';
 import listsService from "../../services/lists.service";
+import adminService from "../../services/admin.service";
 import { ImgUpload, CheckImgFile } from "../../helper"
 import { format } from 'date-fns';
-import { default_theme, baby_shower, wedding, birthday, christmas } from "../../themes/theme.style";
-
 
 export default class ListSetting extends Component {
   constructor(props) {
@@ -37,7 +36,8 @@ export default class ListSetting extends Component {
       imageSrc: [],
       imageUpload: [],
       themes: "",
-      private: true
+      private: true,
+      categoryData: []
 
     }
 
@@ -120,6 +120,14 @@ export default class ListSetting extends Component {
 
   componentDidMount() {
     this.loadList();
+    this.getCategory();
+  }
+  async getCategory() {
+    // const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
+    const categoryData = await adminService.getAllListCategories()
+    this.setState({
+      categoryData: categoryData.data
+    });
   }
   loadList() {
     listsService.get(this.state._id)
@@ -218,9 +226,6 @@ export default class ListSetting extends Component {
               window.location.reload();
             })
         }
-
-
-
       }
 
     }
@@ -230,7 +235,7 @@ export default class ListSetting extends Component {
 
   }
   render() {
-    const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
+    // const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
     const radios = [
       { name: 'Birthday', value: 'birthday' },
       { name: 'Wedding', value: 'wedding' },
@@ -244,43 +249,6 @@ export default class ListSetting extends Component {
         <Form onSubmit={this.onSubmit}>
           <Row>
             <Col>
-              <Row className="m-3">
-                <Col sm={2}>
-                  <Form.Label>  Theme:</Form.Label>
-                </Col>
-                <Col sm={10}>
-
-                  <ButtonGroup>
-                    {radios.map((radio, idx) => (
-                      <ToggleButton
-                        key={idx}
-                        id={`radio-${idx}`}
-                        type="radio"
-                        variant={'outline-primary'}
-                        name={radio.name}
-                        value={radio.value}
-                        checked={this.state.themes === radio.value}
-                        onChange={this.onChangethemes}>
-                        {radio.name}
-                      </ToggleButton>
-                    ))}
-                  </ButtonGroup>
-                </Col>
-              </Row>
-              {this.state.themes == "custom"
-                && <Row className="m-3">
-                  <Col sm={2}>
-                    <Form.Label htmlFor="exampleColorInput">Custom Theme</Form.Label>
-                  </Col>
-                  <Col sm={10}>
-                    <Form.Control
-                      type="color"
-                      id="exampleColorInput"
-                      defaultValue="#563d7c"
-                      title="Choose your color"
-                    />
-                  </Col>
-                </Row>}
               <Row className="m-3">
                 <Col sm={2}>
                   <Form.Label>  List:</Form.Label>
@@ -344,13 +312,50 @@ export default class ListSetting extends Component {
                   <Form.Select name="list" value={this.state.category} onChange={this.onChangeCategory} required>
                     <option value="">Category</option>
                     {
-                      categoryData.map(function (category) {
-                        return <option key={category.id} value={category.id} >{category.value}</option>
+                      this.state.categoryData.map(function (category) {
+                        return <option key={category._id} value={category._id} >{category.category}</option>
                       })
                     }
                   </Form.Select>
                 </Col>
               </Row>
+              <Row className="m-3">
+                <Col sm={2}>
+                  <Form.Label>  Theme:</Form.Label>
+                </Col>
+                <Col sm={10}>
+
+                  <ButtonGroup>
+                    {radios.map((radio, idx) => (
+                      <ToggleButton
+                        key={idx}
+                        id={`radio-${idx}`}
+                        type="radio"
+                        variant={'outline-primary'}
+                        name={radio.name}
+                        value={radio.value}
+                        checked={this.state.themes === radio.value}
+                        onChange={this.onChangethemes}>
+                        {radio.name}
+                      </ToggleButton>
+                    ))}
+                  </ButtonGroup>
+                </Col>
+              </Row>
+              {this.state.themes == "custom"
+                && <Row className="m-3">
+                  <Col sm={2}>
+                    <Form.Label htmlFor="exampleColorInput">Custom Theme</Form.Label>
+                  </Col>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="color"
+                      id="exampleColorInput"
+                      defaultValue="#563d7c"
+                      title="Choose your color"
+                    />
+                  </Col>
+                </Row>}
               <Row className="m-3">
                 <Col sm={2}>
                   <Form.Label>  Private:</Form.Label>

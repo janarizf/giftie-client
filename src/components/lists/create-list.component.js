@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Navigate } from 'react-router-dom';
 import { Button, Row, Col, Form, Container, Image } from 'react-bootstrap';
 import listsService from "../../services/lists.service";
+import adminService from "../../services/admin.service";
 import { ImgUpload, CheckImgFile } from "../../helper"
 import { format } from 'date-fns';
 export default class ListCreate extends Component {
@@ -15,7 +16,7 @@ export default class ListCreate extends Component {
     this.onChangeIntroduction = this.onChangeIntroduction.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    
+
     this.onChangePrivate = this.onChangePrivate.bind(this);
     this.onChangeImage = this.onChangeImage.bind(this);
 
@@ -34,7 +35,8 @@ export default class ListCreate extends Component {
       imageSrc: [],
       imageUpload: [],
       themes: "default",
-      private: true
+      private: true,
+      categoryData: []
     }
 
     if (props.listData) {
@@ -58,6 +60,16 @@ export default class ListCreate extends Component {
     if (userObj)
       return userObj._id
     return "Guest";
+  }
+  async getCategory() {
+    // const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
+    const categoryData = await adminService.getAllListCategories()
+    this.setState({
+      categoryData: categoryData.data
+    });
+  }
+  componentDidMount() {
+    this.getCategory();
   }
 
   onChangeName(e) {
@@ -185,7 +197,7 @@ export default class ListCreate extends Component {
     }
   }
   render() {
-    const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
+    //const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
     return (
       <Container>
         {this.state.redirect && <Navigate to={"/list/" + this.state._id} />}
@@ -204,13 +216,13 @@ export default class ListCreate extends Component {
               <Form.Select name="list" value={this.state.category} onChange={this.onChangeCategory} required>
                 <option value="">Category</option>
                 {
-                  categoryData.map(function (category) {
-                    return <option key={category.id} value={category.id} >{category.value}</option>
+                  this.state.categoryData.map(function (category) {
+                    return <option key={category._id} value={category._id} >{category.category}</option>
                   })
                 }
               </Form.Select>
               <Form.Check type='switch' id="privateBool" name="private" checked={this.state.private} onChange={this.onChangePrivate} />
-  
+
               <Button variant="custom" type="submit">
                 Save
               </Button>

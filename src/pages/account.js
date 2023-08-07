@@ -64,9 +64,7 @@ export default class Account extends Component {
                             <Tab eventKey="groups" title="Groups">
                                 <GroupMainView />
                             </Tab>
-                            <Tab eventKey="settings" title="Settings">
-
-                            </Tab>
+                           
                         </Tabs>
 
                     </Col>

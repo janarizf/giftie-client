@@ -82,7 +82,6 @@ html,
 }
 
 .navbar-light {
-  background-color: #ffffff;
   font-family: 'Nunito', sans-serif;
   font-weight: 400;
 }
@@ -153,7 +152,7 @@ background: #f3f3f3;
 }
 .container-green-bg
 {
-  color: #ffffff;
+  color: #04321f;
   background-image: url("./img/giftie_green.jpg");
   background-size: cover;
   padding: 3rem;
