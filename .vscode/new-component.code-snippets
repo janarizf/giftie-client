@@ -1,6 +1,6 @@
 {
   "arrow function component": {
-    "prefix": "new-props",
+    "prefix": "new-component",
     "body": [
       "import React from 'react';",
       "",
