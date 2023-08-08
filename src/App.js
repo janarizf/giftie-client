@@ -25,6 +25,7 @@ import { AdminLayout } from "./components/admin/AdminLayout";
 import { ROUTES } from "./constants/ROUTES";
 import { Themes } from "./components/admin/Themes";
 import Links from "./pages/admin/Links/Links";
+import Marketing from "./pages/admin/Marketing/Marketing";
 
 let isAuthenticated = true;
 class App extends Component {
@@ -81,6 +82,11 @@ class App extends Component {
                 element={<Themes />}
               />
               <Route exact path={`${ROUTES.ADMIN.LINKS}`} element={<Links />} />
+              <Route
+                exact
+                path={`${ROUTES.ADMIN.MARKETING}`}
+                element={<Marketing />}
+              />
             </Routes>
           </AdminLayout>
         ) : (
