@@ -3,12 +3,12 @@
     "prefix": "new-page",
     "body": [
       "import React, { Component } from 'react';",
-      "import { $TM_FILENAME_BASE } from '../../../components/admin/$TM_FILENAME_BASE';",
+      "import { $TM_FILENAME_BASE as $TM_FILENAME_BASE from \"../../../components/admin/$TM_FILENAME_BASE\";",
       "",
       "export default class $TM_FILENAME_BASE extends Component {",
       "  render() {",
       "    return (",
-      "      <Login />",
+      "      <$TM_FILENAME_BASE />",
       "    );",
       "  }",
       "}"
@@ -16,7 +16,7 @@
     "description": "class page"
   },
   "class page export default": {
-    "prefix": "new-page",
+    "prefix": "new-export",
     "body": [
       "export { default } from './';",
     ],
