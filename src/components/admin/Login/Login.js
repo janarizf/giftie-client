@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../../img/giftie_logo_white.png";
 import {
   Container,
   Logo,
@@ -19,12 +18,12 @@ import {
   Button,
   Link
 } from "../../../shared/elements";
-import { COLORS } from "../../../constants/colors";
+import { COLORS } from "../../../constants/COLORS";
 
 const Login = () => {
   return (
     <Container>
-      <Logo src={logo} alt='logo' />
+      <Logo />
       <Wrapper>
         <LeftContainer className='text-white'>
           <Typography

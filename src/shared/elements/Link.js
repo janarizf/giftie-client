@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import { COLORS } from "../../constants/colors";
+import { COLORS } from "../../constants/COLORS";
 
 export const StyledLink = styled.a`
   width: 100%;

@@ -1,10 +1,21 @@
 import React from "react";
-import '../../../shared/styles/admin.css'
+import { Row, Col } from "react-bootstrap";
+import AdminHeader from "../AdminHeader/AdminHeader";
+import AdminSidebar from "../AdminSidebar/AdminSidebar";
+import { Content, MainContainer, Wrapper } from "./AdminLayout.styled";
 
-const AdminLayout = () => {
-    return (
-        <div className="full-container login">Layout</div>
-    )
-}
+const AdminLayout = ({ children }) => {
+  return (
+    <MainContainer fluid>
+      <Wrapper>
+        <AdminSidebar />
+        <Content>
+          <AdminHeader />
+          {children}
+        </Content>
+      </Wrapper>
+    </MainContainer>
+  );
+};
 
 export default AdminLayout;

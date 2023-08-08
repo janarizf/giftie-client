@@ -3,5 +3,7 @@ export const COLORS = {
   WHITE: "#fff",
   BLACK: "#000",
   DARK_PRIMARY: "#044237",
-  GOOGLE_RED: "#BB3636"
+  GOOGLE_RED: "#bb3636",
+  MAIN_BACKGROUND: "#f3f3f3",
+  WHITE_50: "#c3c3c3"
 };

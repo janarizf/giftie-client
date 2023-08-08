@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
 import backgroundImage from "../../../img/giftie_green.jpg";
-import { COLORS } from "../../../constants/colors";
+import { COLORS } from "../../../constants/COLORS";
 import { Form } from "react-bootstrap";
+import GiftieLogo from "../../GiftieLogo/GiftieLogo";
 
 export const Container = styled.div`
   gap: 20px;
@@ -17,7 +18,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Logo = styled.img`
+export const Logo = styled(GiftieLogo)`
   width: 200px;
   height: auto;
   position: absolute;
