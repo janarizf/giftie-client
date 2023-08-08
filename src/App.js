@@ -23,6 +23,7 @@ import NavbarMain from "./components/navbar/navbar";
 import AdminLogin from "./pages/admin/adminLogin/adminLogin";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import { ROUTES } from "./constants/ROUTES";
+import { Themes } from "./components/admin/Themes";
 
 let isAuthenticated = true;
 class App extends Component {
@@ -76,7 +77,7 @@ class App extends Component {
               <Route
                 exact
                 path={`${ROUTES.ADMIN.THEMES}`}
-                element={<div>Themes</div>}
+                element={<Themes />}
               />
             </Routes>
           </AdminLayout>
