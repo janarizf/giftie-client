@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Nav } from "react-bootstrap";
+import { Nav, NavDropdown } from "react-bootstrap";
 import { COLORS } from "../../../constants/COLORS";
 import { GiftieLogo } from "../../../components";
 
@@ -79,5 +79,22 @@ export const StyledNav = styled(Nav)`
         margin-right: -5px;
       }
     }
+  }
+`;
+
+export const StyledNavDropdown = styled(NavDropdown)`
+  & .dropdown-toggle::after {
+    margin: 0 20px 0 auto;
+  }
+
+  & .dropdown-menu {
+    position: relative !important;
+    inset: unset !important;
+    transform: unset !important;
+    background: transparent;
+    border: none;
+    margin-left: 20px;
+    transition: all 0.3s ease-out;
+    padding: 0;
   }
 `;

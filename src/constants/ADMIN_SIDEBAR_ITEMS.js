@@ -9,6 +9,7 @@ import {
   PeopleFill
 } from "react-bootstrap-icons";
 import { ROUTES } from "./ROUTES";
+import { navigateToRoute } from "../shared/utils/navigateToRoute";
 
 export const ADMIN_SIDEBAR_ITEMS = [
   {
@@ -58,7 +59,7 @@ export const ADMIN_SIDEBAR_ITEMS = [
     icon: <ExclamationSquareFill width='15px' />,
     link: ROUTES.ADMIN.ROOT,
     baseUrl: ROUTES.ADMIN.ROOT,
-    disabled: true
+    disabled: false
   },
   {
     name: "Reports",
@@ -66,5 +67,20 @@ export const ADMIN_SIDEBAR_ITEMS = [
     link: ROUTES.ADMIN.ROOT,
     baseUrl: ROUTES.ADMIN.ROOT,
     disabled: true
+  }
+];
+
+export const MARKETING_SUB_MENUS = [
+  {
+    name: "Advertisements",
+    link: navigateToRoute.toMarketing("advertisements"),
+    baseUrl: ROUTES.ADMIN.MARKETING,
+    disabled: true
+  },
+  {
+    name: "Featured Lists",
+    link: navigateToRoute.toMarketing("featured-lists"),
+    baseUrl: ROUTES.ADMIN.MARKETING,
+    disabled: false
   }
 ];

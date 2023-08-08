@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
   Sidebar,
-  DrawerContainer,
+  StyledNavDropdown,
   StyledNav,
   Logo
 } from "./AdminSidebar.styled";
-import { ADMIN_SIDEBAR_ITEMS } from "../../../constants/ADMIN_SIDEBAR_ITEMS";
+import {
+  ADMIN_SIDEBAR_ITEMS,
+  MARKETING_SUB_MENUS
+} from "../../../constants/ADMIN_SIDEBAR_ITEMS";
 import { BoxArrowLeft } from "react-bootstrap-icons";
 import { useLocation } from "react-router-dom";
 
@@ -27,7 +30,30 @@ const AdminSidebar = () => {
       <Logo />
       <StyledNav activeKey={activeNav}>
         {ADMIN_SIDEBAR_ITEMS.map((item, index) => {
-          return (
+          return item.name === "Marketing" ? (
+            <StyledNavDropdown
+              key={`${item.name}`}
+              active={activeNav === item.name}
+              title={
+                <React.Fragment>
+                  {item.icon} {item.name}
+                </React.Fragment>
+              }
+              disabled={item.disabled}
+            >
+              {MARKETING_SUB_MENUS.map((subItem) => {
+                return (
+                  <StyledNavDropdown.Item
+                    key={`${item.name}--${subItem.name}`}
+                    href={subItem.link}
+                    disabled={subItem.disabled}
+                  >
+                    {subItem.name}
+                  </StyledNavDropdown.Item>
+                );
+              })}
+            </StyledNavDropdown>
+          ) : (
             <StyledNav.Link
               key={`${item.name}`}
               href={item.link}
