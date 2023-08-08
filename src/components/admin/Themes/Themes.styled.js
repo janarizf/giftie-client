@@ -6,4 +6,5 @@ export const Container = styled.div`
   border-radius: 5px;
   padding: 25px 30px;
   height: 100%;
+  max-height: 87.1vh;
 `;

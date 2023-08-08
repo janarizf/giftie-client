@@ -6,7 +6,8 @@ export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
-  overflow: scroll;
+  height: 92%;
+  overflow-y: scroll;
 
   & > div {
     flex: 1;

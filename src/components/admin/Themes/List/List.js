@@ -13,7 +13,7 @@ const List = () => {
           Add New Theme
         </Typography>
       </AddNewTheme>
-      {Array.from({ length: 5 }, (_, index) => {
+      {Array.from({ length: 12 }, (_, index) => {
         return <ThemeItem />;
       })}
     </Container>
