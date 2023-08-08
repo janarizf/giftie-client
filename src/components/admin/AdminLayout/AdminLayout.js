@@ -1,18 +1,22 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import AdminSidebar from "../AdminSidebar/AdminSidebar";
-import { Content, MainContainer, Wrapper } from "./AdminLayout.styled";
+import {
+  ContentWrapper,
+  Content,
+  MainContainer,
+  Wrapper
+} from "./AdminLayout.styled";
 
 const AdminLayout = ({ children }) => {
   return (
     <MainContainer fluid>
       <Wrapper>
         <AdminSidebar />
-        <Content>
+        <ContentWrapper>
           <AdminHeader />
-          {children}
-        </Content>
+          <Content>{children}</Content>
+        </ContentWrapper>
       </Wrapper>
     </MainContainer>
   );

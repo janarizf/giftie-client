@@ -1,8 +1,12 @@
 import React from "react";
-import { Navbar, Container } from "react-bootstrap";
+import { Typography } from "../../../shared/elements";
 
 const AdminHeader = () => {
-  return <React.Fragment>Header</React.Fragment>;
+  return (
+    <React.Fragment>
+      <Typography component='h1'>Dashboard</Typography>
+    </React.Fragment>
+  );
 };
 
 export default AdminHeader;
