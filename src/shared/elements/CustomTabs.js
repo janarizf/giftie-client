@@ -1,6 +1,6 @@
 import { Tabs as ReactTabs } from "react-bootstrap";
 import { styled } from "styled-components";
-import { COLORS } from "../../constants/COLORS";
+import { COLORS } from "../../constants/colors";
 
 export const StyledTabs = styled(ReactTabs)`
   gap: 10px;

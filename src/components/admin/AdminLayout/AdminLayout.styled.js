@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { Container } from "react-bootstrap";
-import { COLORS } from "../../../constants/COLORS";
+import { COLORS } from "../../../constants/colors";
 
 export const MainContainer = styled(Container)`
   min-height: 100vh;

@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { COLORS } from "../../../../constants/COLORS";
+import { COLORS } from "../../../../constants/colors";
 import placeholderImage from "../../../../img/giftie_logo.png";
 
 export const Container = styled.div`

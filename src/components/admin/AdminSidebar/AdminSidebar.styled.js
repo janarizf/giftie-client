@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { Nav, NavDropdown } from "react-bootstrap";
-import { COLORS } from "../../../constants/COLORS";
+import { COLORS } from "../../../constants/colors";
 import { GiftieLogo } from "../../../components";
 
 export const Sidebar = styled.div`

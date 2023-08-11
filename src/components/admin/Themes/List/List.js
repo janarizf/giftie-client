@@ -2,7 +2,7 @@ import React from "react";
 import { Container, AddNewTheme, ThemeItem } from "./List.styled";
 import { PlusLg } from "react-bootstrap-icons";
 import { Typography } from "../../../../shared/elements";
-import { COLORS } from "../../../../constants/COLORS";
+import { COLORS } from "../../../../constants/colors";
 
 const List = () => {
   return (

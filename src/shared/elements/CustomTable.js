@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 import { styled } from "styled-components";
-import { COLORS } from "../../constants/COLORS";
+import { COLORS } from "../../constants/colors";
 import { TrashFill } from "react-bootstrap-icons";
 import { Typography } from "../elements";
 

@@ -18,7 +18,7 @@ import {
   Button,
   Link
 } from "../../../shared/elements";
-import { COLORS } from "../../../constants/COLORS";
+import { COLORS } from "../../../constants/colors";
 
 const Login = () => {
   return (

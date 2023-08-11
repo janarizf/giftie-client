@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import { COLORS } from "../../constants/COLORS";
+import { COLORS } from "../../constants/colors";
 import { Dropdown } from "react-bootstrap";
 
 export const StyledDropdown = styled(Dropdown)`

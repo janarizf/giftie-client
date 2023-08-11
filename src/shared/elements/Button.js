@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import { COLORS } from "../../constants/COLORS";
+import { COLORS } from "../../constants/colors";
 
 export const StyledButton = styled.button`
   width: 100%;

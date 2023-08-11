@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import backgroundImage from "../../../img/giftie_green.jpg";
-import { COLORS } from "../../../constants/COLORS";
+import { COLORS } from "../../../constants/colors";
 import { Form } from "react-bootstrap";
 import GiftieLogo from "../../GiftieLogo/GiftieLogo";
 

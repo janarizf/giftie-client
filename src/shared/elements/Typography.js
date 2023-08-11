@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import { COLORS } from "../../constants/COLORS";
+import { COLORS } from "../../constants/colors";
 
 const StyledH1 = styled.h1`
   color: ${(props) => props.$color || COLORS.BLACK};
