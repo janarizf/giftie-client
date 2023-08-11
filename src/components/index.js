@@ -1,0 +1,1 @@
+export { GiftieLogo } from "./GiftieLogo";

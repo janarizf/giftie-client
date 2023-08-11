@@ -1,0 +1,25 @@
+{
+  "arrow function component": {
+    "prefix": "new-component",
+    "body": [
+      "import React from 'react';",
+      "",
+      "const $TM_FILENAME_BASE = () => {",
+      "  return <div>$TM_FILENAME_BASE</div>;",
+      "};",
+      "",
+      "export default $TM_FILENAME_BASE;"
+    ],
+    "description": "arrow function component"
+  },
+  "styled component": {
+    "prefix": "new-styled",
+    "body": [
+      "import { styled } from 'styled-components';",
+      "",
+      "export const Container = styled.div`",
+      "`;",
+    ],
+    "description": "arrow function component with styled"
+  }
+}
