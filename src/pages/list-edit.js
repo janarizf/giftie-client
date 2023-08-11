@@ -75,10 +75,11 @@ export default function ListEdit() {
           setSelectedTheme(default_theme);
         }
       }
+
       setUser(GetCurrentUser);
       setListData(record);
       getCategory(response.data.category_id);
-      checkFollowers();
+      checkFollowers(record.followers);
     }
     async function getCategory(category) {
       // const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
@@ -86,10 +87,23 @@ export default function ListEdit() {
       const cat = categoryData.data.filter(a => a._id == category);
       setCategory(cat[0].category);
     }
-    function checkFollowers() {
-      listData.followers.some(user => user.user_id === user._id);
-      setFollowerText("Unfollow");
-      setisFollower(true);
+    function checkFollowers(followers) {
+      const currentuser = GetCurrentUser();
+      const isFollowing = followers.some(user => {
+        if (user.user_id == currentuser._id)
+          return true;
+
+        return false;
+      });
+
+      if (isFollowing) {
+        setFollowerText("Unfollow");
+        setisFollower(true);
+      } else {
+        setFollowerText("Follow");
+        setisFollower(false);
+      }
+
     }
     fetchData();
 
@@ -118,7 +132,7 @@ export default function ListEdit() {
 
   }
   function UnfollowList() {
-    const followers = listData.followers.filter(user => user.user_id !== user._id);
+    const followers = listData.followers.filter(us => us.user_id !== user._id);
     listData.followers = followers;
     listsService.update(listData._id, listData)
       .then((respond) => {

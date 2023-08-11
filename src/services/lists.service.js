@@ -8,7 +8,9 @@ class ListsDataService {
   getByUser(id) {
     return http.get(`/lists/getByUser/${id}`);
   }
-
+  getByFollower(id) {
+    return http.get(`/lists/getByFollower/${id}`);
+  }
   get(id) {
     return http.get(`/lists/getOne/${id}`);
   }
