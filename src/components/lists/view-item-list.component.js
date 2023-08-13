@@ -23,7 +23,6 @@ export default class ItemListView extends Component {
             viewItemShow: false,
             editItemShow: false,
             selectedItem: "",
-            reservedText: "Reserve Item",
             sortField: "name",
             sortOrder: true
         };
@@ -86,7 +85,7 @@ export default class ItemListView extends Component {
 
     }
 
-    async reserveItem(e) {
+    reserveItem(e) {
         console.log(e.target.id);
         console.log(this.state.list)
         var filtered = this.state.list.items.filter((item) => item._id != e.target.id);
@@ -110,10 +109,32 @@ export default class ItemListView extends Component {
             .catch(error => { console.log(error) })
     }
 
+    reserveButtonText(d) {
+        if (d.reserved) {
+            if (d.reservedby != this.state.user) {
+              
+                return "Reserved"
+            }
+            else
+                return "Unreserve Item"
+        }
+        return "Reserve Item";
+    }
+    reserveButtonDisabled(d) {
+        if (d.reserved) {
+            if (d.reservedby != this.state.user)
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
     sortItems(field) {
-        const sortedItems = SortItemsByField(field,!this.state.sortOrder,this.state.items)
-        this.setState({ items: sortedItems,
-            sortOrder:!this.state.sortOrder});
+        const sortedItems = SortItemsByField(field, !this.state.sortOrder, this.state.items)
+        this.setState({
+            items: sortedItems,
+            sortOrder: !this.state.sortOrder
+        });
     };
 
     componentDidMount() {
@@ -168,7 +189,10 @@ export default class ItemListView extends Component {
                                                                 Quantity: {d.quantity}<br />
 
                                                                 <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button>
-                                                                <Button size="sm" variant="custom" onClick={event => this.reserveItem(event, this)} id={d._id}>{(d.reserved ? "Unreserve Item" : "Reserve Item")}</Button><br />
+                                                                <Button size="sm" variant="custom" disabled={this.reserveButtonDisabled(d)}
+                                                                    onClick={event => this.reserveItem(event, this)} id={d._id}>
+                                                                    {this.reserveButtonText(d)}
+                                                                </Button><br />
 
                                                             </Card.Text>
 
@@ -213,9 +237,11 @@ export default class ItemListView extends Component {
                                                                 Note: {d.note}<br />
                                                                 Category: {d.category_id}<br />
                                                                 Quantity: {d.quantity}<br />
-
                                                                 <Button size="sm" variant="custom" onClick={this.openViewItem} id={d._id}>View</Button><br />
-                                                                <Button size="sm" variant="custom" onClick={event => this.reserveItem(event, this)} id={d._id}>{(d.reserved ? "Unreserve Item" : "Reserve Item")}</Button><br />
+                                                                <Button size="sm" variant="custom" disabled={this.reserveButtonDisabled(d)}
+                                                                    onClick={event => this.reserveItem(event, this)} id={d._id}>
+                                                                    {this.reserveButtonText(d)}
+                                                                </Button><br />
 
                                                             </Card.Text>
 
