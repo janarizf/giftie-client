@@ -6,6 +6,7 @@ import listsService from "../../services/lists.service";
 import AddGroup from "./add-group.component";
 import GroupList from "./lists/grouplists";
 import GroupMembersView from "./members/group-members.component"
+import Settings from "./settings/settings"
 import Image from 'react-bootstrap/Image'
 import {
   EmailShareButton,
@@ -95,7 +96,6 @@ export default function GroupsEdit() {
     }
     async function getCategory(category) {
       const statusData = [{ id: 1, value: "New" }, { id: 2, value: "Closed" }, { id: 3, value: "Ongoing" }];
-      const typeData = [{ id: 1, value: "Christmas" }, { id: 2, value: "Birthday" }, { id: 3, value: "Wedding" }, { id: 4, value: "Others" }];
       const cat = statusData.filter(a => a.id == category);
       setCategory(cat[0].value);
     }
@@ -103,7 +103,7 @@ export default function GroupsEdit() {
 
 
     return;
-  }, []);
+  }, [params.id]);
 
   return (
 
@@ -118,7 +118,6 @@ export default function GroupsEdit() {
               <div className="my-5" >
                 <h3> Group: {groupData.groupname} </h3>
 
-                <Button size="md" variant="custom" onClick={openModal}>Edit</Button>
                 <div>
                   <EmailShareButton
                     url={shareUrl}
@@ -161,13 +160,13 @@ export default function GroupsEdit() {
               className="mb-3 tab-list"
             >
               <Tab eventKey="lists" title="Lists">
-              {  <GroupList />}
+                {<GroupList />}
               </Tab>
               <Tab eventKey="members" title="Members">
-               {   <GroupMembersView groupid={params.id} />}
+                {<GroupMembersView groupid={params.id} />}
               </Tab>
               <Tab eventKey="settings" title="Settings">
-
+                {<Settings groupData={groupData} />}
               </Tab>
 
             </Tabs>
@@ -179,7 +178,7 @@ export default function GroupsEdit() {
       </Container>
       <Modal show={modal.modalShow} onHide={closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit list</Modal.Title>
+          <Modal.Title>Edit Group</Modal.Title>
         </Modal.Header>
         <Modal.Body><AddGroup groupData={groupData} /></Modal.Body>
       </Modal>

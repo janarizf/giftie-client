@@ -68,12 +68,20 @@ class AdminDataService {
     }
 
     async getAllThemes() {
-        return await http.get("/admin/getAllThemes")
+        return await http.get("/admin/themes/getallthemes")
         .then((response) => { return response })
         .catch((err) => {
             console.log(err);
         });
     }
+    
+  async createThemes(data) {
+    return await http.post("/admin/themes/create", data)
+        .then((response)=> {return response})
+        .catch((err) => {
+          console.log(err);
+      });
+  }
 }
 
 export default new AdminDataService();
