@@ -3,9 +3,9 @@ import { useParams, useNavigate } from "react-router";
 import { Container, Col, Row, Form, Button, Modal, Tab, Tabs, Card, ListGroup } from 'react-bootstrap';
 import groupsService from "../../services/groups.service";
 import listsService from "../../services/lists.service";
-import AddGroup from "./add-group.component"
-import ListView from "../../components/lists/view-list.component";
-import GroupMembersView from "./group-members.component"
+import AddGroup from "./add-group.component";
+import GroupList from "./lists/grouplists";
+import GroupMembersView from "./members/group-members.component"
 import Image from 'react-bootstrap/Image'
 import {
   EmailShareButton,
@@ -79,11 +79,15 @@ export default function GroupsEdit() {
       record.lists.forEach(id => {
         listsService.get(id)
           .then(list => {
-            listDT.push({
-              listId: list.data._id,
-              listName: list.data.name
-            });
-            setListData({ listDT });
+            if (list) {
+
+              listDT.push({
+                listId: list._id,
+                listName: list.name
+              });
+              setListData({ listDT });
+            }
+
           })
 
       });
@@ -157,10 +161,10 @@ export default function GroupsEdit() {
               className="mb-3 tab-list"
             >
               <Tab eventKey="lists" title="Lists">
-                <ListView listData={listData}/>
+              {  <GroupList />}
               </Tab>
               <Tab eventKey="members" title="Members">
-                <GroupMembersView groupid={params.id} />
+               {   <GroupMembersView groupid={params.id} />}
               </Tab>
               <Tab eventKey="settings" title="Settings">
 

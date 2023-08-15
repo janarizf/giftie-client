@@ -19,7 +19,8 @@ export default class AddGroup extends Component {
             members: [],
             invited: [],
             redirect: false,
-            listsData: []
+            listsData: [],
+            selectedLists: []
         };
 
         this.onChangeGroupName = this.onChangeGroupName.bind(this);
@@ -29,6 +30,8 @@ export default class AddGroup extends Component {
         this.onChangeStatus = this.onChangeStatus.bind(this);
         this.onChangeList = this.onChangeList.bind(this);
         this.saveGroup = this.saveGroup.bind(this);
+        this.loadList = this.loadList.bind(this);
+        this.loadUser = this.loadUser.bind(this);
 
         if (props.groupData) {
             this.state = {
@@ -40,8 +43,7 @@ export default class AddGroup extends Component {
                 type: props.groupData.type,
                 status: props.groupData.status,
                 lists: props.groupData.lists,
-                members: props.groupData.members,
-                listsData: props.groupData.lists
+                members: props.groupData.members
             }
         }
     }
@@ -72,10 +74,11 @@ export default class AddGroup extends Component {
         });
     }
     onChangeList(e) {
-       // const options = [...e.target.selectedOptions];
+        // const options = [...e.target.selectedOptions];
         const values = e.map(option => option.value);
         this.setState({
-            lists: values
+            lists: values,
+            selectedLists: e,
         });
     }
     async loadUser() {
@@ -99,8 +102,11 @@ export default class AddGroup extends Component {
                         label: el.name
                     }
                 })
+                const filteredList = newArray.filter(number =>
+                    this.state.lists.includes(number.value));
                 this.setState({
-                    listsData: newArray
+                    listsData: newArray,
+                    selectedLists: filteredList
                 });
             })
             .catch(function (error) {
@@ -118,7 +124,7 @@ export default class AddGroup extends Component {
             status: this.state.status,
             lists: this.state.lists,
             members: this.state.members,
-            invited:  this.state.invited,
+            invited: this.state.invited,
             private: this.state.private,
             createdby: this.state.owner,
             createddate: new Date(),
@@ -138,7 +144,7 @@ export default class AddGroup extends Component {
                         status: respond.data.status,
                         lists: respond.data.lists,
                         members: respond.data.members,
-                        invited:  respond.data.invited,
+                        invited: respond.data.invited,
                         redirect: true
 
                     })
@@ -159,7 +165,7 @@ export default class AddGroup extends Component {
                         status: respond.data.status,
                         lists: respond.data.lists,
                         members: respond.data.members,
-                        invited:  respond.data.invited,
+                        invited: respond.data.invited,
                         redirect: true
 
                     })
@@ -209,14 +215,13 @@ export default class AddGroup extends Component {
                         </Form.Select>
                         <Form.Label>List</Form.Label>
                         <Select
-
                             isMulti={true}
                             name="colors"
                             options={this.state.listsData}
                             onChange={this.onChangeList}
                             className="basic-multi-select"
                             classNamePrefix="select"
-                            defaultValue={this.state.listsData}
+                            value={this.state.selectedLists}
                         />
                         <Form.Check
                             type="switch"
