@@ -9,5 +9,6 @@ export const COLORS = {
   DARK_GRAY: "#707070",
   SECONDARY: "#3c45c7",
   BORDER_GRAY: "#cdcdcd",
-  GRAY: "#7f7f7f"
+  GRAY: "#7f7f7f",
+  DANGER: "#e92a2a"
 };
