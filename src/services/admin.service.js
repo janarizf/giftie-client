@@ -66,7 +66,13 @@ class AdminDataService {
                 console.log(err);
             });
     }
-
+    async getAllThemesCategories() {
+        return await http.get("/admin/themes/getAllThemesCategories")
+            .then((response) => { return response })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
     async getAllThemes() {
         return await http.get("/admin/themes/getallthemes")
             .then((response) => { return response })
