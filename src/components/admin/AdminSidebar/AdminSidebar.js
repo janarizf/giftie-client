@@ -12,8 +12,7 @@ import {
 import { BoxArrowLeft } from "react-bootstrap-icons";
 import { useLocation } from "react-router-dom";
 
-const AdminSidebar = () => {
-  const [activeNav, setActiveNav] = useState("Dashboard");
+const AdminSidebar = ({ activeNav, setActiveNav }) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -23,54 +22,56 @@ const AdminSidebar = () => {
     if (active) {
       setActiveNav(active.name);
     }
-  }, [location.pathname]);
+  }, [location.pathname, setActiveNav]);
 
   return (
-    <Sidebar>
-      <Logo />
-      <StyledNav activeKey={activeNav}>
-        {ADMIN_SIDEBAR_ITEMS.map((item, index) => {
-          return item.name === "Marketing" ? (
-            <StyledNavDropdown
-              key={`${item.name}`}
-              active={activeNav === item.name}
-              title={
-                <React.Fragment>
-                  {item.icon} {item.name}
-                </React.Fragment>
-              }
-              disabled={item.disabled}
-            >
-              {MARKETING_SUB_MENUS.map((subItem) => {
-                return (
-                  <StyledNavDropdown.Item
-                    key={`${item.name}--${subItem.name}`}
-                    href={subItem.link}
-                    disabled={subItem.disabled}
-                  >
-                    {subItem.name}
-                  </StyledNavDropdown.Item>
-                );
-              })}
-            </StyledNavDropdown>
-          ) : (
-            <StyledNav.Link
-              key={`${item.name}`}
-              href={item.link}
-              disabled={item.disabled}
-              active={activeNav === item.name}
-            >
-              {item.icon}
-              {item.name}
-            </StyledNav.Link>
-          );
-        })}
-        <StyledNav.Link href='#' disabled={false}>
-          <BoxArrowLeft width='15px' />
-          Logout
-        </StyledNav.Link>
-      </StyledNav>
-    </Sidebar>
+    <React.Fragment>
+      <Sidebar>
+        <Logo />
+        <StyledNav activeKey={activeNav}>
+          {ADMIN_SIDEBAR_ITEMS.map((item, index) => {
+            return item.name === "Marketing" ? (
+              <StyledNavDropdown
+                key={`${item.name}`}
+                active={activeNav === item.name}
+                title={
+                  <React.Fragment>
+                    {item.icon} {item.name}
+                  </React.Fragment>
+                }
+                disabled={item.disabled}
+              >
+                {MARKETING_SUB_MENUS.map((subItem) => {
+                  return (
+                    <StyledNavDropdown.Item
+                      key={`${item.name}--${subItem.name}`}
+                      href={subItem.link}
+                      disabled={subItem.disabled}
+                    >
+                      {subItem.name}
+                    </StyledNavDropdown.Item>
+                  );
+                })}
+              </StyledNavDropdown>
+            ) : (
+              <StyledNav.Link
+                key={`${item.name}`}
+                href={item.link}
+                disabled={item.disabled}
+                active={activeNav === item.name}
+              >
+                {item.icon}
+                {item.name}
+              </StyledNav.Link>
+            );
+          })}
+          <StyledNav.Link href='#' disabled={false}>
+            <BoxArrowLeft width='15px' />
+            Logout
+          </StyledNav.Link>
+        </StyledNav>
+      </Sidebar>
+    </React.Fragment>
   );
 };
 

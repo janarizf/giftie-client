@@ -32,7 +32,7 @@ const CustomTable = ({
           <tr>
             {headers.map((i) => (
               <th>
-                <Typography color={COLORS.DARK_GRAY}>{i}</Typography>
+                <Typography color={COLORS.DARK_GRAY} children={undefined} customMargin={undefined}>{i}</Typography>
               </th>
             ))}
             {hasActions ? (

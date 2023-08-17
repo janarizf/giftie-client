@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import AdminSidebar from "../AdminSidebar/AdminSidebar";
 import {
@@ -9,12 +9,14 @@ import {
 } from "./AdminLayout.styled";
 
 const AdminLayout = ({ children }) => {
+  const [activeNav, setActiveNav] = useState("Dashboard");
+
   return (
     <MainContainer fluid>
       <Wrapper>
-        <AdminSidebar />
+        <AdminSidebar setActiveNav={setActiveNav} activeNav={activeNav} />
         <ContentWrapper>
-          <AdminHeader />
+          <AdminHeader activeNav={activeNav} setActiveNav={setActiveNav} />
           <Content>{children}</Content>
         </ContentWrapper>
       </Wrapper>
