@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import AddItem from "./add-item.component";
 import EditItem from "./edit-item.component";
 import ViewItem from "./view-item.components";
-import ListSetting from "./settings.component";
+import ListSetting from "./settings/settings";
 import listsService from "../../services/lists.service";
 import { SortItemsByField } from "../../helper";
 import { Link } from 'react-router-dom';

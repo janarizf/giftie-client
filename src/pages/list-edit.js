@@ -58,22 +58,11 @@ export default function ListEdit() {
         record.image = require('../img/giftie_question.png');
       }
       if (record.themes) {
-        //TODO: update code using themes from admin module. get all themes then filter.
-        if (record.themes.toString().includes("birthday")) {
-          setSelectedTheme(birthday);
-        }
-        else if (record.themes.toString().includes("wedding")) {
-          setSelectedTheme(wedding);
-        }
-        else if (record.themes.toString().includes("baby_shower")) {
-          setSelectedTheme(baby_shower);
-        }
-        else if (record.themes.toString().includes("christmas")) {
-          setSelectedTheme(christmas);
-        }
-        else {
-          setSelectedTheme(default_theme);
-        }
+        const activetheme = await adminService.getThemesById(record.themes);
+        setSelectedTheme(activetheme.data);
+      }
+      else {
+        setSelectedTheme(default_theme);
       }
 
       setUser(GetCurrentUser);

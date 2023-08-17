@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Navigate } from 'react-router-dom';
 import { Button, Row, Col, Form, Container, Image, ToggleButton, ButtonGroup, Figure } from 'react-bootstrap';
-import listsService from "../../services/lists.service";
-import adminService from "../../services/admin.service";
-import { ImgUpload, CheckImgFile } from "../../helper"
+
+import listsService from "../../../services/lists.service";
+import adminService from "../../../services/admin.service";
+import { ImgUpload, CheckImgFile } from "../../../helper"
 import { format } from 'date-fns';
 
 export default class ListSetting extends Component {
@@ -37,7 +38,8 @@ export default class ListSetting extends Component {
       imageUpload: [],
       themes: "",
       private: true,
-      categoryData: []
+      categoryData: [],
+      themesData: []
 
     }
 
@@ -118,9 +120,17 @@ export default class ListSetting extends Component {
     }.bind(this))
   }
 
+  async getThemes() {
+    const themes = await adminService.getAllThemes()
+    this.setState({
+      themesData: themes.data
+    });
+  }
+
   componentDidMount() {
     this.loadList();
     this.getCategory();
+    this.getThemes();
   }
   async getCategory() {
     // const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
@@ -324,22 +334,23 @@ export default class ListSetting extends Component {
                   <Form.Label>  Theme:</Form.Label>
                 </Col>
                 <Col sm={10}>
-
-                  <ButtonGroup>
-                    {radios.map((radio, idx) => (
-                      <ToggleButton
-                        key={idx}
-                        id={`radio-${idx}`}
-                        type="radio"
-                        variant={'outline-primary'}
-                        name={radio.name}
-                        value={radio.value}
-                        checked={this.state.themes === radio.value}
-                        onChange={this.onChangethemes}>
-                        {radio.name}
-                      </ToggleButton>
-                    ))}
-                  </ButtonGroup>
+                 
+                  {this.state.themesData.map((option, index) => (
+                    <Row>
+                    <Form.Check
+                       name="group1"
+                      key={index}
+                      type="radio"
+                      checked={this.state.themes === option._id}
+                      onChange={this.onChangethemes}
+                      value={option._id} // Actual value
+                    />
+                    {option.name}
+                    <Image fluid src={option.backgroundimage} alt={option.name}   
+                    style={{ width: 100, height: 100, borderRadius: 100/2, padding: 0}}/>
+                  </Row>
+                  ))}
+                 
                 </Col>
               </Row>
               {this.state.themes == "custom"

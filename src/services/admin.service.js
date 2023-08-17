@@ -61,27 +61,33 @@ class AdminDataService {
 
     async getAllListCategories() {
         return await http.get("/admin/getAllListCategories")
-        .then((response) => { return response })
-        .catch((err) => {
-            console.log(err);
-        });
+            .then((response) => { return response })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     async getAllThemes() {
         return await http.get("/admin/themes/getallthemes")
-        .then((response) => { return response })
-        .catch((err) => {
-            console.log(err);
-        });
+            .then((response) => { return response })
+            .catch((err) => {
+                console.log(err);
+            });
     }
-    
-  async createThemes(data) {
-    return await http.post("/admin/themes/create", data)
-        .then((response)=> {return response})
-        .catch((err) => {
-          console.log(err);
-      });
-  }
+    async getThemesById(themeId) {
+        return await http.get(`/admin/themes/getThemesById/${themeId}`)
+            .then((response) => { return response })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    async createThemes(data) {
+        return await http.post("/admin/themes/create", data)
+            .then((response) => { return response })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 }
 
 export default new AdminDataService();

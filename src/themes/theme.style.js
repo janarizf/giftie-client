@@ -1,16 +1,12 @@
 export const default_theme = {
     name: "default_theme",
-    category: "default_theme",
-    colors: {
-        header: "#9d1f3f",
-        body: "#10c4a4",
-        text: "#ffffff"
-    },
-    images:
-    {
-        header: "http://localhost:3000/giftie_green.jpg",
-        background: "",
-    }
+    category_id: "default_theme",
+    headercolor: "#9d1f3f",
+    bodycolor: "#10c4a4",
+    textcolor: "#ffffff",
+    headerimage: "http://localhost:3000/giftie_green.jpg",
+    backgroundimage: "https://giftie-backend.herokuapp.com/lists/getImage/1691433060064-20.png",
+
 };
 export const baby_shower = {
     name: "baby_shower",

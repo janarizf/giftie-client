@@ -4,13 +4,13 @@ export const GlobalStyles = createGlobalStyle`
   h5, h3
   {
     font-family: 'Nunito ExtraBold', sans-serif;
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.textcolor};
   }
 
   .jumbotron-list{
-    background: ${({ theme }) => theme.colors.body};
-    background-image: url(${({ theme }) => theme.images.header});
-    color: ${({ theme }) => theme.colors.text};
+    background: ${({ theme }) => theme.headercolor};
+    background-image: url(${({ theme }) => theme.headerimage});
+    color: ${({ theme }) => theme.textcolor};
     background-size: cover;
     background-position: bottom; 
     text-align: center;
@@ -26,20 +26,23 @@ export const GlobalStyles = createGlobalStyle`
   {
     background: #000000;
     background-color: rgba(0, 0, 0, .001);
+    background-image: url(${({ theme }) => theme.backgroundimage});
+    background-size: cover;
+    background-position: bottom; 
   }
 
   .footer
   {
-    background: ${({ theme }) => theme.colors.body};
-    background-image: url(${({ theme }) => theme.images.header});
+    background: ${({ theme }) => theme.headercolor};
+    background-image: url(${({ theme }) => theme.headerimage});
     background-size: cover;
     background-position: bottom; 
     padding: 20px;
-    color: #ffffff;
+    color: ${({ theme }) => theme.bodycolor};
   }
   .main
   {
-    background-image: url(${({ theme }) => theme.images.background});
+    background-image: url(${({ theme }) => theme.backgroundimage});
     background-size: cover;
     background-position: bottom; 
   }
