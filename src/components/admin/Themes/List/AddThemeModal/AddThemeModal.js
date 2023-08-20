@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyledModal,
   MultiSelectDropdown
@@ -14,11 +14,13 @@ import {
 import { BrushFill } from "react-bootstrap-icons";
 import { COLORS } from "../../../../../constants/colors";
 import { SketchPicker } from "react-color";
+import useOutsideContainerClick from "./../../../../../shared/utils/useOutsideContainerClick";
 
 const AddThemeModal = ({ open, onClose }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
   const [color, setColor] = useState("#FF5733");
+  const wrapperRef = useRef(null);
 
   const toggleItem = (item) => {
     if (selectedItems.includes(item)) {
@@ -31,6 +33,11 @@ const AddThemeModal = ({ open, onClose }) => {
   const handleChange = (selectedColor) => {
     setColor(selectedColor.hex);
   };
+
+  const handleColorPickerClose = () => {
+    setIsColorPickerOpen(false);
+  };
+  useOutsideContainerClick(wrapperRef, handleColorPickerClose);
 
   return (
     <StyledModal
@@ -76,7 +83,7 @@ const AddThemeModal = ({ open, onClose }) => {
         </Form>
       </StyledModal.Body>
       {isColorPickerOpen ? (
-        <SketchPickerContainer>
+        <SketchPickerContainer ref={wrapperRef}>
           <SketchPicker color={color} onChange={handleChange} />
           <SketchPickerButtonsContainer>
             <StyledButton>Select</StyledButton>
