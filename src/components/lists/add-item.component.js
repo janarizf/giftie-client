@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Button, Form, Figure, Spinner } from 'react-bootstrap';
-import Image from 'react-bootstrap/Image'
+import { Button, Form, Figure, Spinner } from "react-bootstrap";
+import Image from "react-bootstrap/Image";
 import listsService from "../../services/lists.service";
-import { ImgUpload, CheckImgFile } from "../../helper"
-
+import { ImgUpload, CheckImgFile } from "../../helper";
 
 export default class AddItem extends Component {
   constructor(props) {
@@ -38,7 +37,7 @@ export default class AddItem extends Component {
       isEdit: false,
       link_img: "",
       loading: false
-    }
+    };
   }
 
   onChangeName(e) {
@@ -58,7 +57,8 @@ export default class AddItem extends Component {
       this.setState({
         loading: true
       });
-      await listsService.getImg(encodeURIComponent(this.state.website))
+      await listsService
+        .getImg(encodeURIComponent(this.state.website))
         .then((response) => {
           this.setState({
             link_img: response.data,
@@ -72,7 +72,6 @@ export default class AddItem extends Component {
     }
   }
 
-
   onChangeCategory(e) {
     this.setState({
       category: e.target.value
@@ -80,7 +79,9 @@ export default class AddItem extends Component {
   }
 
   deleteImage(e) {
-    const ImagesArray = this.state.imageSrc.filter((item, index) => index !== e);
+    const ImagesArray = this.state.imageSrc.filter(
+      (item, index) => index !== e
+    );
     this.setState({
       hasImage: false,
       imageSrc: ImagesArray
@@ -134,11 +135,9 @@ export default class AddItem extends Component {
   }
   async imageUpload() {
     const selectedFile = document.getElementById("input-file").files[0];
-    return listsService.fileupload(selectedFile)
-      .then((res) => {
-        return res
-      });
-
+    return listsService.fileupload(selectedFile).then((res) => {
+      return res;
+    });
   }
   async handleUpload(imageUrl) {
     try {
@@ -147,7 +146,7 @@ export default class AddItem extends Component {
       const blob = await response.blob();
 
       // Create a File object from the Blob with a predefined filename
-      const filename = imageUrl.split('/').pop(); // Extract filename from URL
+      const filename = imageUrl.split("/").pop(); // Extract filename from URL
       const uploadedFile = new File([blob], filename, { type: blob.type });
 
       var files = [];
@@ -157,11 +156,10 @@ export default class AddItem extends Component {
         hasImage: true,
         imageUpload: files
       });
-
     } catch (error) {
-      console.error('Error fetching or uploading the image:', error);
+      console.error("Error fetching or uploading the image:", error);
     }
-  };
+  }
   saveItems(e) {
     try {
       e.preventDefault();
@@ -181,8 +179,9 @@ export default class AddItem extends Component {
         reserved: false
       };
       if (!this.state.hasImage) {
-        this.state.list_data.items.push(data)
-        listsService.update(this.state.list_data._id, this.state.list_data)
+        this.state.list_data.items.push(data);
+        listsService
+          .update(this.state.list_data._id, this.state.list_data)
           .then((response) => {
             this.setState({
               list_id: response.data._id,
@@ -193,81 +192,129 @@ export default class AddItem extends Component {
             alert("Added item " + data.name);
             window.location.reload(true);
           });
-      }
-      else {
+      } else {
+        ImgUpload(
+          this.state.imageUpload[0],
+          function (uploaded) {
+            //const apiurl = process.env.REACT_APP_APIURL;
+            //  data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
 
-        ImgUpload(this.state.imageUpload[0], function (uploaded) {
-          //const apiurl = process.env.REACT_APP_APIURL;
-          //  data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
+            data.image = [
+              {
+                id: uploaded.data[0].id,
+                filename: uploaded.data[0].filename
+              }
+            ];
+            console.log(data.image);
+            // this.state.list_data.updatedby = "admin";
+            //this.state.list_data.updateddate = new Date();
+            this.state.list_data.items.push(data);
+            listsService
+              .update(this.state.list_data._id, this.state.list_data)
+              .then((response) => {
+                console.log(response.data);
+                this.setState({
+                  list_id: response.data._id,
+                  list_data: response.data,
+                  hasImage: false
+                });
 
-          data.image = [{
-            id: uploaded.data[0].id,
-            filename: uploaded.data[0].filename
-          }];
-          console.log(data.image)
-          // this.state.list_data.updatedby = "admin";
-          //this.state.list_data.updateddate = new Date();
-          this.state.list_data.items.push(data)
-          listsService.update(this.state.list_data._id, this.state.list_data)
-            .then((response) => {
-              console.log(response.data);
-              this.setState({
-                list_id: response.data._id,
-                list_data: response.data,
-                hasImage: false
+                console.log(response.data._id);
+                alert("Added item " + data.name);
+                window.location.reload(true);
               });
-
-              console.log(response.data._id);
-              alert("Added item " + data.name);
-              window.location.reload(true);
-            })
-        }.bind(this));
+          }.bind(this)
+        );
       }
     } catch (error) {
       console.log(error);
     }
-
   }
   render() {
-    const itemCategoryData = [{ id: 1, value: "Clothes" }, { id: 2, value: "Gadgets" }, { id: 3, value: "Food" }, { id: 4, value: "Appliances" }, { id: 5, value: "Others" }];
+    const itemCategoryData = [
+      { id: 1, value: "Clothes" },
+      { id: 2, value: "Gadgets" },
+      { id: 3, value: "Food" },
+      { id: 4, value: "Appliances" },
+      { id: 5, value: "Others" }
+    ];
     return (
-      <Form onSubmit={this.saveItems} encType="multipart/form-data">
+      <Form onSubmit={this.saveItems} encType='multipart/form-data'>
         <Form.Group>
           <Form.Label>Add to List</Form.Label>
-          <Form.Control placeholder="Disabled input" disabled={true} value={this.state.list_data.name} />
+          <Form.Control
+            placeholder='Disabled input'
+            disabled={true}
+            value={this.state.list_data.name}
+          />
           <Form.Label>What would you like?</Form.Label>
-          <Form.Control placeholder="e.g. toys, chocolates, essentials etc.." disabled={this.state.isEdit} name="name" required value={this.state.name} onChange={this.onChangeName} />
+          <Form.Control
+            placeholder='e.g. toys, chocolates, essentials etc..'
+            disabled={this.state.isEdit}
+            name='name'
+            required
+            value={this.state.name}
+            onChange={this.onChangeName}
+          />
           <Form.Label>Website item link (optional)</Form.Label>
-          <Form.Control placeholder="https://" name="website" value={this.state.website} disabled={false} onChange={this.onChangeWebsite} />
-          <Button size="sm" variant="custom" onClick={() => this.scrapeImg()} disabled={this.state.loading}>
+          <Form.Control
+            placeholder='https://'
+            name='website'
+            value={this.state.website}
+            disabled={false}
+            onChange={this.onChangeWebsite}
+          />
+          <Button
+            size='sm'
+            variant='custom'
+            onClick={() => this.scrapeImg()}
+            disabled={this.state.loading}
+          >
             Get Image
-            {this.state.loading && <Spinner
-              as="span"
-              animation="border"
-              role="status"
-              aria-hidden="true"
-            />}
+            {this.state.loading && (
+              <Spinner
+                as='span'
+                animation='border'
+                role='status'
+                aria-hidden='true'
+              />
+            )}
           </Button>
 
           <br />
 
           <Form.Label>Item Category</Form.Label>
-          <Form.Select value={this.state.category} onChange={this.onChangeCategory} disabled={false} required >
-            <option key="0" value="">Category</option>
-            {
-              itemCategoryData.map(function (category, index) {
-                return <option key={index} value={category.id} >{category.value}</option>
-              })
-            }
-
+          <Form.Select
+            value={this.state.category}
+            onChange={this.onChangeCategory}
+            disabled={false}
+            required
+          >
+            <option key='0' value=''>
+              Category
+            </option>
+            {itemCategoryData.map(function (category, index) {
+              return (
+                <option key={index} value={category.id}>
+                  {category.value}
+                </option>
+              );
+            })}
           </Form.Select>
           <Form.Label>Images (optional)</Form.Label>
-          <Form.Control type="file" accept=".png, .jpg, .jpeg" disabled={false} name="image" id="input-file" onChange={this.onChangeImage} />
-          {this.state.link_img &&
+          <Form.Control
+            type='file'
+            accept='.png, .jpg, .jpeg'
+            disabled={false}
+            name='image'
+            id='input-file'
+            onChange={this.onChangeImage}
+          />
+          {this.state.link_img && (
             <div>
-              <img src={this.state.link_img} alt="" width="100" height="auto" />
+              <img src={this.state.link_img} alt='' width='100' height='auto' />
             </div>
-          }
+          )}
           {this.state.hasImage &&
             this.state.imageSrc.map((item, index) => {
               return (
@@ -280,22 +327,46 @@ export default class AddItem extends Component {
                   </button> */}
                 </div>
               );
-            })
-          }
+            })}
           {/* {this.state.hasImage && <Button variant="custom" onClick={this.imageUpload}>upload</Button>}<br/> */}
           <Form.Label>Note (optional)</Form.Label>
-          <Form.Control placeholder="explain what do you prefer for that item" name="note" disabled={false} value={this.state.note} onChange={this.onChangeNote} />
+          <Form.Control
+            placeholder='explain what do you prefer for that item'
+            name='note'
+            disabled={false}
+            value={this.state.note}
+            onChange={this.onChangeNote}
+          />
           <Form.Label>Max Pricing (optional)</Form.Label>
-          <Form.Control type="number" name="price" value={this.state.price} disabled={false} onChange={this.onChangePrice} />
+          <Form.Control
+            type='number'
+            name='price'
+            value={this.state.price}
+            disabled={false}
+            onChange={this.onChangePrice}
+          />
           <Form.Label>Quantity</Form.Label>
-          <Form.Control type="number" name="quantity" placeholder="0" disabled={false} value={this.state.quantity} onChange={this.onChangeQuantity} />
-          <Form.Check type='checkbox' label="Unlimited Item" name="unlimited" disabled={false} value={this.state.unlimited} onChange={this.onChangeUnlimited} />
+          <Form.Control
+            type='number'
+            name='quantity'
+            placeholder='0'
+            disabled={false}
+            value={this.state.quantity}
+            onChange={this.onChangeQuantity}
+          />
+          <Form.Check
+            type='checkbox'
+            label='Unlimited Item'
+            name='unlimited'
+            disabled={false}
+            value={this.state.unlimited}
+            onChange={this.onChangeUnlimited}
+          />
         </Form.Group>
-        <Button variant="custom" type="submit">
+        <Button variant='custom' type='submit'>
           Submit
         </Button>
       </Form>
-
     );
   }
 }
