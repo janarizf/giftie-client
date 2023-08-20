@@ -31,9 +31,9 @@ const AddThemeModal = ({ open, onClose }) => {
   });
 
   useEffect(() => {
-    const localThemeColor = localStorage.getItem("themeColors");
+    const localThemeColor = JSON.parse(localStorage.getItem("themeColors"));
     if (localThemeColor) {
-      setThemeColors(JSON.parse(localThemeColor));
+      setThemeColors(localThemeColor);
     }
   }, []);
 
@@ -93,7 +93,9 @@ const AddThemeModal = ({ open, onClose }) => {
       ...themeColors,
       [colorType]: [...themeColors[colorType], color]
     });
-    // form.setFieldValue(colorType, color);
+    if (!themeColors[colorType].length) {
+      form.setFieldValue(colorType, color);
+    }
     setIsColorPickerOpen(false);
   };
 
