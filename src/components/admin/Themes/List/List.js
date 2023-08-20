@@ -49,17 +49,9 @@ const List = ({ categoryFilter }) => {
     return;
   }, [categoryFilter]);
 
-  console.log("====================================");
-  console.log(categoryFilter);
-  console.log("====================================");
-
   const themes = useMemo(() => {
     return response ? response.data : [];
   }, [response]);
-
-  console.log("====================================");
-  console.log(themes);
-  console.log("====================================");
 
   if (isLoading)
     return (
