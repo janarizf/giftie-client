@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Container, AddNewTheme, ThemeItem } from "./List.styled";
+import { Container, AddNewTheme } from "./List.styled";
 import { PlusLg } from "react-bootstrap-icons";
 import { Typography } from "../../../../shared/elements";
 import { COLORS } from "../../../../constants/colors";
 import AddThemeModal from "./AddThemeModal/AddThemeModal";
-import adminService from "../../../../services/admin.service";
+import themeService from "../../../../services/admin/themes.service";
 import Item from "./Item";
 import { Spinner } from "react-bootstrap";
 
@@ -17,8 +17,8 @@ const List = () => {
   useEffect(() => {
     setIsLoading(true);
     async function fetchData() {
-      adminService
-        .getAllThemes()
+      themeService
+        .getAll()
         .then((response) => {
           setResponse(response);
           setIsLoading(false);

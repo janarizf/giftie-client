@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Container } from "./Header.styled";
 import { Typography, Select } from "../../../../shared/elements";
 import { Dropdown } from "react-bootstrap";
-import adminService from "../../../../services/admin.service";
 import { Spinner } from "react-bootstrap";
+import categoriesService from "../../../../services/admin/categories.service";
 
 const Header = ({ categoryFilter, setCategoryFilter }) => {
   const [response, setResponse] = useState(null);
@@ -12,7 +12,7 @@ const Header = ({ categoryFilter, setCategoryFilter }) => {
   useEffect(() => {
     setIsLoading(true);
     async function fetchData() {
-      adminService
+      categoriesService
         .getAllThemesCategories()
         .then((response) => {
           setResponse(response);
@@ -25,6 +25,7 @@ const Header = ({ categoryFilter, setCategoryFilter }) => {
     }
 
     fetchData();
+
     return;
   }, []);
 
