@@ -4,7 +4,7 @@ import Header from "./Header/Header";
 import List from "./List/List";
 
 const Themes = () => {
-  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [categoryFilter, setCategoryFilter] = useState("");
   return (
     <Container>
       <Header

@@ -47,7 +47,7 @@ const Header = ({ categoryFilter, setCategoryFilter }) => {
       ) : (
         <Select>
           <Dropdown.Toggle id='dropdown-autoclose-true'>
-            {categoryFilter ? categoryFilter : "Default"}
+            {categoryFilter ? categoryFilter : "All"}
           </Dropdown.Toggle>
           <Dropdown.Menu className='w-100'>
             <Dropdown.Item
@@ -71,4 +71,4 @@ const Header = ({ categoryFilter, setCategoryFilter }) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

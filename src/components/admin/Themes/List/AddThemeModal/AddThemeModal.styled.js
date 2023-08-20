@@ -13,10 +13,35 @@ export const AddColor = styled("div")`
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  margin: 2px;
 
   &:hover {
     opacity: 0.8;
   }
+`;
+
+export const ColorItem = styled("div")`
+  background: ${(props) => props.$backgroundColor || COLORS.PRIMARY};
+  border-radius: 25px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const ShadowActiveBorder = styled("div")`
+  display: absolute;
+  padding: 2px;
+  background-color: transparent;
+  border-radius: 25px;
+  transition: 0.2s;
 `;
 
 export const SketchPickerContainer = styled("div")`
