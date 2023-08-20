@@ -46,7 +46,7 @@ const AddThemeModal = ({ open, onClose }) => {
       </StyledModal.Header>
       <StyledModal.Body>
         <Form>
-          <Form.Group className='mb-3' controlId='addThemeForm.ControlInput1'>
+          <Form.Group className='mb-3' controlId='addThemeForm.category'>
             <Form.Label>List Category</Form.Label>
             <MultiSelectDropdown
               options={themesList}
@@ -55,30 +55,42 @@ const AddThemeModal = ({ open, onClose }) => {
               type={"checkbox"}
             />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='addThemeForm.ControlInput1'>
-            <Form.Label>Foreground Color</Form.Label>
+          <Form.Group className='mb-3' controlId='addThemeForm.textColor'>
+            <Form.Label>Text Color</Form.Label>
             <AddColor onClick={() => setIsColorPickerOpen(true)}>
               <BrushFill style={{ fontSize: "13px" }} color={COLORS.DANGER} />
             </AddColor>
-            {isColorPickerOpen ? (
-              <SketchPickerContainer>
-                <SketchPicker color={color} onChange={handleChange} />
-                <SketchPickerButtonsContainer>
-                  <StyledButton>Select</StyledButton>
-                  <StyledButton
-                    className='secondary'
-                    onClick={() => setIsColorPickerOpen(false)}
-                  >
-                    Close
-                  </StyledButton>
-                </SketchPickerButtonsContainer>
-              </SketchPickerContainer>
-            ) : (
-              <React.Fragment />
-            )}
+          </Form.Group>
+          <Form.Group className='mb-3' controlId='addThemeForm.backgroundColor'>
+            <Form.Label>Background Color</Form.Label>
+            <AddColor onClick={() => setIsColorPickerOpen(true)}>
+              <BrushFill style={{ fontSize: "13px" }} color={COLORS.DANGER} />
+            </AddColor>
+          </Form.Group>
+          <Form.Group className='mb-3' controlId='addThemeForm.headerColor'>
+            <Form.Label>Header Color</Form.Label>
+            <AddColor onClick={() => setIsColorPickerOpen(true)}>
+              <BrushFill style={{ fontSize: "13px" }} color={COLORS.DANGER} />
+            </AddColor>
           </Form.Group>
         </Form>
       </StyledModal.Body>
+      {isColorPickerOpen ? (
+        <SketchPickerContainer>
+          <SketchPicker color={color} onChange={handleChange} />
+          <SketchPickerButtonsContainer>
+            <StyledButton>Select</StyledButton>
+            <StyledButton
+              className='secondary'
+              onClick={() => setIsColorPickerOpen(false)}
+            >
+              Close
+            </StyledButton>
+          </SketchPickerButtonsContainer>
+        </SketchPickerContainer>
+      ) : (
+        <React.Fragment />
+      )}
     </StyledModal>
   );
 };

@@ -13,31 +13,36 @@ class ListsDataService {
     return http.get(`/lists/getOne/${id}`);
   }
 
-   getImg(url) {
-    return  http.get(`/imgscraper/getimg/${url}`);
+  getImg(url) {
+    return http.get(`/imgscraper/getimg/${url}`);
   }
   convertImg(file) {
-    return  http.get(`/imgscraper/convertImg/${file}`);
+    return http.get(`/imgscraper/convertImg/${file}`);
   }
 
-
   async create(data) {
-    return await http.post("/lists/create", data)
-        .then((response)=> {return response})
-        .catch((err) => {
-          console.log(err);
+    return await http
+      .post("/lists/create", data)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 
   async update(id, data) {
-    return await http.patch(`/lists/update/${id}`, data)
-    .then((response)=> {return response})
-    .catch((err) => {
-      console.log(err);
-  });
+    return await http
+      .patch(`/lists/update/${id}`, data)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-   additem(id, data) {
-    return  http.put(`/lists/update/${id}`, data);
+  additem(id, data) {
+    return http.put(`/lists/update/${id}`, data);
   }
   delete(id) {
     return http.delete(`/lists/delete/${id}`);
@@ -56,19 +61,19 @@ class ListsDataService {
       let formData = new FormData();
       formData.append("image", data);
 
-      var response = http.postForm("/lists/fileupload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }
-      })
-      .then((res) => 
-      { 
-        console.log(res);
-        return res;
-      });
-     return response;
+      var response = http
+        .postForm("/lists/fileupload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then((res) => {
+          console.log(res);
+          return res;
+        });
+      return response;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 }

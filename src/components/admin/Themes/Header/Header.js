@@ -1,20 +1,62 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Container } from "./Header.styled";
 import { Typography, Select } from "../../../../shared/elements";
 import { Dropdown } from "react-bootstrap";
+import adminService from "../../../../services/admin.service";
+import { Spinner } from "react-bootstrap";
 
 const Header = () => {
+  const [response, setResponse] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    async function fetchData() {
+      adminService
+        .getAllThemeCategories()
+        .then((response) => {
+          setResponse(response);
+          setIsLoading(false);
+        })
+        .catch(function (error) {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+
+    fetchData();
+    return;
+  }, []);
+
+  const themeCategories = useMemo(() => {
+    return response ? response.data : [];
+  }, [response]);
+
   return (
     <Container>
       <Typography fontSize={14} fontWeight='bold'>
         All Themes
       </Typography>
-      <Select>
-        <Dropdown.Toggle id='dropdown-autoclose-true'>Birthday</Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item key={"Birthday"}>{"Birthday"}</Dropdown.Item>
-        </Dropdown.Menu>
-      </Select>
+      {isLoading ? (
+        <Spinner
+          animation='border'
+          role='status'
+          style={{ margin: "10px 20px 0 auto" }}
+        >
+          <span className='visually-hidden'>Loading...</span>
+        </Spinner>
+      ) : (
+        <Select>
+          <Dropdown.Toggle id='dropdown-autoclose-true'>
+            Birthday
+          </Dropdown.Toggle>
+          <Dropdown.Menu className='w-100'>
+            {themeCategories.map((item) => (
+              <Dropdown.Item key={item._id}>{item.category}</Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Select>
+      )}
     </Container>
   );
 };

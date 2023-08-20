@@ -43,7 +43,6 @@ export const ThemeItem = styled.div`
   gap: 5px;
   cursor: pointer;
   transition: 0.2s;
-  background-image: url(${(props) => props.$image || placeholderImage});
   background-size: contain;
   border: 1px solid ${COLORS.MAIN_BACKGROUND};
   position: relative;
