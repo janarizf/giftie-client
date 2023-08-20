@@ -17,6 +17,7 @@ import { useAddThemeForm } from "./AddThemeForm";
 import categoriesService from "../../../../../services/admin/categories.service";
 import { Select } from "../../../../../shared/elements";
 import FileUpload from "./../../../../FileUpload/FileUpload";
+import themesService from "../../../../../services/admin/themes.service";
 
 const AddThemeModal = ({ open, onClose }) => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
@@ -49,7 +50,7 @@ const AddThemeModal = ({ open, onClose }) => {
   useEffect(() => {
     setIsLoading(true);
     async function fetchData() {
-      categoriesService
+      await categoriesService
         .getAllThemesCategories()
         .then((response) => {
           setResponse(response);
@@ -106,8 +107,19 @@ const AddThemeModal = ({ open, onClose }) => {
 
   // Form
   const handleSubmit = (values) => {
-    // Simulate form submission
-    console.log(values);
+    async function createTheme() {
+      await themesService
+        .create(values)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+
+    createTheme();
   };
 
   const { form } = useAddThemeForm({
@@ -144,6 +156,15 @@ const AddThemeModal = ({ open, onClose }) => {
       </StyledModal.Header>
       <StyledModal.Body>
         <Form>
+          <Form.Group className='mb-3' controlId='addThemeForm.name'>
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              placeholder={"Enter name"}
+              value={form.values.name}
+              name={"name"}
+              style={{ borderColor: "#707070" }}
+            />
+          </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.category'>
             <Form.Label>List Category</Form.Label>
             {/* <MultiSelectDropdown
@@ -161,7 +182,7 @@ const AddThemeModal = ({ open, onClose }) => {
                 <React.Fragment>
                   <Dropdown.Toggle
                     id='dropdown-autoclose-true'
-                    style={{ height: 34 }}
+                    style={{ height: 38 }}
                   >
                     {themeCategories.filter(
                       (v) => v._id === form.values.category_id
