@@ -7,6 +7,7 @@ export const ROUTES = {
     DASHBOARD: "/admin/dashboard",
     THEMES: "/admin/themes",
     LINKS: "/admin/links",
-    MARKETING: "/admin/marketing/:tab"
+    MARKETING: "/admin/marketing/:tab",
+    SETTINGS: "/admin/settings/:tab"
   }
 };
