@@ -4,9 +4,13 @@ import Header from "./Header/Header";
 import List from "./List/List";
 
 const Themes = () => {
+  const [categoryFilter, setCategoryFilter] = useState("Default");
   return (
     <Container>
-      <Header />
+      <Header
+        categoryFilter={categoryFilter}
+        setCategoryFilter={setCategoryFilter}
+      />
       <List />
     </Container>
   );

@@ -37,31 +37,34 @@ const List = () => {
     return response ? response.data : [];
   }, [response]);
 
-  return (
-    <Container>
-      <AddNewTheme onClick={() => setIsAddThemeModalOpen(true)}>
-        <PlusLg size={"24px"} color={COLORS.SECONDARY} />
-        <Typography color={COLORS.SECONDARY} fontWeight='bold'>
-          Add New Theme
-        </Typography>
-      </AddNewTheme>
-      {isLoading ? (
-        <Spinner
-          animation='border'
-          role='status'
-          style={{ margin: "10px 20px 0 auto" }}
-        >
+  if (isLoading)
+    return (
+      <div className='w-100 d-flex align-center justify-content-center'>
+        <Spinner animation='border' role='status'>
           <span className='visually-hidden'>Loading...</span>
         </Spinner>
-      ) : (
-        themes.map((item) => <Item key={`theme-${item._id}`} data={item} />)
-      )}
-      <AddThemeModal
-        open={isAddThemeModalOpen}
-        onClose={() => setIsAddThemeModalOpen(false)}
-      />
-    </Container>
-  );
+      </div>
+    );
+  else
+    return (
+      <Container>
+        <React.Fragment>
+          <AddNewTheme onClick={() => setIsAddThemeModalOpen(true)}>
+            <PlusLg size={"24px"} color={COLORS.SECONDARY} />
+            <Typography color={COLORS.SECONDARY} fontWeight='bold'>
+              Add New Theme
+            </Typography>
+          </AddNewTheme>
+          {themes.map((item) => (
+            <Item key={`theme-${item._id}`} data={item} />
+          ))}
+          <AddThemeModal
+            open={isAddThemeModalOpen}
+            onClose={() => setIsAddThemeModalOpen(false)}
+          />
+        </React.Fragment>
+      </Container>
+    );
 };
 
 export default List;

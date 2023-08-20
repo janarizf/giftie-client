@@ -5,7 +5,7 @@ import { Dropdown } from "react-bootstrap";
 import adminService from "../../../../services/admin.service";
 import { Spinner } from "react-bootstrap";
 
-const Header = () => {
+const Header = ({ categoryFilter, setCategoryFilter }) => {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,15 +38,24 @@ const Header = () => {
         All Themes
       </Typography>
       {isLoading ? (
-        <Spinner animation='border' style={{ margin: "10px 20px 0 auto" }} />
+        <Spinner
+          animation='border'
+          style={{ margin: "10px 20px 0 auto" }}
+          size='sm'
+        />
       ) : (
         <Select>
           <Dropdown.Toggle id='dropdown-autoclose-true'>
-            Birthday
+            {categoryFilter ? categoryFilter : "Default"}
           </Dropdown.Toggle>
           <Dropdown.Menu className='w-100'>
             {themeCategories.map((item) => (
-              <Dropdown.Item key={item._id}>{item.category}</Dropdown.Item>
+              <Dropdown.Item
+                key={item._id}
+                onClick={() => setCategoryFilter(item.category)}
+              >
+                {item.category}
+              </Dropdown.Item>
             ))}
           </Dropdown.Menu>
         </Select>
