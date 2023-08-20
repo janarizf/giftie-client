@@ -13,7 +13,7 @@ const Header = () => {
     setIsLoading(true);
     async function fetchData() {
       adminService
-        .getAllThemeCategories()
+        .getAllThemesCategories()
         .then((response) => {
           setResponse(response);
           setIsLoading(false);
@@ -38,13 +38,7 @@ const Header = () => {
         All Themes
       </Typography>
       {isLoading ? (
-        <Spinner
-          animation='border'
-          role='status'
-          style={{ margin: "10px 20px 0 auto" }}
-        >
-          <span className='visually-hidden'>Loading...</span>
-        </Spinner>
+        <Spinner animation='border' style={{ margin: "10px 20px 0 auto" }} />
       ) : (
         <Select>
           <Dropdown.Toggle id='dropdown-autoclose-true'>

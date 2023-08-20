@@ -6,6 +6,7 @@ import { COLORS } from "../../../../constants/colors";
 import AddThemeModal from "./AddThemeModal/AddThemeModal";
 import adminService from "../../../../services/admin.service";
 import Item from "./Item";
+import { Spinner } from "react-bootstrap";
 
 const List = () => {
   const [isAddThemeModalOpen, setIsAddThemeModalOpen] = useState(false);
@@ -36,10 +37,6 @@ const List = () => {
     return response ? response.data : [];
   }, [response]);
 
-  console.log("====================================");
-  console.log(themes);
-  console.log("====================================");
-
   return (
     <Container>
       <AddNewTheme onClick={() => setIsAddThemeModalOpen(true)}>
@@ -48,9 +45,17 @@ const List = () => {
           Add New Theme
         </Typography>
       </AddNewTheme>
-      {themes.map((item) => (
-        <Item key={`theme-${item._id}`} data={item} />
-      ))}
+      {isLoading ? (
+        <Spinner
+          animation='border'
+          role='status'
+          style={{ margin: "10px 20px 0 auto" }}
+        >
+          <span className='visually-hidden'>Loading...</span>
+        </Spinner>
+      ) : (
+        themes.map((item) => <Item key={`theme-${item._id}`} data={item} />)
+      )}
       <AddThemeModal
         open={isAddThemeModalOpen}
         onClose={() => setIsAddThemeModalOpen(false)}
