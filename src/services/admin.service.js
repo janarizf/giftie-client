@@ -87,6 +87,13 @@ class AdminDataService {
                 console.log(err);
             });
     }
+    async getThemesByCategory(catId) {
+        return await http.get(`/admin/themes/getThemesByCategory/${catId}`)
+            .then((response) => { return response })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
     async createThemes(data) {
         return await http.post("/admin/themes/create", data)
             .then((response) => { return response })
