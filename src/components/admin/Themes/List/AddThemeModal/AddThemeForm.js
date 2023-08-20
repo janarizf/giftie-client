@@ -13,13 +13,13 @@ export const useAddThemeForm = ({ onSubmit }) => {
   };
 
   const validationSchema = Yup.object().shape({
-    backgroundimage: Yup.string().notRequired(),
-    bodycolor: Yup.string().notRequired(),
-    category_id: Yup.string().notRequired(),
-    headercolor: Yup.string().notRequired(),
-    headerimage: Yup.string().notRequired(),
-    name: Yup.string().notRequired(),
-    textcolor: Yup.string().notRequired()
+    backgroundimage: Yup.string().required(),
+    bodycolor: Yup.string().required(),
+    category_id: Yup.string().required(),
+    headercolor: Yup.string().required(),
+    headerimage: Yup.string().required(),
+    name: Yup.string().required(),
+    textcolor: Yup.string().required()
   });
 
   const form = useFormik({

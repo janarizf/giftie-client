@@ -142,6 +142,8 @@ const AddThemeModal = ({ open, onClose }) => {
     }
   }, [backgroundImage]);
 
+  console.log(form);
+
   return (
     <StyledModal
       show={open}
@@ -159,11 +161,18 @@ const AddThemeModal = ({ open, onClose }) => {
           <Form.Group className='mb-3' controlId='addThemeForm.name'>
             <Form.Label>Name</Form.Label>
             <Form.Control
+              required
               placeholder={"Enter name"}
               value={form.values.name}
-              name={"name"}
-              style={{ borderColor: "#707070" }}
+              name='name'
+              // style={{ borderColor: "#707070" }}
+              onChange={form.handleChange}
+              onBlur={form.handleBlur}
+              isInvalid={!!form.errors.name}
             />
+            <Form.Control.Feedback type='invalid'>
+              Please enter name.
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.category'>
             <Form.Label>List Category</Form.Label>
@@ -207,6 +216,9 @@ const AddThemeModal = ({ open, onClose }) => {
                 </React.Fragment>
               )}
             </Select>
+            <Form.Control.Feedback type='invalid'>
+              Please enter name.
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.textColor'>
             <Form.Label>Text Color</Form.Label>
