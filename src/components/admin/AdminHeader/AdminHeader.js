@@ -18,17 +18,17 @@ const AdminHeader = ({ activeNav, setActiveNav }) => {
   return (
     <React.Fragment>
       <Header key={false} expand={false}>
+        <Navbar.Toggle
+          className='d-lg-none'
+          aria-controls={`offcanvasNavbar-expand-${false}`}
+        />
         <Navbar.Brand href='#'>
           <Typography component='h1'>{activeNav}</Typography>
         </Navbar.Brand>
-        <Navbar.Toggle
-          className='d-none d-sm-block'
-          aria-controls={`offcanvasNavbar-expand-${false}`}
-        />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${false}`}
           aria-labelledby={`offcanvasNavbarLabel-expand-${false}`}
-          placement='end'
+          placement='start'
           style={{ padding: "10px" }}
         >
           <Offcanvas.Header closeButton>

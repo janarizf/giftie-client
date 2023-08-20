@@ -26,7 +26,7 @@ const AdminSidebar = ({ activeNav, setActiveNav }) => {
 
   return (
     <React.Fragment>
-      <Sidebar>
+      <Sidebar className='d-none d-lg-block'>
         <Logo />
         <StyledNav activeKey={activeNav}>
           {ADMIN_SIDEBAR_ITEMS.map((item, index) => {

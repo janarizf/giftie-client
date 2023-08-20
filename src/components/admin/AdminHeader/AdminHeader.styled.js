@@ -4,6 +4,16 @@ import { COLORS } from "../../../constants/colors";
 
 export const Header = styled(Navbar)`
   background-color: transparent;
+
+  & .navbar-toggler {
+    border: none;
+    padding: 0;
+  }
+
+  &.navbar {
+    justify-content: unset;
+    gap: 20px;
+  }
 `;
 
 export const Logo = styled.img`
