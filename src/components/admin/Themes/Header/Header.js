@@ -50,6 +50,12 @@ const Header = ({ categoryFilter, setCategoryFilter }) => {
             {categoryFilter ? categoryFilter : "Default"}
           </Dropdown.Toggle>
           <Dropdown.Menu className='w-100'>
+            <Dropdown.Item
+              key={`category-all`}
+              onClick={() => setCategoryFilter("")}
+            >
+              All
+            </Dropdown.Item>
             {themeCategories.map((item) => (
               <Dropdown.Item
                 key={item._id}

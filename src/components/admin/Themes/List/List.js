@@ -8,7 +8,7 @@ import themeService from "../../../../services/admin/themes.service";
 import Item from "./Item";
 import { Spinner } from "react-bootstrap";
 
-const List = () => {
+const List = ({ categoryFilter }) => {
   const [isAddThemeModalOpen, setIsAddThemeModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -16,26 +16,50 @@ const List = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    async function fetchData() {
-      themeService
-        .getAll()
-        .then((response) => {
-          setResponse(response);
-          setIsLoading(false);
-        })
-        .catch(function (error) {
-          console.log(error);
-          setIsLoading(false);
-        });
+    if (categoryFilter) {
+      async function fetchData() {
+        await themeService
+          .getByCategory({ categoryFilter })
+          .then((response) => {
+            setResponse(response);
+            setIsLoading(false);
+          })
+          .catch(function (error) {
+            console.log(error);
+            setIsLoading(false);
+          });
+      }
+      fetchData();
+    } else {
+      async function fetchData() {
+        await themeService
+          .getAll()
+          .then((response) => {
+            setResponse(response);
+            setIsLoading(false);
+          })
+          .catch(function (error) {
+            console.log(error);
+            setIsLoading(false);
+          });
+      }
+      fetchData();
     }
 
-    fetchData();
     return;
-  }, []);
+  }, [categoryFilter]);
+
+  console.log("====================================");
+  console.log(categoryFilter);
+  console.log("====================================");
 
   const themes = useMemo(() => {
     return response ? response.data : [];
   }, [response]);
+
+  console.log("====================================");
+  console.log(themes);
+  console.log("====================================");
 
   if (isLoading)
     return (
