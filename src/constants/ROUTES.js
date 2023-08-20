@@ -11,6 +11,8 @@ export const ROUTES = {
     FEATURED_LIST: {
       CREATE: "/admin/marketing/featured-lists/create"
     },
-    SETTINGS: "/admin/settings/:tab"
+    SETTINGS: {
+      MANAGE_ADMINS: "/admin/settings/manage_admin_accounts"
+    }
   }
 };

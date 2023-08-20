@@ -106,8 +106,8 @@ export const MARKETING_SUB_MENUS = [
 export const SUPER_ADMIN_SETTINGS = [
   {
     name: "Admin Accounts",
-    link: navigateToRoute.toSettings("accounts"),
-    baseUrl: ROUTES.ADMIN.MARKETING,
-    disabled: true
+    link: ROUTES.ADMIN.SETTINGS.MANAGE_ADMINS,
+    baseUrl: ROUTES.ADMIN.SETTINGS.MANAGE_ADMINS,
+    disabled: false
   }
 ];

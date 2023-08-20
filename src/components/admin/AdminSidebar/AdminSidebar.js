@@ -14,7 +14,7 @@ import { BoxArrowLeft } from "react-bootstrap-icons";
 import { useLocation } from "react-router-dom";
 import { ADMIN_USERS } from "./../../../constants/ADMIN_USERS";
 
-const isSuperAdmin = false;
+const isSuperAdmin = true;
 
 const AdminSidebar = ({ activeNav, setActiveNav }) => {
   const location = useLocation();
