@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CustomTable } from "../../../../../shared";
 import logo from "../../../../../img/giftie_logo.png";
+import featureListService from "../../../../../services/admin/featuredlist.service";
 
 const headers = [
   "List Name",
@@ -46,6 +47,28 @@ const mockData = [
   }
 ];
 const List = () => {
+  // const [response, setResponse] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   async function fetchData() {
+  //     await featureListService
+  //       .getAllThemesCategories()
+  //       .then((response) => {
+  //         setResponse(response);
+  //         setIsLoading(false);
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //         setIsLoading(false);
+  //       });
+  //   }
+
+  //   fetchData();
+
+  //   return;
+  // }, []);
+
   return (
     <div className='h-100'>
       <CustomTable

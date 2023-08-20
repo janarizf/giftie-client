@@ -8,6 +8,9 @@ export const ROUTES = {
     THEMES: "/admin/themes",
     LINKS: "/admin/links",
     MARKETING: "/admin/marketing/:tab",
+    FEATURED_LIST: {
+      CREATE: "/admin/marketing/featured-lists/create"
+    },
     SETTINGS: "/admin/settings/:tab"
   }
 };

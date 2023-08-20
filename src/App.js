@@ -26,6 +26,7 @@ import { ROUTES } from "./constants/ROUTES";
 import { Themes } from "./components/admin/Themes";
 import Links from "./pages/admin/Links/Links";
 import Marketing from "./pages/admin/Marketing/Marketing";
+import CreateFeaturedList from "./pages/admin/Marketing/CreateFeaturedList/CreateFeaturedList";
 
 let isAuthenticated = true;
 class App extends Component {
@@ -86,6 +87,11 @@ class App extends Component {
                 exact
                 path={`${ROUTES.ADMIN.MARKETING}`}
                 element={<Marketing />}
+              />
+              <Route
+                exact
+                path={`${ROUTES.ADMIN.FEATURED_LIST.CREATE}`}
+                element={<CreateFeaturedList />}
               />
             </Routes>
           </AdminLayout>
