@@ -16,6 +16,7 @@ import useOutsideContainerClick from "./../../../../../shared/utils/useOutsideCo
 import { useAddThemeForm } from "./AddThemeForm";
 import categoriesService from "../../../../../services/admin/categories.service";
 import { Select } from "../../../../../shared/elements";
+import FileUpload from "./../../../../FileUpload/FileUpload";
 
 const AddThemeModal = ({ open, onClose }) => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
@@ -29,6 +30,8 @@ const AddThemeModal = ({ open, onClose }) => {
     bodycolor: [],
     headercolor: []
   });
+  const [headerImage, setHeaderImage] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState(null);
 
   useEffect(() => {
     const localThemeColor = JSON.parse(localStorage.getItem("themeColors"));
@@ -114,6 +117,18 @@ const AddThemeModal = ({ open, onClose }) => {
   const handleSelectColorFromPalette = (color, type) => {
     form.setFieldValue(type, color);
   };
+
+  useEffect(() => {
+    if (headerImage) {
+      form.setFieldValue("headerimage", headerImage);
+    }
+  }, [headerImage]);
+
+  useEffect(() => {
+    if (backgroundImage) {
+      form.setFieldValue("backgroundimage", backgroundImage);
+    }
+  }, [backgroundImage]);
 
   return (
     <StyledModal
@@ -266,6 +281,14 @@ const AddThemeModal = ({ open, onClose }) => {
               </AddColor>
             </div>
           </Form.Group>
+          <Form.Group>
+            <Form.Label>Header Image</Form.Label>
+            <FileUpload onFileSelected={setHeaderImage} />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Background Image</Form.Label>
+            <FileUpload onFileSelected={setBackgroundImage} />
+          </Form.Group>
         </Form>
       </StyledModal.Body>
       {isColorPickerOpen ? (
@@ -286,7 +309,10 @@ const AddThemeModal = ({ open, onClose }) => {
       ) : (
         <React.Fragment />
       )}
-      <StyledButton style={{ height: 40 }} onClick={form.handleSubmit}>
+      <StyledButton
+        style={{ height: 40, marginTop: 20 }}
+        onClick={form.handleSubmit}
+      >
         Add Theme
       </StyledButton>
     </StyledModal>
