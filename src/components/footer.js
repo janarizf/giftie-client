@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 function Footer() {
     return (
-        <Container className="footer p-5">
+        <Container className="footer">
             <Row>
                 <Col>
                     <Row>

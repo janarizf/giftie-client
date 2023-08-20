@@ -1,7 +1,7 @@
 import listsService from "./services/lists.service";
 import groupsService from "./services/groups.service";
 
-export function ImgUpload(selectedFile, callback) {
+export async function ImgUpload(selectedFile, callback) {
     return listsService.fileupload(selectedFile)
         .then((res) => {
             return callback(res);
@@ -23,13 +23,13 @@ export function CheckImgFile(file, callback) {
     callback(ImagesArray);
 }
 
-export async function addUserToGroup(data, callback) {
+export async function AddUserToGroup(data, callback) {
     return groupsService.addMember(data)
-    .then((res) => {
-        return callback(res);
-    });
+        .then((res) => {
+            return callback(res);
+        });
 }
- 
+
 export default function GetCurrentUser() {
     let currentUser = JSON.parse(localStorage.getItem('user'))
     if (!currentUser) {
@@ -56,3 +56,22 @@ export const getFromLS = key => {
         return JSON.parse(value);
     }
 }
+
+export const SortItemsByField = (field, sort, data) => {
+    const sortedItems = data.sort((a, b) => {
+        // Access the field value within each object
+        const fieldValueA = a[field].toLowerCase();
+        const fieldValueB = b[field].toLowerCase();
+
+        // Customize the comparison logic based on your sorting requirements
+        if (fieldValueA < fieldValueB) {
+            return sort ? -1 : 1;
+        }
+        if (fieldValueA > fieldValueB) {
+            return sort ? 1 : -1
+        }
+        return 0; // fieldValueA and fieldValueB are considered equal
+    });
+
+    return sortedItems;
+};

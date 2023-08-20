@@ -30,13 +30,13 @@ const NavbarMain = () => {
     var isLoggedin = user;
     return (
 
-        <Navbar expand="lg" variant="light" >
+        <Navbar expand="lg" className="p-0">
             <Navbar.Brand href="/home"><img src={require('../../img/giftie_logo.png')} weign="40" height="40" /></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Col ></Col>
                 <Col xs={8}>
-                    <Nav className="me-auto">
+                    <Nav className="me-auto m-2">
                         <Link className="nav-link" to={'/home'}>
                             Home
                         </Link>
@@ -59,7 +59,7 @@ const NavbarMain = () => {
                     </Nav>
                 </Col>
                 <Col>
-                    <Nav>
+                    <Nav className="me-auto m-2">
                         {/* <Link className="nav-link" to={'/list'} ><PlusCircle color="gray" /> Create a list</Link> */}
                         {isLoggedin == null && <Link className="nav-link" to={'/login'}>
                             Login

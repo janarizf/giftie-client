@@ -5,7 +5,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import jwt_decode from "jwt-decode";
 import usersService from "../../services/users.service";
-import {addUserToGroup } from "../../helper"
+import {AddUserToGroup } from "../../helper"
 const SignUp = () => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
@@ -26,6 +26,7 @@ const SignUp = () => {
             if (userObj) {
                 await usersService.signUp(userObj)
                     .then((existing) => {
+                        alert("User Existing. Logging In");
                         if (existing) {
                             console.log("existing");
                             localStorage.setItem('user', JSON.stringify(existing.data));

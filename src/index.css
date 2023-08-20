@@ -14,10 +14,7 @@ body {
 .dropbtn {
   background-color: #ffffff;
   color: #044237;
-  font-size: 50px;
   border: none;
-  cursor: pointer;
-  border-radius: 25px;
   margin-right: -15rem;
 }
 
@@ -27,14 +24,12 @@ body {
 }
 
 .dropup-content {
-  margin-top: -10rem;
   display: none;
   background-color: #f3f3f3;
   position: absolute;
   min-width: 160px;
   z-index: 1;
   border-radius: 25px;
-  padding: 10px;
 }
 
 .dropup-content a {
@@ -82,7 +77,6 @@ html,
 }
 
 .navbar-light {
-  background-color: #ffffff;
   font-family: 'Nunito', sans-serif;
   font-weight: 400;
 }
@@ -153,7 +147,7 @@ background: #f3f3f3;
 }
 .container-green-bg
 {
-  color: #ffffff;
+  color: #04321f;
   background-image: url("./img/giftie_green.jpg");
   background-size: cover;
   padding: 3rem;
@@ -162,9 +156,12 @@ background: #f3f3f3;
 .footer {
   background: #10c4a4;
   padding: 20px;
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
+.footer-text {
+  color: #ffffff !important;
+}
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;

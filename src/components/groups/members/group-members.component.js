@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, ListGroup, Button, Image, Modal, Form, FloatingLabel, Row } from 'react-bootstrap';
-import groupsService from "../../services/groups.service";
+import groupsService from "../../../services/groups.service";
 import { Link } from 'react-router-dom';
 
 export default class GroupMembersView extends Component {
@@ -58,30 +58,28 @@ export default class GroupMembersView extends Component {
             <Container>
                 <Row>
                     <h4> Members: <Link onClick={(() => this.setState({ showInvite: true }))}>
-                        <Image src={require('../../img/plus_sign.png')} roundedCircle width={'25px'} />
+                        <Image src={require('../../../img/plus_sign.png')} roundedCircle width={'25px'} />
                     </Link></h4>
+                    <h6>Group Owner: {this.state.group.createdby}</h6>
                 </Row>
-                <h6>Group Owner: {this.state.group.createdby}</h6>
-                <Row>
-                    <Row>
-                        {this.state.members.map(function (member, index) {
-                            return (
-                                <Row key={index}>
-                                    {member.name}
-                                </Row>
-                            )
-                        })}
 
-                    </Row>
+                <Row>
+                    {this.state.members.map(function (member, index) {
+                        return (
+                            <Row key={index}>
+                               <span> {member.name}</span>
+                            </Row>
+                        )
+                    })}
+
                 </Row>
                 <Row>
-                <h5>Invited:</h5>
-                </Row>
-                <Row>
+                    <h5>Invited:</h5>
+               
                     {this.state.invited.map(function (member, index) {
                         return (
                             <Row key={index} >
-                                {member}
+                               <span> {member.email}</span>
                             </Row>
                         )
                     })}

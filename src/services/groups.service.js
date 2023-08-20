@@ -42,6 +42,15 @@ class GroupsDataService {
       console.log(err);
   });
   }
+
+  async updatebyid(groupid,listid) {
+    return await http.patch(`/groups/updatebyid/${groupid}/${listid}`)
+    .then((response)=> {return response})
+    .catch((err) => {
+      console.log(err);
+  });
+  }
+
    additem(id, data) {
     return  http.put(`/groups/update/${id}`, data);
   }

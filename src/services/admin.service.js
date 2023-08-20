@@ -77,13 +77,55 @@ class AdminDataService {
   //featured list
   //manage links
 
-  // themes
-  getAllThemes(name) {
-    return http.get(`/admin/themes/getallthemes`);
+  async getAllListCategories() {
+    return await http
+      .get("/admin/getAllListCategories")
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-
-  getAllThemeCategories(name) {
-    return http.get(`/admin/themes/getallthemescategories`);
+  async getAllThemesCategories() {
+    return await http
+      .get("/admin/themes/getAllThemesCategories")
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  async getAllThemes() {
+    return await http
+      .get("/admin/themes/getallthemes")
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  async getThemesById(themeId) {
+    return await http
+      .get(`/admin/themes/getThemesById/${themeId}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  async createThemes(data) {
+    return await http
+      .post("/admin/themes/create", data)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 
