@@ -43,6 +43,7 @@ export const ThemeItem = styled.div`
   gap: 5px;
   cursor: pointer;
   transition: 0.2s;
+  background-image: url(${(props) => props.$image || placeholderImage});
   background-size: contain;
   border: 1px solid ${COLORS.MAIN_BACKGROUND};
   position: relative;
@@ -64,4 +65,13 @@ export const ThemeItem = styled.div`
   &:hover:after {
     opacity: 1;
   }
+`;
+
+export const ThemeItemInfoContainer = styled.div`
+  width: calc(100% + 2em);
+  background-color: ${(props) => props.$backgroundColor || COLORS.PRIMARY};
+  margin: 1em -1em 0;
+  height: 100px;
+  padding: 1em;
+  color: ${(props) => props.$color || COLORS.WHITE};
 `;
