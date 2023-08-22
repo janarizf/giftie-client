@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import listsService from "../services/lists.service";
-import adminService from "../services/admin.service";
+import themesService from "../services/admin/themes.service";
+import categoriesService from "../services/admin/categories.service"
 import ItemListView from "../components/lists/view-item-list.component";
 import GetCurrentUser from '../helper'
 
@@ -58,7 +59,7 @@ export default function ListEdit() {
         record.image = require('../img/giftie_question.png');
       }
       if (record.themes) {
-        const activetheme = await adminService.getThemesById(record.themes);
+        const activetheme = await themesService.getThemesById(record.themes);
         setSelectedTheme(activetheme.data);
       }
       else {
@@ -72,7 +73,7 @@ export default function ListEdit() {
     }
     async function getCategory(category) {
       // const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
-      const categoryData = await adminService.getAllListCategories()
+      const categoryData = await categoriesService.getAllListCategories()
       const cat = categoryData.data.filter(a => a._id == category);
       setCategory(cat[0].category);
     }

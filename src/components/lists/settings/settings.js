@@ -3,7 +3,8 @@ import { Navigate } from 'react-router-dom';
 import { Button, Row, Col, Form, Container, Image, ToggleButton, ButtonGroup, Figure } from 'react-bootstrap';
 
 import listsService from "../../../services/lists.service";
-import adminService from "../../../services/admin.service";
+import categoriesService from "../../../services/admin/categories.service";
+import themesService from "../../../services/admin/themes.service";
 import { ImgUpload, CheckImgFile } from "../../../helper"
 import { format } from 'date-fns';
 
@@ -121,7 +122,7 @@ export default class ListSetting extends Component {
   }
 
   async getThemes() {
-    const themes = await adminService.getAllThemes()
+    const themes = await themesService.getAllThemes()
     this.setState({
       themesData: themes.data
     });
@@ -134,7 +135,7 @@ export default class ListSetting extends Component {
   }
   async getCategory() {
     // const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
-    const categoryData = await adminService.getAllListCategories()
+    const categoryData = await categoriesService.getAllListCategories()
     this.setState({
       categoryData: categoryData.data
     });
