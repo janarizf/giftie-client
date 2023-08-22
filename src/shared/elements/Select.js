@@ -4,7 +4,7 @@ import { COLORS } from "../../constants/colors";
 import { Dropdown } from "react-bootstrap";
 
 export const StyledDropdown = styled(Dropdown)`
-  width: 200px;
+  width: ${(props) => props.$width || "200px"};
 
   & .btn {
     width: 100%;

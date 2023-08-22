@@ -66,3 +66,12 @@ export const ThemeItem = styled.div`
     opacity: 1;
   }
 `;
+
+export const ThemeItemInfoContainer = styled.div`
+  width: calc(100% + 2em);
+  background-color: ${(props) => props.$backgroundColor || COLORS.PRIMARY};
+  margin: 1em -1em 0;
+  height: 100px;
+  padding: 1em;
+  color: ${(props) => props.$color || COLORS.WHITE};
+`;

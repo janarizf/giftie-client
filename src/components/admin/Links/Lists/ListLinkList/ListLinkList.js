@@ -29,7 +29,7 @@ const ListLinkList = () => {
     <div>
       <Filter />
       <CustomTable
-        responsive='sm'
+        responsive='md'
         hasActions
         headers={headers}
         data={mockData}

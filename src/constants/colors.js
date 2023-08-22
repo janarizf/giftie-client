@@ -8,5 +8,7 @@ export const COLORS = {
   WHITE_50: "#c3c3c3",
   DARK_GRAY: "#707070",
   SECONDARY: "#3c45c7",
-  BORDER_GRAY: "#cdcdcd"
+  BORDER_GRAY: "#cdcdcd",
+  GRAY: "#7f7f7f",
+  DANGER: "#e92a2a"
 };

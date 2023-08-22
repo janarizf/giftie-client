@@ -20,6 +20,10 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media only screen and (max-width: 991px) {
+    padding: 10px;
+  }
 `;
 
 export const Content = styled.div`

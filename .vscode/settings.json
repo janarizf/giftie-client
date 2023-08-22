@@ -3,5 +3,5 @@
     "prettier.enable": true,
     "editor.tabSize": 2,
     "editor.formatOnType": true,
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
 }
