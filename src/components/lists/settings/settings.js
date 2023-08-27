@@ -122,7 +122,7 @@ export default class ListSetting extends Component {
   }
 
   async getThemes() {
-    const themes = await themesService.getAllThemes()
+    const themes = await themesService.getAll()
     this.setState({
       themesData: themes.data
     });
@@ -135,7 +135,7 @@ export default class ListSetting extends Component {
   }
   async getCategory() {
     // const categoryData = [{ id: 1, value: "Birthday" }, { id: 2, value: "Wedding" }, { id: 3, value: "Christmas" }, { id: 4, value: "Baby Shower" }, { id: 5, value: "Housewarming" }, { id: 6, value: "Others" }];
-    const categoryData = await categoriesService.getAllListCategories()
+    const categoryData = await categoriesService.getAllListCategory();
     this.setState({
       categoryData: categoryData.data
     });

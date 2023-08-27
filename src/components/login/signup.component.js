@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { Col, Container, Row } from 'react-bootstrap';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import jwt_decode from "jwt-decode";
 import usersService from "../../services/users.service";
-import {AddUserToGroup } from "../../helper"
+import { AddUserToGroup } from "../../helper"
 const SignUp = () => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
@@ -32,6 +32,7 @@ const SignUp = () => {
                             localStorage.setItem('user', JSON.stringify(existing.data));
                             setUser(existing.data);
                             navigate('/account');
+                            window.location.reload(true);
                         }
 
                     })
@@ -58,7 +59,8 @@ const SignUp = () => {
                             localStorage.setItem('user', JSON.stringify(existing.data[0]));
                             setUser(existing.data[0]);
                             alert("User Existing. Logging In");
-                            navigate('/account');;
+                            navigate('/account');
+
                         }
                         else {
                             usersService.signUp(userObj)
@@ -75,6 +77,7 @@ const SignUp = () => {
                                     console.log(error);
                                 })
                         }
+                        window.location.reload(true);
                     })
                     .catch(function (error) {
                         console.log(error);
