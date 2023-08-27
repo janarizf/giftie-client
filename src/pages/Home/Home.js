@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, Button, Row, Container, Col, Image } from 'react-bootstrap';
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 
-export default class home extends Component {
+class Home extends Component {
   render() {
     return (
       <main>
@@ -17,7 +17,7 @@ export default class home extends Component {
                   <Button size="lg" href="/account" variant='custom'>How it Works  <ArrowRightCircle color="white" /></Button>
                 </Col>
                 <Col>
-                  <Image className="img-banner" src={require('../img/girl_gift.png')}/>
+                  <Image className="img-banner" src={require('../../img/girl_gift.png')}/>
                 </Col>
               </Row>
             </Container>
@@ -26,20 +26,20 @@ export default class home extends Component {
         <Container >
           <Row className="row-text text-center">
             <h2>Why use Giftie?</h2>
-            <Col>  <Image src={require('../img/purposeful_box.png')} /></Col>
-            <Col>  <Image src={require('../img/practical_box.png')} /></Col>
-            <Col>  <Image src={require('../img/easy_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/purposeful_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/practical_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/easy_box.png')} /></Col>
           </Row>
           <Row className="container-main row-text text-center">
             <h2>How? Create and Share</h2>
-            <Col>  <Image src={require('../img/create_box.png')} /></Col>
-            <Col>  <Image src={require('../img/add_box.png')} /></Col>
-            <Col>  <Image src={require('../img/share_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/create_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/add_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/share_box.png')} /></Col>
           </Row>
           <Row className="container-green-bg row-text text-center">
             <h2>Jumpstart using a starter list</h2>
             <p> Specially curated for your special celebration</p>
-            <Col>  <Image src={require('../img/create_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/create_box.png')} /></Col>
 
           </Row>
           <Row className="row-text text-center">
@@ -51,14 +51,14 @@ export default class home extends Component {
               </p>
             </Row>
             <Row>
-              <Col>  <Image src={require('../img/unli_box.png')} /></Col>
-              <Col>  <Image src={require('../img/reserve_box.png')} /></Col>
-              <Col>  <Image src={require('../img/custom_box.png')} /></Col>
+              <Col>  <Image src={require('../../img/unli_box.png')} /></Col>
+              <Col>  <Image src={require('../../img/reserve_box.png')} /></Col>
+              <Col>  <Image src={require('../../img/custom_box.png')} /></Col>
             </Row>
             <Row>
-              <Col>  <Image src={require('../img/easyshare_box.png')} /></Col>
-              <Col>  <Image src={require('../img/occassion_box.png')} /></Col>
-              <Col>  <Image src={require('../img/free_box.png')} /></Col>
+              <Col>  <Image src={require('../../img/easyshare_box.png')} /></Col>
+              <Col>  <Image src={require('../../img/occassion_box.png')} /></Col>
+              <Col>  <Image src={require('../../img/free_box.png')} /></Col>
             </Row>
           </Row>
           <Row className="container-main row-text text-center">
@@ -71,3 +71,4 @@ export default class home extends Component {
     );
   }
 }
+export default Home;

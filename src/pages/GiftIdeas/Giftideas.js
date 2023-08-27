@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Container, Card, Row, Col, Form, Button, Modal } from 'react-bootstrap';
-import listsService from "../services/lists.service";
-
-
+import listsService from "../../services/lists.service";
 
 export default class Gift extends Component {
     constructor(props) {
@@ -52,7 +50,7 @@ export default class Gift extends Component {
             const apiurl = process.env.REACT_APP_APIURL;
             return apiurl + "lists/getImage/" + d[0].filename;
         } else {
-            return require('../img/giftie_question.png')
+            return require('../../img/giftie_question.png')
         }
     }
 

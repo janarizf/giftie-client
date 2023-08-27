@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import listsService from "../services/lists.service";
-import themesService from "../services/admin/themes.service";
-import categoriesService from "../services/admin/categories.service"
-import ItemListView from "../components/lists/view-item-list.component";
-import GetCurrentUser from '../helper'
+import listsService from "../../../services/lists.service";
+import themesService from "../../../services/admin/themes.service";
+import categoriesService from "../../../services/admin/categories.service"
+import ItemListView from "../../../components/lists/view-item-list.component";
+import GetCurrentUser from '../../../helper'
 
 import { Container, Col, Row, Form, Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image'
 import { ThemeProvider } from "styled-components";
-import { GlobalStyles } from '../themes/globalstyles';
+import { GlobalStyles } from '../../../themes/globalstyles';
 
-import { default_theme, baby_shower, wedding, birthday, christmas } from "../themes/theme.style";
+import { default_theme, baby_shower, wedding, birthday, christmas } from "../../../themes/theme.style";
 
 import {
   EmailShareButton,
@@ -56,7 +56,7 @@ export default function ListEdit() {
       }
       setUrl(window.location.href)
       if (record.image.length == 0) {
-        record.image = require('../img/giftie_question.png');
+        record.image = require('../../../img/giftie_question.png');
       }
       if (record.themes) {
         const activetheme = await themesService.getById(record.themes);

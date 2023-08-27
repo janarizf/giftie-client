@@ -8,16 +8,17 @@ import {
   Routes,
   useLocation
 } from "react-router-dom";
-import Home from "./pages/home";
-import Help from "./pages/help";
-import About from "./pages/about";
-import Blog from "./pages/blog";
-import Account from "./pages/account";
-import Gift from "./pages/giftideas";
+import Home from "./pages/Home/Home";
+import Help from "./pages/Help/Help";
+import About from "./pages/About/About";
+import Blog from "./pages/Blog/Blog";
+import Account from "./pages/account/profile/Account";
+import Gift from "./pages/GiftIdeas/Giftideas";
 import GroupsEdit from "./components/groups/edit-group.component";
-import ListEdit from "./pages/list-edit";
+import List from "./pages/account/lists/List";
 import Login from "./components/login/login.component";
 import SignUp from "./components/login/signup.component";
+
 import Footer from "./components/footer";
 import NavbarMain from "./components/navbar/navbar";
 import AdminLogin from "./pages/admin/adminLogin/adminLogin";
@@ -46,19 +47,21 @@ class App extends Component {
           <Container>
             <NavbarMain />
             <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/home' element={<Home />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/gift' element={<Gift />} />
-              <Route path='/blog' element={<Blog />} />
-              <Route path='/help' element={<Help />} />
-              <Route path='/account' element={<Account />} />
-              <Route path='/list/:id/item/:id' element={<ListEdit />} />
-              <Route path='/list/:id' element={<ListEdit />} />
+              <Route exact path={`${ROUTES.MAIN_APP.LOGIN}`} element={<Login />} />
+              <Route exact path={`${ROUTES.MAIN_APP.SIGNUP}`} element={<SignUp />} />
+              <Route exact path={`${ROUTES.ROOT}`} element={<Home />} />
+              <Route exact path={`${ROUTES.MAIN_APP.HOME}`} element={<Home />} />
+              <Route exact path={`${ROUTES.MAIN_APP.ABOUT}`} element={<About />} />
+              <Route exact path={`${ROUTES.MAIN_APP.GIFT}`} element={<Gift />} />
+              <Route exact path={`${ROUTES.MAIN_APP.BLOG}`} element={<Blog />} />
+              <Route exact path={`${ROUTES.MAIN_APP.HELP}`} element={<Help />} />
+              <Route exact path={`${ROUTES.MAIN_APP.ACCOUNT}`} element={<Account />} />
+
+              <Route path='/list/:id/item/:id' element={<List />} />
+              <Route path='/list/:id' element={<List />} />
               <Route path='/groups/:id' element={<GroupsEdit />} />
               <Route path='/groups/:id/invite' element={<GroupsEdit />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/signup' element={<SignUp />} />
+
               <Route path='/invitelogin/:id' element={<Login />} />
               <Route path='/invitesignup/:id' element={<SignUp />} />
             </Routes>
