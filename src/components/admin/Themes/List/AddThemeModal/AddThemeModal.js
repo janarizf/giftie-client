@@ -18,6 +18,7 @@ import categoriesService from "../../../../../services/admin/categories.service"
 import { Select } from "../../../../../shared/elements";
 import FileUpload from "./../../../../FileUpload/FileUpload";
 import themesService from "../../../../../services/admin/themes.service";
+import { ErrorMessage } from "../../../../ErrorMessage";
 
 const AddThemeModal = ({ open, onClose }) => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
@@ -165,14 +166,18 @@ const AddThemeModal = ({ open, onClose }) => {
               placeholder={"Enter name"}
               value={form.values.name}
               name='name'
-              // style={{ borderColor: "#707070" }}
+              style={{
+                borderColor: !!form.errors.name ? COLORS.DANGER : "#707070"
+              }}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
               isInvalid={!!form.errors.name}
             />
-            <Form.Control.Feedback type='invalid'>
-              Please enter name.
-            </Form.Control.Feedback>
+            {!!form.errors.name ? (
+              <ErrorMessage errorMessage={"Please enter name"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.category'>
             <Form.Label>List Category</Form.Label>
@@ -191,7 +196,12 @@ const AddThemeModal = ({ open, onClose }) => {
                 <React.Fragment>
                   <Dropdown.Toggle
                     id='dropdown-autoclose-true'
-                    style={{ height: 38 }}
+                    style={{
+                      height: 38,
+                      borderColor: !!form.errors.category_id
+                        ? COLORS.DANGER
+                        : "#707070"
+                    }}
                   >
                     {themeCategories.filter(
                       (v) => v._id === form.values.category_id
@@ -213,12 +223,15 @@ const AddThemeModal = ({ open, onClose }) => {
                       </Dropdown.Item>
                     ))}
                   </Dropdown.Menu>
+
+                  {!!form.errors.category_id ? (
+                    <ErrorMessage errorMessage={"Please select category"} />
+                  ) : (
+                    <React.Fragment />
+                  )}
                 </React.Fragment>
               )}
             </Select>
-            <Form.Control.Feedback type='invalid'>
-              Please enter name.
-            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.textColor'>
             <Form.Label>Text Color</Form.Label>
@@ -250,6 +263,11 @@ const AddThemeModal = ({ open, onClose }) => {
                 <BrushFill style={{ fontSize: "14px" }} color={COLORS.DANGER} />
               </AddColor>
             </div>
+            {!!form.errors.textcolor ? (
+              <ErrorMessage errorMessage={"Please select text color"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.backgroundColor'>
             <Form.Label>Background Color</Form.Label>
@@ -281,6 +299,11 @@ const AddThemeModal = ({ open, onClose }) => {
                 <BrushFill style={{ fontSize: "13px" }} color={COLORS.DANGER} />
               </AddColor>
             </div>
+            {!!form.errors.bodycolor ? (
+              <ErrorMessage errorMessage={"Please select background color"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.headerColor'>
             <Form.Label>Header Color</Form.Label>
@@ -313,14 +336,35 @@ const AddThemeModal = ({ open, onClose }) => {
                 <BrushFill style={{ fontSize: "13px" }} color={COLORS.DANGER} />
               </AddColor>
             </div>
+            {!!form.errors.headercolor ? (
+              <ErrorMessage errorMessage={"Please select header color"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Header Image</Form.Label>
-            <FileUpload onFileSelected={setHeaderImage} />
+            <FileUpload
+              onFileSelected={setHeaderImage}
+              isError={!!form.errors.headerimage}
+            />
+            {!!form.errors.headerimage ? (
+              <ErrorMessage errorMessage={"Please select header image"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Background Image</Form.Label>
-            <FileUpload onFileSelected={setBackgroundImage} />
+            <FileUpload
+              onFileSelected={setBackgroundImage}
+              isError={!!form.errors.backgroundimage}
+            />
+            {!!form.errors.backgroundimage ? (
+              <ErrorMessage errorMessage={"Please select background image"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
         </Form>
       </StyledModal.Body>

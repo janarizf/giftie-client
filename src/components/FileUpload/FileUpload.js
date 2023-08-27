@@ -2,10 +2,11 @@ import React, { useRef, useState, useEffect } from "react";
 import { Container, Wrapper, Preview } from "./FileUpload.styled";
 import { Upload } from "react-bootstrap-icons";
 import { Typography } from "../../shared/elements";
+import { COLORS } from "./../../constants/colors";
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
-const FileUpload = ({ onFileSelected }) => {
+const FileUpload = ({ onFileSelected, isError }) => {
   const inputFile = useRef(null);
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
@@ -52,7 +53,10 @@ const FileUpload = ({ onFileSelected }) => {
   }, [fileDataURL]);
 
   return (
-    <Container onClick={handleOpenFileWindow}>
+    <Container
+      onClick={handleOpenFileWindow}
+      style={{ borderColor: isError ? COLORS.DANGER : "#707070" }}
+    >
       <div style={{ height: 0, width: 0, overflow: "hidden" }}>
         <input
           ref={inputFile}

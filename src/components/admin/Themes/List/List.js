@@ -45,7 +45,6 @@ const List = ({ categoryFilter }) => {
       }
       fetchData();
     }
-
     return;
   }, [categoryFilter]);
 
