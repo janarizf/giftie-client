@@ -19,6 +19,7 @@ import { Select } from "../../../../../shared/elements";
 import FileUpload from "./../../../../FileUpload/FileUpload";
 import themesService from "../../../../../services/admin/themes.service";
 import { ErrorMessage } from "../../../../ErrorMessage";
+import { ImgUpload } from "../../../../../helper";
 
 const AddThemeModal = ({ open, onClose }) => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
@@ -107,20 +108,39 @@ const AddThemeModal = ({ open, onClose }) => {
   useOutsideContainerClick(wrapperRef, handleColorPickerClose);
 
   // Form
-  const handleSubmit = (values) => {
-    async function createTheme() {
-      await themesService
-        .create(values)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-          setIsLoading(false);
-        });
-    }
+  const handleSubmit = async (values) => {
+    const apiurl = process.env.REACT_APP_APIURL;
+    const uploadedBackgroundImage = await ImgUpload(
+      values.backgroundimage,
+      (uploaded) => {
+        return `${apiurl}lists/getImage/${uploaded.data[0].filename}`;
+      }
+    );
+    const uploadedHeaderImage = await ImgUpload(
+      values.headerimage,
+      (uploaded) => {
+        return `${apiurl}lists/getImage/${uploaded.data[0].filename}`;
+      }
+    );
 
-    createTheme();
+    if (uploadedBackgroundImage && uploadedHeaderImage) {
+      async function createTheme() {
+        await themesService
+          .create({
+            ...values,
+            headerimage: uploadedHeaderImage,
+            backgroundimage: uploadedBackgroundImage
+          })
+          .then((response) => {
+            onClose();
+          })
+          .catch(function (error) {
+            console.log(error);
+            setIsLoading(false);
+          });
+      }
+      createTheme();
+    }
   };
 
   const { form } = useAddThemeForm({
@@ -142,8 +162,6 @@ const AddThemeModal = ({ open, onClose }) => {
       form.setFieldValue("backgroundimage", backgroundImage);
     }
   }, [backgroundImage]);
-
-  console.log(form);
 
   return (
     <StyledModal
