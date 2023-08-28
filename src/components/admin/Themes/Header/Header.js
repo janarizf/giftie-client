@@ -47,7 +47,10 @@ const Header = ({ categoryFilter, setCategoryFilter }) => {
       ) : (
         <Select>
           <Dropdown.Toggle id='dropdown-autoclose-true'>
-            {categoryFilter ? categoryFilter : "All"}
+            {categoryFilter
+              ? themeCategories.filter((v) => v._id === categoryFilter)[0]
+                  .category
+              : "All"}
           </Dropdown.Toggle>
           <Dropdown.Menu className='w-100'>
             <Dropdown.Item
@@ -59,7 +62,7 @@ const Header = ({ categoryFilter, setCategoryFilter }) => {
             {themeCategories.map((item) => (
               <Dropdown.Item
                 key={item._id}
-                onClick={() => setCategoryFilter(item.category)}
+                onClick={() => setCategoryFilter(item._id)}
               >
                 {item.category}
               </Dropdown.Item>

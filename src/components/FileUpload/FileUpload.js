@@ -7,7 +7,7 @@ import { CheckImgFile } from "../../helper";
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
-const FileUpload = ({ onFileSelected, isError }) => {
+const FileUpload = ({ img, onFileSelected, isError }) => {
   const inputFile = useRef(null);
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
@@ -55,8 +55,8 @@ const FileUpload = ({ onFileSelected, isError }) => {
       </div>
 
       <Wrapper>
-        {fileDataURL ? (
-          <Preview src={fileDataURL} />
+        {fileDataURL || img ? (
+          <Preview src={fileDataURL ? fileDataURL : img} />
         ) : (
           <React.Fragment>
             <Upload style={{ fontSize: 25 }} />

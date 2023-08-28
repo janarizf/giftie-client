@@ -21,7 +21,7 @@ import themesService from "../../../../../services/admin/themes.service";
 import { ErrorMessage } from "../../../../ErrorMessage";
 import { ImgUpload } from "../../../../../helper";
 
-const AddThemeModal = ({ open, onClose }) => {
+const AddThemeModal = ({ data, open, onClose }) => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
   const [color, setColor] = useState("#FF5733");
   const [colorType, setColorType] = useState("");
@@ -29,19 +29,29 @@ const AddThemeModal = ({ open, onClose }) => {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [themeColors, setThemeColors] = useState({
-    textcolor: [],
-    bodycolor: [],
-    headercolor: []
+    textcolor: data && data.textcolor ? [data.textcolor] : [],
+    bodycolor: data && data.bodycolor ? [data.bodycolor] : [],
+    headercolor: data && data.headercolor ? [data.headercolor] : []
   });
   const [headerImage, setHeaderImage] = useState(null);
   const [backgroundImage, setBackgroundImage] = useState(null);
 
   useEffect(() => {
     const localThemeColor = JSON.parse(localStorage.getItem("themeColors"));
-    if (localThemeColor) {
+    if (
+      localThemeColor.bodycolor.length &&
+      localThemeColor.headercolor.length &&
+      localThemeColor.textcolor.length
+    ) {
       setThemeColors(localThemeColor);
+    } else {
+      setThemeColors({
+        textcolor: data && data.textcolor ? [data.textcolor] : [],
+        bodycolor: data && data.bodycolor ? [data.bodycolor] : [],
+        headercolor: data && data.headercolor ? [data.headercolor] : []
+      });
     }
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     if (themeColors) {
@@ -109,34 +119,64 @@ const AddThemeModal = ({ open, onClose }) => {
 
   // Form
   const handleSubmit = async (values) => {
+    const newValues = values;
     const apiurl = process.env.REACT_APP_APIURL;
-    const uploadedBackgroundImage = await ImgUpload(
-      values.backgroundimage,
-      (uploaded) => {
-        return `${apiurl}lists/getImage/${uploaded.data[0].filename}`;
-      }
-    );
-    const uploadedHeaderImage = await ImgUpload(
-      values.headerimage,
-      (uploaded) => {
-        return `${apiurl}lists/getImage/${uploaded.data[0].filename}`;
-      }
-    );
+    if (backgroundImage) {
+      const uploadedBackgroundImage = await ImgUpload(
+        values.backgroundimage,
+        (uploaded) => {
+          return `${apiurl}lists/getImage/${uploaded.data[0].filename}`;
+        }
+      );
+      newValues.backgroundimage = uploadedBackgroundImage;
+    }
 
-    if (uploadedBackgroundImage && uploadedHeaderImage) {
-      async function createTheme() {
+    if (headerImage) {
+      const uploadedHeaderImage = await ImgUpload(
+        values.headerimage,
+        (uploaded) => {
+          return `${apiurl}lists/getImage/${uploaded.data[0].filename}`;
+        }
+      );
+      newValues.headerimage = uploadedHeaderImage;
+    }
+
+    if (data) {
+      console.log();
+      async function updateTheme() {
         await themesService
-          .create({
-            ...values,
-            headerimage: uploadedHeaderImage,
-            backgroundimage: uploadedBackgroundImage
+          .update(data._id, {
+            ...newValues
           })
-          .then((response) => {
+          .then((res) => {
             onClose();
+            console.log(res);
           })
           .catch(function (error) {
             console.log(error);
             setIsLoading(false);
+          })
+          .finally(() => {
+            onClose();
+          });
+      }
+      updateTheme();
+    } else {
+      async function createTheme() {
+        await themesService
+          .create({
+            ...newValues
+          })
+          .then((res) => {
+            console.log(res);
+            setHeaderImage("");
+            setBackgroundImage("");
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .finally(() => {
+            onClose();
           });
       }
       createTheme();
@@ -144,6 +184,7 @@ const AddThemeModal = ({ open, onClose }) => {
   };
 
   const { form } = useAddThemeForm({
+    data: data,
     onSubmit: handleSubmit
   });
 
@@ -363,6 +404,8 @@ const AddThemeModal = ({ open, onClose }) => {
           <Form.Group>
             <Form.Label>Header Image</Form.Label>
             <FileUpload
+              key={`file-headerimage}`}
+              img={form.values.headerimage}
               onFileSelected={setHeaderImage}
               isError={!!form.errors.headerimage}
             />
@@ -375,6 +418,8 @@ const AddThemeModal = ({ open, onClose }) => {
           <Form.Group>
             <Form.Label>Background Image</Form.Label>
             <FileUpload
+              key={`file-backgroundimage`}
+              img={form.values.backgroundimage}
               onFileSelected={setBackgroundImage}
               isError={!!form.errors.backgroundimage}
             />
@@ -408,7 +453,7 @@ const AddThemeModal = ({ open, onClose }) => {
         style={{ height: 40, marginTop: 20 }}
         onClick={form.handleSubmit}
       >
-        Add Theme
+        {data ? "Update" : "Add"} Theme
       </StyledButton>
     </StyledModal>
   );

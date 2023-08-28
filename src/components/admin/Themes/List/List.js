@@ -13,19 +13,21 @@ const List = ({ categoryFilter }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [response, setResponse] = useState(null);
+  const [selectedTheme, setSelectedTheme] = useState(undefined);
 
   useEffect(() => {
     setIsLoading(true);
     if (categoryFilter) {
       async function fetchData() {
         await themeService
-          .getByCategory({ categoryFilter })
+          .getByCategory(categoryFilter)
           .then((response) => {
             setResponse(response);
-            setIsLoading(false);
           })
           .catch(function (error) {
             console.log(error);
+          })
+          .finally(() => {
             setIsLoading(false);
           });
       }
@@ -36,10 +38,11 @@ const List = ({ categoryFilter }) => {
           .getAll()
           .then((response) => {
             setResponse(response);
-            setIsLoading(false);
           })
           .catch(function (error) {
             console.log(error);
+          })
+          .finally(() => {
             setIsLoading(false);
           });
       }
@@ -51,6 +54,24 @@ const List = ({ categoryFilter }) => {
   const themes = useMemo(() => {
     return response ? response.data : [];
   }, [response]);
+
+  const handleSelectTheme = (themeId) => {
+    if (themeId) {
+      themeService
+        .getById(themeId)
+        .then((response) => {
+          if (response.data) {
+            setSelectedTheme(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setIsAddThemeModalOpen(true);
+        });
+    }
+  };
 
   if (isLoading)
     return (
@@ -71,11 +92,19 @@ const List = ({ categoryFilter }) => {
             </Typography>
           </AddNewTheme>
           {themes.map((item) => (
-            <Item key={`theme-${item._id}`} data={item} />
+            <Item
+              key={`theme-${item._id}`}
+              data={item}
+              onClick={() => handleSelectTheme(item._id)}
+            />
           ))}
           <AddThemeModal
             open={isAddThemeModalOpen}
-            onClose={() => setIsAddThemeModalOpen(false)}
+            data={selectedTheme}
+            onClose={() => {
+              setIsAddThemeModalOpen(false);
+              setSelectedTheme(undefined);
+            }}
           />
         </React.Fragment>
       </Container>
