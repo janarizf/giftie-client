@@ -14,14 +14,14 @@ export default class About extends Component {
 
           </Col>
           <Col>
-          <Image src={require('../img/about_us.png')} /> 
+          <Image src={require('../../img/about_us.png')} /> 
           </Col>
         </Row>
         <Row className="container-green-bg row-text text-center">
           <h2>Why use Giftie?</h2>
-          <Col>  <Image src={require('../img/purposeful_box.png')} /></Col>
-          <Col>  <Image src={require('../img/practical_box.png')} /></Col>
-          <Col>  <Image src={require('../img/easy_box.png')} /></Col>
+          <Col>  <Image src={require('../../img/purposeful_box.png')} /></Col>
+          <Col>  <Image src={require('../../img/practical_box.png')} /></Col>
+          <Col>  <Image src={require('../../img/easy_box.png')} /></Col>
         </Row>
         <Row className="container-main row-text text-center">
           <Row>
@@ -32,14 +32,14 @@ export default class About extends Component {
             </p>
           </Row>
           <Row>
-            <Col>  <Image src={require('../img/unli_box.png')} /></Col>
-            <Col>  <Image src={require('../img/reserve_box.png')} /></Col>
-            <Col>  <Image src={require('../img/custom_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/unli_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/reserve_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/custom_box.png')} /></Col>
           </Row>
           <Row>
-            <Col>  <Image src={require('../img/easyshare_box.png')} /></Col>
-            <Col>  <Image src={require('../img/occassion_box.png')} /></Col>
-            <Col>  <Image src={require('../img/free_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/easyshare_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/occassion_box.png')} /></Col>
+            <Col>  <Image src={require('../../img/free_box.png')} /></Col>
           </Row>
         </Row>
       </Container>

@@ -14,5 +14,17 @@ export const ROUTES = {
     SETTINGS: {
       MANAGE_ADMINS: "/admin/settings/manage_admin_accounts"
     }
+  },
+  MAIN_APP: {
+    LOGIN: "/login",
+    SIGNUP: "/signup",
+    HOME: "/home",
+    HELP: "/help",
+    ABOUT: "/about",
+    BLOG: "/blog",
+    GIFT: "/gift",
+    ACCOUNT: "/account",
+    GROUPS: "/components/groups",
+    LIST: "/account/lists",
   }
 };

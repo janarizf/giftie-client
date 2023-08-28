@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { Card, Button, Nav, Container, Modal, Row, Col, Tab, Tabs, Figure } from 'react-bootstrap';
-import AddItem from "../components/lists/add-item.component";
-import ListView from "../components/lists/view-list.component";
-import ProfileMainView from "../components/profile/profile.component"
-import GroupMainView from "../components/groups/group.component";
+import ListView from "../../../components/lists/view-list.component";
+import ProfileMainView from "../../../components/profile/profile.component"
+import GroupMainView from "../../../components/groups/group.component";
 import Image from 'react-bootstrap/Image'
-import GetCurrentUser from '../helper'
-
-
+import GetCurrentUser from '../../../helper'
 
 export default class Account extends Component {
     constructor(props) {
