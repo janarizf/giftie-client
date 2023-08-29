@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Select from 'react-select'
 import { ImgUpload, CheckImgFile } from "../../../helper"
-import { Button, Container, Form, Col, Row } from 'react-bootstrap';
+import { Button, Container, Form, Col, Row, Figure } from 'react-bootstrap';
 import groupsService from "../../../services/groups.service";
 import listsService from "../../../services/lists.service";
 export default class AddGroup extends Component {
@@ -13,7 +13,8 @@ export default class AddGroup extends Component {
             owner: "",
             owner_id: "",
             private: false,
-            type:"",
+            type: "",
+            image: "",
             status: "",
             lists: [],
             members: [],
@@ -35,6 +36,7 @@ export default class AddGroup extends Component {
         this.saveGroup = this.saveGroup.bind(this);
         this.loadList = this.loadList.bind(this);
         this.loadUser = this.loadUser.bind(this);
+        this.loadGroup = this.loadGroup.bind(this);
         this.onChangeImage = this.onChangeImage.bind(this);
     }
 
@@ -65,15 +67,15 @@ export default class AddGroup extends Component {
     }
     onChangeImage(e) {
         CheckImgFile(e, function (ImagesArray) {
-          console.log(e.target.files);
-          console.log(ImagesArray);
-          this.setState({
-            hasImage: true,
-            imageSrc: ImagesArray,
-            imageUpload: e.target.files
-          });
+            console.log(e.target.files);
+            console.log(ImagesArray);
+            this.setState({
+                hasImage: true,
+                imageSrc: ImagesArray,
+                imageUpload: e.target.files
+            });
         }.bind(this))
-      }
+    }
     onChangeList(e) {
         // const options = [...e.target.selectedOptions];
         const values = e.map(option => option.value);
@@ -88,14 +90,42 @@ export default class AddGroup extends Component {
             var us = (JSON.parse(localStorage.getItem('user')));
             console.log(us);
             this.setState({
-                owner_id: us._id,
-                owner: us.firstname + " " + us.lastname
+                updatedby: us._id
             })
-            this.loadList(us);
+            this.loadGroup(us);
+
+
         }
     }
-    async loadList(user) {
-        listsService.getByUser(user._id)
+    async loadGroup() {
+        groupsService.get(this.state._id)
+            .then(response => {
+                this.setState({
+                    groupname: response.data.groupname,
+                    owner: response.data.owner,
+                    owner_id: response.data.owner_id,
+                    image: response.data.image,
+                    private: response.data.private,
+                    type: response.data.type,
+                    status: response.data.status,
+                    lists: response.data.lists,
+                    members: response.data.members,
+                    invited: response.data.invited
+                });
+                if (response.data.image.length > 0) {
+                    this.setState({
+                        hasImage: true,
+                        imageSrc: [response.data.image],
+                    })
+                }
+                this.loadList();
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+    async loadList() {
+        listsService.getByUser(this.state.updatedby)
             .then(response => {
                 const newArray = response.data.map(el => {
                     return {
@@ -114,7 +144,6 @@ export default class AddGroup extends Component {
                 console.log(error);
             })
     }
-
     async saveGroup(e) {
         e.preventDefault();
         var data = {
@@ -128,34 +157,60 @@ export default class AddGroup extends Component {
             invited: this.state.invited,
             private: this.state.private,
             createdby: this.state.owner,
-            createddate: new Date(),
-            updatedby: this.state.owner,
-            updateddate: new Date()
+            createddate: this.state.createdby,
+            updatedby: this.state.updatedby,
+            updateddate: new Date(),
+            image: this.state.image
         };
         if (this.state._id) {
-            ImgUpload(this.state.imageUpload[0], function (uploaded) {
-                const apiurl = process.env.REACT_APP_APIURL;
-                data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
-            groupsService.update(this.state._id, data)
-                .then((respond) => {
-                    this.setState({
-                        _id: respond.data._id,
-                        groupname: respond.data.groupname,
-                        owner: respond.data.owner,
-                        owner_id: respond.data.owner_id,
-                        private: respond.data.private,
-                        type: respond.data.type,
-                        status: respond.data.status,
-                        lists: respond.data.lists,
-                        members: respond.data.members,
-                        invited: respond.data.invited,
-                        redirect: true
+            if (this.state.hasImage) {
+                ImgUpload(this.state.imageUpload[0], function (uploaded) {
+                    const apiurl = process.env.REACT_APP_APIURL;
+                    data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
+                    groupsService.update(this.state._id, data)
+                        .then((respond) => {
+                            this.setState({
+                                _id: respond.data._id,
+                                groupname: respond.data.groupname,
+                                owner: respond.data.owner,
+                                owner_id: respond.data.owner_id,
+                                private: respond.data.private,
+                                type: respond.data.type,
+                                status: respond.data.status,
+                                lists: respond.data.lists,
+                                members: respond.data.members,
+                                invited: respond.data.invited,
+                                redirect: true
 
+                            })
+                            console.log(respond.data);
+                            alert("Updated Group " + respond.data.groupname)
+                            window.location.reload();
+                        })
+                }.bind(this))
+            }
+            else {
+                groupsService.update(this.state._id, data)
+                    .then((respond) => {
+                        this.setState({
+                            _id: respond.data._id,
+                            groupname: respond.data.groupname,
+                            owner: respond.data.owner,
+                            owner_id: respond.data.owner_id,
+                            private: respond.data.private,
+                            type: respond.data.type,
+                            status: respond.data.status,
+                            lists: respond.data.lists,
+                            members: respond.data.members,
+                            invited: respond.data.invited,
+                            redirect: true
+
+                        })
+                        console.log(respond.data);
+                        alert("Updated Group " + respond.data.groupname)
+                        window.location.reload();
                     })
-                    console.log(respond.data);
-                    alert("Updated Group " + respond.data.groupname)
-                })
-            }.bind(this))
+            }
         }
     }
 
@@ -179,6 +234,21 @@ export default class AddGroup extends Component {
                                 </Col>
                                 <Col sm={10}>
                                     <Form.Control type="file" accept=".png, .jpg, .jpeg" name="photo" id="input-file" onChange={this.onChangeImage} />
+                                    {this.state.image && this.state.imageSrc}
+                                    {this.state.hasImage &&
+                                        this.state.imageSrc.map((item, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    <Figure>
+                                                        <Figure.Image src={item} width={150} height={150} />
+                                                    </Figure>
+                                                    {/*  <button type="button" onClick={() => this.deleteImage(index)}>
+                    delete
+                  </button> */}
+                                                </div>
+                                            );
+                                        })
+                                    }
                                 </Col>
                             </Row>
                             <Row className="m-3">

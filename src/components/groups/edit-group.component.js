@@ -28,9 +28,7 @@ export default function GroupsEdit() {
     listId: "",
     listName: ""
   })
-  const [modal, setModal] = useState({
-    modalShow: false
-  })
+  const [grpImg, setGrpImg] = useState({src: require('../../img/giftie_question.png')})
   const [shareUrl, setUrl] = useState({
     shareUrl: 'www.google.com'
   })
@@ -39,18 +37,6 @@ export default function GroupsEdit() {
 
   const params = useParams();
   const navigate = useNavigate();
-
-  function openModal() {
-    setModal({
-      modalShow: true
-
-    });
-  };
-  function closeModal() {
-    setModal({
-      modalShow: false
-    });
-  };
 
   useEffect(() => {
 
@@ -108,11 +94,12 @@ export default function GroupsEdit() {
   return (
 
     <Container>
-      <Row className="jumbotron jumbotron-fluid">
+      <Row className="jumbotron jumbotron-list">
         <Form className="p-3" >
           <Row>
             <Col sm={4} className="text-center">
-              <Image fluid src={require('../../img/giftie_question.png')} alt="..." />
+              <Image fluid src={groupData.image?groupData.image:grpImg.src} alt="..." 
+                 style={{ width: 200, height: 200, borderRadius: 200 }}/>
             </Col>
             <Col sm={8}>
               <div className="my-5" >
@@ -147,6 +134,7 @@ export default function GroupsEdit() {
               </div>
             </Col>
           </Row>
+          <Row className="p-3"></Row>
         </Form>
 
       </Row>
@@ -166,7 +154,7 @@ export default function GroupsEdit() {
                 {<GroupMembersView groupid={params.id} />}
               </Tab>
               <Tab eventKey="settings" title="Settings">
-                {<Settings groupData={groupData} />}
+                {<Settings groupid={params.id} />}
               </Tab>
 
             </Tabs>
@@ -176,12 +164,7 @@ export default function GroupsEdit() {
       <Container>
 
       </Container>
-      <Modal show={modal.modalShow} onHide={closeModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Group</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><AddGroup groupData={groupData} /></Modal.Body>
-      </Modal>
+ 
     </Container>
   );
 

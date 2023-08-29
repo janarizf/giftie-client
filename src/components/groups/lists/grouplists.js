@@ -55,7 +55,7 @@ export default function GroupList() {
     function todoList() {
         return listData.lists.map(function (currentTodo, i) {
             return (
-                <div className='p-3'>
+                <div className='p-3' key={i}>
                     <Card key={currentTodo._id} className='text-center card-item' >
                         {/* <Card.Img src={currentTodo.image} /> */}
                         <Card.Body>
