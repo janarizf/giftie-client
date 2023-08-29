@@ -177,7 +177,7 @@ export default class ItemListView extends Component {
                                         </div>
                                         {this.state.items.map(function (d, index) {
                                             return (
-                                                <div className='p-3'>
+                                                <div className='p-3' key={index}>
                                                     <Card key={index} className='text-center card-item'>
                                                         <Card.Img variant="top" src={this.imgSrc(d.image)} className="card-img" />
                                                         <Card.Body>
@@ -202,7 +202,7 @@ export default class ItemListView extends Component {
                                                                 </button>
                                                                 <div className="dropup-content">
                                                                     <Button size="sm" variant="custom" onClick={event => this.deleteItem(event, this)} id={d._id}>Delete</Button>
-                                                                    <Button size="sm" variant="custom" id={d._id}>Share</Button>
+                                                                  {/* <Button size="sm" variant="custom" id={d._id}>Share</Button> */}
                                                                 </div>
                                                             </div>
                                                         </Card.Body>

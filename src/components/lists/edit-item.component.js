@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Button, Form, Figure, Spinner } from 'react-bootstrap';
-import Image from 'react-bootstrap/Image'
 import listsService from "../../services/lists.service";
-import { ImgUpload, CheckImgFile } from "../../helper"
-export default class AddItem extends Component {
+import { ImgUpload } from "../../helper"
+export default class EditItem extends Component {
   constructor(props) {
     super(props);
 
@@ -16,8 +15,9 @@ export default class AddItem extends Component {
     this.onChangeQuantity = this.onChangeQuantity.bind(this);
     this.onChangeUnlimited = this.onChangeUnlimited.bind(this);
     this.saveItems = this.saveItems.bind(this);
-    this.imageUpload = this.imageUpload.bind(this);
-    this.deleteImage = this.deleteImage.bind(this);
+    this.scrapeImg = this.scrapeImg.bind(this);
+    this.imgSrc = this.imgSrc.bind(this);
+
     this.state = {
       list_id: props.listData._id,
       list_data: props.listData,
@@ -31,14 +31,18 @@ export default class AddItem extends Component {
       price: props.itemData.price,
       quantity: props.itemData.quantity,
       unlimited: props.itemData.unlimited,
-      hasImage: false,
-      imageSrc: [],
+      reservedby: props.itemData.reservedby,
+      reserved: props.itemData.reserved,
+      hasImage: props.itemData.image?true:false,
+      imageSrc: props.itemData.image ? this.imgSrc(props.itemData.image[0].filename) : '',
       imageUpload: [],
-      base64Image: "",
-      isEdit: false
+      isEdit: false,
+      loading: false
     }
   }
-
+  imgSrc(img) {
+      return "http://localhost:9000/lists/getImage/" + img;
+  }
   onChangeName(e) {
     this.setState({
       name: e.target.value
@@ -51,16 +55,16 @@ export default class AddItem extends Component {
     });
   }
 
-
   async scrapeImg() {
     if (this.state.website !== "") {
       this.setState({
         loading: true
       });
-      await listsService.getImg(encodeURIComponent(this.state.website))
+      await listsService
+        .getImg(encodeURIComponent(this.state.website))
         .then((response) => {
           this.setState({
-            link_img: response.data,
+            imageSrc: response.data,
             loading: false
           });
 
@@ -84,15 +88,6 @@ export default class AddItem extends Component {
       hasImage: false,
       imageSrc: ImagesArray
     });
-  }
-
-  imgSrc() {
-    console.log(this.state.image);
-    if (this.state.image.length > 0) {
-      return "http://localhost:9000/lists/getImage/" + this.state.image[0].filename;
-    } else {
-      return ""
-    }
   }
 
   async onChangeImage(e) {
@@ -142,22 +137,23 @@ export default class AddItem extends Component {
     });
   }
 
-  async imageUpload() {
-    const selectedFile = document.getElementById("input-file").files[0];
-    return listsService.fileupload(selectedFile)
-      .then((res) => {
-        return res
-      });
-
-  }
   async handleUpload(imageUrl) {
     try {
       // Fetch the image data from the provided URL
       const response = await fetch(imageUrl);
-      const blob = await response.blob();
-
+      var blob = await response.blob();
       // Create a File object from the Blob with a predefined filename
-      const filename = imageUrl.split('/').pop(); // Extract filename from URL
+      var filename = imageUrl.split("/").pop(); // Extract filename from URL
+      filename = filename.replaceAll('%', '');
+      const strippedUrl = filename.replace(/(\.jpg|.jpeg|\.png).*$/, (match, ext) => ext);
+      filename = strippedUrl;
+      if (blob.type === 'image/webp') {
+        if (filename.slice(-4) === '.png') {
+          blob = new Blob([blob], { type: 'image/png' });
+        } else {
+          blob = new Blob([blob], { type: 'image/jpeg' });
+        }
+      }
       const uploadedFile = new File([blob], filename, { type: blob.type });
 
       var files = [];
@@ -167,12 +163,10 @@ export default class AddItem extends Component {
         hasImage: true,
         imageUpload: files
       });
-
     } catch (error) {
-      console.error('Error fetching or uploading the image:', error);
+      console.error("Error fetching or uploading the image:", error);
     }
-  };
-
+  }
   saveItems(e) {
     try {
       e.preventDefault();
@@ -181,7 +175,7 @@ export default class AddItem extends Component {
         name: this.state.name,
         website: this.state.website,
         category_id: this.state.category,
-        image: [],
+        image: this.state.image,
         note: this.state.note,
         price: this.state.price,
         quantity: this.state.quantity,
@@ -189,7 +183,7 @@ export default class AddItem extends Component {
         addedon: new Date(),
         taken: false,
         reservedby: "",
-        reserved: false
+        reserved: this.state.reserved
       };
       let updatedItemList = this.state.list_data.items.filter(function (it) {
         return it._id != this.state.item_id;
@@ -214,7 +208,6 @@ export default class AddItem extends Component {
         ImgUpload(this.state.imageUpload[0], function (uploaded) {
           //const apiurl = process.env.REACT_APP_APIURL;
           //  data.image = apiurl + "lists/getImage/" + uploaded.data[0].filename;
-
           data.image = [{
             id: uploaded.data[0].id,
             filename: uploaded.data[0].filename
@@ -245,77 +238,130 @@ export default class AddItem extends Component {
 
   }
   render() {
-    const itemCategoryData = [{ id: 1, value: "Clothes" }, { id: 2, value: "Gadgets" }, { id: 3, value: "Food" }, { id: 4, value: "Appliances" }, { id: 5, value: "Others" }]; return (
-      <Form onSubmit={this.saveItems} encType="multipart/form-data">
+    const itemCategoryData = [
+      { id: 1, value: "Clothes" },
+      { id: 2, value: "Gadgets" },
+      { id: 3, value: "Food" },
+      { id: 4, value: "Appliances" },
+      { id: 5, value: "Others" }
+    ];
+    return (
+      <Form onSubmit={this.saveItems} encType='multipart/form-data'>
         <Form.Group>
           <Form.Label>Add to List</Form.Label>
-          <Form.Control placeholder="Disabled input" disabled={true} value={this.state.list_data.name} />
+          <Form.Control
+            placeholder='Disabled input'
+            disabled={true}
+            value={this.state.list_data.name}
+          />
           <Form.Label>What would you like?</Form.Label>
-          <Form.Control placeholder="e.g. toys, chocolates, essentials etc.." disabled={this.state.isEdit} name="name" required value={this.state.name} onChange={this.onChangeName} />
+          <Form.Control
+            placeholder='e.g. toys, chocolates, essentials etc..'
+            disabled={this.state.isEdit}
+            name='name'
+            required
+            value={this.state.name}
+            onChange={this.onChangeName}
+          />
+          <Form.Label>Item Category</Form.Label>
+          <Form.Select
+            value={this.state.category}
+            onChange={this.onChangeCategory}
+            disabled={false}
+            required
+          >
+            <option key='0' value=''>
+              Category
+            </option>
+            {itemCategoryData.map(function (category, index) {
+              return (
+                <option key={index} value={category.id}>
+                  {category.value}
+                </option>
+              );
+            })}
+          </Form.Select>
           <Form.Label>Website item link (optional)</Form.Label>
-          <Form.Control placeholder="https://" name="website" value={this.state.website} disabled={false} onChange={this.onChangeWebsite} />
-          <Button size="sm" variant="custom" onClick={() => this.scrapeImg()} disabled={this.state.loading}>
+          <Form.Control
+            placeholder='https://'
+            name='website'
+            value={this.state.website}
+            disabled={false}
+            onChange={this.onChangeWebsite}
+          />
+          <Button
+            size='sm'
+            variant='custom'
+            onClick={() => this.scrapeImg()}
+            disabled={this.state.loading}
+          >
             Get Image
-            {this.state.loading && <Spinner
-              as="span"
-              animation="border"
-              role="status"
-              aria-hidden="true"
-            />}
+            {this.state.loading && (
+              <Spinner
+                as='span'
+                animation='border'
+                role='status'
+                aria-hidden='true'
+              />
+            )}
           </Button>
+
           <br />
 
-          <Form.Label>Item Category</Form.Label>
-          <Form.Select value={this.state.category} onChange={this.onChangeCategory} disabled={false} required >
-            <option key="0" value="">Category</option>
-            {
-              itemCategoryData.map(function (category, index) {
-                return <option key={index} value={category.id} >{category.value}</option>
-              })
-            }
+          <Form.Label>Images (optional)</Form.Label>
+          <Form.Control
+            type='file'
+            accept='.png, .jpg, .jpeg'
+            disabled={false}
+            name='image'
+            id='input-file'
+            onChange={this.onChangeImage}
+          />
 
-          </Form.Select>
-          <Form.Label>Images (optional)</Form.Label> <br />
-
-          {this.state.image.length == 0 &&
-            <Form.Control type="file" accept=".png, .jpg, .jpeg" disabled={false} name="image" id="input-file" onChange={this.onChangeImage} />
-          }
-          {this.state.link_img &&
-            <div>
-              <img src={this.state.link_img} alt="" width="100" height="auto" />
-            </div>
-          }
           {this.state.hasImage &&
-            this.state.imageSrc.map((item, index) => {
-              return (
-                <div key={index}>
-                  <Figure>
-                    <Figure.Image src={item} width={150} height={150} />
-                  </Figure>
-                  {/*  <button type="button" onClick={() => this.deleteImage(index)}>
-                    delete
-                  </button> */}
-                </div>
-              );
-            })
-          }
+            <Figure>
+              <Figure.Image src={this.state.imageSrc} width={200} height={200} />
+            </Figure>
+          }   <br />
           {/* {this.state.hasImage && <Button variant="custom" onClick={this.imageUpload}>upload</Button>}<br/> */}
           <Form.Label>Note (optional)</Form.Label>
-          <Form.Control placeholder="explain what do you prefer for that item" name="note" disabled={false} value={this.state.note} onChange={this.onChangeNote} />
+          <Form.Control
+            placeholder='explain what do you prefer for that item'
+            name='note'
+            disabled={false}
+            value={this.state.note}
+            onChange={this.onChangeNote}
+          />
           <Form.Label>Max Pricing (optional)</Form.Label>
-          <Form.Control type="number" name="price" value={this.state.price} disabled={false} onChange={this.onChangePrice} />
+          <Form.Control
+            type='number'
+            name='price'
+            value={this.state.price}
+            disabled={false}
+            onChange={this.onChangePrice}
+          />
           <Form.Label>Quantity</Form.Label>
-          <Form.Control type="number" name="quantity" placeholder="0" disabled={false} value={this.state.quantity} onChange={this.onChangeQuantity} />
-          <Form.Check type='checkbox' label="Unlimited Item" name="unlimited" disabled={false} value={this.state.unlimited} onChange={this.onChangeUnlimited} />
+          <Form.Control
+            type='number'
+            name='quantity'
+            placeholder='0'
+            disabled={false}
+            value={this.state.quantity}
+            onChange={this.onChangeQuantity}
+          />
+          <Form.Check
+            type='checkbox'
+            label='Unlimited Item'
+            name='unlimited'
+            disabled={false}
+            value={this.state.unlimited}
+            onChange={this.onChangeUnlimited}
+          />
         </Form.Group>
-        <Button variant="custom" type="submit">
+        <Button variant='custom' type='submit'>
           Submit
         </Button>
-        <Button variant="custom" onClick={() => { window.location.reload() }}>
-          Back
-        </Button>
       </Form>
-
     );
   }
 }

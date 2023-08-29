@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form, Figure, Spinner } from "react-bootstrap";
 import listsService from "../../services/lists.service";
-import { ImgUpload, CheckImgFile } from "../../helper";
+import { ImgUpload } from "../../helper";
 
 export default class AddItem extends Component {
   constructor(props) {
@@ -28,10 +28,11 @@ export default class AddItem extends Component {
       price: 0,
       quantity: 1,
       unlimited: false,
+      reservedby: "",
+      reserved: false,
       hasImage: false,
       imageSrc: "",
       imageUpload: [],
-      base64Image: "",
       isEdit: false,
       loading: false
     };
