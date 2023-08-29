@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Button, Form, Figure, Spinner } from "react-bootstrap";
-import Image from "react-bootstrap/Image";
 import listsService from "../../services/lists.service";
 import { ImgUpload, CheckImgFile } from "../../helper";
 
@@ -143,10 +142,19 @@ export default class AddItem extends Component {
     try {
       // Fetch the image data from the provided URL
       const response = await fetch(imageUrl);
-      const blob = await response.blob();
-
+      var blob = await response.blob();
       // Create a File object from the Blob with a predefined filename
-      const filename = imageUrl.split("/").pop(); // Extract filename from URL
+      var filename = imageUrl.split("/").pop(); // Extract filename from URL
+      filename = filename.replaceAll('%', '');
+      const strippedUrl = filename.replace(/(\.jpg|.jpeg|\.png).*$/, (match, ext) => ext);
+      filename = strippedUrl;
+      if (blob.type === 'image/webp') {
+        if (filename.slice(-4) === '.png') {
+          blob = new Blob([blob], { type: 'image/png' });
+        } else {
+          blob = new Blob([blob], { type: 'image/jpeg' });
+        }
+      }
       const uploadedFile = new File([blob], filename, { type: blob.type });
 
       var files = [];
