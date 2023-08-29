@@ -335,23 +335,25 @@ export default class ListSetting extends Component {
                   <Form.Label>  Theme:</Form.Label>
                 </Col>
                 <Col sm={10}>
-                 
-                  {this.state.themesData.map((option, index) => (
-                    <Row>
-                    <Form.Check
-                       name="group1"
-                      key={index}
-                      type="radio"
-                      checked={this.state.themes === option._id}
-                      onChange={this.onChangethemes}
-                      value={option._id} // Actual value
-                    />
-                    {option.name}
-                    <Image fluid src={option.backgroundimage} alt={option.name}   
-                    style={{ width: 100, height: 100, borderRadius: 100/2, padding: 0}}/>
+                  <Row xs={2} md={3} lg={6}>
+                    {this.state.themesData.map((option, index) => (
+                      <Row key={index}>
+                        <Form.Check
+                          name="group1"
+                          key={index}
+                          type="radio"
+                          checked={this.state.themes === option._id}
+                          onChange={this.onChangethemes}
+                          value={option._id} // Actual value
+                        />
+                        {option.name}
+                        <Row>
+                          <Image fluid src={option.backgroundimage} alt={option.name}
+                            style={{ width: 100, height: 100, borderRadius: 100 / 2, padding: 0 }} />
+                        </Row>
+                      </Row>
+                    ))}
                   </Row>
-                  ))}
-                 
                 </Col>
               </Row>
               {this.state.themes == "custom"

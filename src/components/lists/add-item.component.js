@@ -16,7 +16,6 @@ export default class AddItem extends Component {
     this.onChangeQuantity = this.onChangeQuantity.bind(this);
     this.onChangeUnlimited = this.onChangeUnlimited.bind(this);
     this.saveItems = this.saveItems.bind(this);
-    this.imageUpload = this.imageUpload.bind(this);
     this.scrapeImg = this.scrapeImg.bind(this);
     this.state = {
       list_id: props.listData._id,
@@ -30,11 +29,10 @@ export default class AddItem extends Component {
       quantity: 1,
       unlimited: false,
       hasImage: false,
-      imageSrc: [],
+      imageSrc: "",
       imageUpload: [],
       base64Image: "",
       isEdit: false,
-      link_img: "",
       loading: false
     };
   }
@@ -60,7 +58,7 @@ export default class AddItem extends Component {
         .getImg(encodeURIComponent(this.state.website))
         .then((response) => {
           this.setState({
-            link_img: response.data,
+            imageSrc: response.data,
             loading: false
           });
 
@@ -77,15 +75,15 @@ export default class AddItem extends Component {
     });
   }
 
-  deleteImage(e) {
-    const ImagesArray = this.state.imageSrc.filter(
-      (item, index) => index !== e
-    );
-    this.setState({
-      hasImage: false,
-      imageSrc: ImagesArray
-    });
-  }
+  // deleteImage(e) {
+  //   const ImagesArray = this.state.imageSrc.filter(
+  //     (item, index) => index !== e
+  //   );
+  //   this.setState({
+  //     hasImage: false,
+  //     imageSrc: ImagesArray
+  //   });
+  // }
 
   async onChangeImage(e) {
     let ImagesArray = Object.entries(e.target.files).map((e) => {
@@ -101,10 +99,10 @@ export default class AddItem extends Component {
     });
 
     console.log(e.target.files);
-    console.log(ImagesArray);
+    console.log(ImagesArray[0]);
     this.setState({
       hasImage: true,
-      imageSrc: ImagesArray,
+      imageSrc: ImagesArray[0],
       image: e.target.value,
       imageUpload: e.target.files
     });
@@ -132,12 +130,7 @@ export default class AddItem extends Component {
       unlimited: e.target.value
     });
   }
-  async imageUpload() {
-    const selectedFile = document.getElementById("input-file").files[0];
-    return listsService.fileupload(selectedFile).then((res) => {
-      return res;
-    });
-  }
+
   async handleUpload(imageUrl) {
     try {
       // Fetch the image data from the provided URL
@@ -264,6 +257,24 @@ export default class AddItem extends Component {
             value={this.state.name}
             onChange={this.onChangeName}
           />
+          <Form.Label>Item Category</Form.Label>
+          <Form.Select
+            value={this.state.category}
+            onChange={this.onChangeCategory}
+            disabled={false}
+            required
+          >
+            <option key='0' value=''>
+              Category
+            </option>
+            {itemCategoryData.map(function (category, index) {
+              return (
+                <option key={index} value={category.id}>
+                  {category.value}
+                </option>
+              );
+            })}
+          </Form.Select>
           <Form.Label>Website item link (optional)</Form.Label>
           <Form.Control
             placeholder='https://'
@@ -291,24 +302,6 @@ export default class AddItem extends Component {
 
           <br />
 
-          <Form.Label>Item Category</Form.Label>
-          <Form.Select
-            value={this.state.category}
-            onChange={this.onChangeCategory}
-            disabled={false}
-            required
-          >
-            <option key='0' value=''>
-              Category
-            </option>
-            {itemCategoryData.map(function (category, index) {
-              return (
-                <option key={index} value={category.id}>
-                  {category.value}
-                </option>
-              );
-            })}
-          </Form.Select>
           <Form.Label>Images (optional)</Form.Label>
           <Form.Control
             type='file'
@@ -318,24 +311,12 @@ export default class AddItem extends Component {
             id='input-file'
             onChange={this.onChangeImage}
           />
-          {this.state.link_img && (
-            <div>
-              <img src={this.state.link_img} alt='' width='100' height='auto' />
-            </div>
-          )}
+
           {this.state.hasImage &&
-            this.state.imageSrc.map((item, index) => {
-              return (
-                <div key={index}>
-                  <Figure>
-                    <Figure.Image src={item} width={150} height={150} />
-                  </Figure>
-                  {/*  <button type="button" onClick={() => this.deleteImage(index)}>
-                    delete
-                  </button> */}
-                </div>
-              );
-            })}
+            <Figure>
+              <Figure.Image src={this.state.imageSrc} width={200} height={200} />
+            </Figure>
+          }   <br />
           {/* {this.state.hasImage && <Button variant="custom" onClick={this.imageUpload}>upload</Button>}<br/> */}
           <Form.Label>Note (optional)</Form.Label>
           <Form.Control
