@@ -19,7 +19,13 @@ class ListsDataService {
   }
 
   getImg(url) {
-    return http.get(`/imgscraper/getimg/${url}`);
+    return http.get(`/imgscraper/getimg/${url}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      console.log(err);
+    });;
   }
   convertImg(file) {
     return http.get(`/imgscraper/convertImg/${file}`);

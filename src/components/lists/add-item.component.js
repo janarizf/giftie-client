@@ -58,14 +58,20 @@ export default class AddItem extends Component {
       await listsService
         .getImg(encodeURIComponent(this.state.website))
         .then((response) => {
+          if (response) {
+            this.setState({
+              imageSrc: response.data
+            });
+            if (response.data) {
+              this.handleUpload(response.data);
+            }
+            console.log(response.data);
+          }
           this.setState({
-            imageSrc: response.data,
             loading: false
           });
-
-          this.handleUpload(response.data);
-
-          console.log(response.data);
+        }).catch((error) => {
+          console.log(error);
         });
     }
   }
