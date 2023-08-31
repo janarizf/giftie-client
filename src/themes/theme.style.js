@@ -5,7 +5,7 @@ export const default_theme = {
     bodycolor: "#10c4a4",
     textcolor: "#ffffff",
     headerimage: "http://localhost:3000/giftie_green.jpg",
-    backgroundimage: "https://giftie-backend.herokuapp.com/lists/getImage/1691433060064-20.png",
+    backgroundimage: "",
 
 };
 export const baby_shower = {
