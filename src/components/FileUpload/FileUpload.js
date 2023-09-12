@@ -2,10 +2,12 @@ import React, { useRef, useState, useEffect } from "react";
 import { Container, Wrapper, Preview } from "./FileUpload.styled";
 import { Upload } from "react-bootstrap-icons";
 import { Typography } from "../../shared/elements";
+import { COLORS } from "./../../constants/colors";
+import { CheckImgFile } from "../../helper";
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
-const FileUpload = ({ onFileSelected }) => {
+const FileUpload = ({ img, onFileSelected, isError }) => {
   const inputFile = useRef(null);
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
@@ -24,35 +26,19 @@ const FileUpload = ({ onFileSelected }) => {
     }
     setFile(file);
 
-    let fileReader,
-      isCancel = false;
-    if (file) {
-      fileReader = new FileReader();
-      const image = new Image();
-      fileReader.onload = (e) => {
-        const { result } = e.target;
-        image.src = fileReader.result;
-        setFileDataURL(result);
-      };
-      fileReader.readAsDataURL(file);
+    if (e) {
+      CheckImgFile(e, function (ImagesArray) {
+        setFileDataURL(ImagesArray);
+        onFileSelected(e.target.files[0]);
+      });
     }
-
-    return () => {
-      isCancel = true;
-      if (fileReader && fileReader.readyState === 1) {
-        fileReader.abort();
-      }
-    };
   };
 
-  useEffect(() => {
-    if (fileDataURL) {
-      onFileSelected(fileDataURL);
-    }
-  }, [fileDataURL]);
-
   return (
-    <Container onClick={handleOpenFileWindow}>
+    <Container
+      onClick={handleOpenFileWindow}
+      style={{ borderColor: isError ? COLORS.DANGER : "#707070" }}
+    >
       <div style={{ height: 0, width: 0, overflow: "hidden" }}>
         <input
           ref={inputFile}
@@ -69,8 +55,8 @@ const FileUpload = ({ onFileSelected }) => {
       </div>
 
       <Wrapper>
-        {fileDataURL ? (
-          <Preview src={fileDataURL} />
+        {fileDataURL || img ? (
+          <Preview src={fileDataURL ? fileDataURL : img} />
         ) : (
           <React.Fragment>
             <Upload style={{ fontSize: 25 }} />

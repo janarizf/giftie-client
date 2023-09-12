@@ -18,8 +18,10 @@ import categoriesService from "../../../../../services/admin/categories.service"
 import { Select } from "../../../../../shared/elements";
 import FileUpload from "./../../../../FileUpload/FileUpload";
 import themesService from "../../../../../services/admin/themes.service";
+import { ErrorMessage } from "../../../../ErrorMessage";
+import { ImgUpload } from "../../../../../helper";
 
-const AddThemeModal = ({ open, onClose }) => {
+const AddThemeModal = ({ data, open, onClose }) => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
   const [color, setColor] = useState("#FF5733");
   const [colorType, setColorType] = useState("");
@@ -27,19 +29,29 @@ const AddThemeModal = ({ open, onClose }) => {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [themeColors, setThemeColors] = useState({
-    textcolor: [],
-    bodycolor: [],
-    headercolor: []
+    textcolor: data && data.textcolor ? [data.textcolor] : [],
+    bodycolor: data && data.bodycolor ? [data.bodycolor] : [],
+    headercolor: data && data.headercolor ? [data.headercolor] : []
   });
   const [headerImage, setHeaderImage] = useState(null);
   const [backgroundImage, setBackgroundImage] = useState(null);
 
   useEffect(() => {
     const localThemeColor = JSON.parse(localStorage.getItem("themeColors"));
-    if (localThemeColor) {
+    if (
+      localThemeColor.bodycolor.length &&
+      localThemeColor.headercolor.length &&
+      localThemeColor.textcolor.length
+    ) {
       setThemeColors(localThemeColor);
+    } else {
+      setThemeColors({
+        textcolor: data && data.textcolor ? [data.textcolor] : [],
+        bodycolor: data && data.bodycolor ? [data.bodycolor] : [],
+        headercolor: data && data.headercolor ? [data.headercolor] : []
+      });
     }
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     if (themeColors) {
@@ -106,23 +118,73 @@ const AddThemeModal = ({ open, onClose }) => {
   useOutsideContainerClick(wrapperRef, handleColorPickerClose);
 
   // Form
-  const handleSubmit = (values) => {
-    async function createTheme() {
-      await themesService
-        .create(values)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-          setIsLoading(false);
-        });
+  const handleSubmit = async (values) => {
+    const newValues = values;
+    const apiurl = process.env.REACT_APP_APIURL;
+    if (backgroundImage) {
+      const uploadedBackgroundImage = await ImgUpload(
+        values.backgroundimage,
+        (uploaded) => {
+          return `${apiurl}lists/getImage/${uploaded.data[0].filename}`;
+        }
+      );
+      newValues.backgroundimage = uploadedBackgroundImage;
     }
 
-    createTheme();
+    if (headerImage) {
+      const uploadedHeaderImage = await ImgUpload(
+        values.headerimage,
+        (uploaded) => {
+          return `${apiurl}lists/getImage/${uploaded.data[0].filename}`;
+        }
+      );
+      newValues.headerimage = uploadedHeaderImage;
+    }
+
+    if (data) {
+      console.log();
+      async function updateTheme() {
+        await themesService
+          .update(data._id, {
+            ...newValues
+          })
+          .then((res) => {
+            onClose();
+            console.log(res);
+          })
+          .catch(function (error) {
+            console.log(error);
+            setIsLoading(false);
+          })
+          .finally(() => {
+            onClose();
+          });
+      }
+      updateTheme();
+    } else {
+      async function createTheme() {
+        await themesService
+          .create({
+            ...newValues
+          })
+          .then((res) => {
+            console.log(res);
+            setHeaderImage("");
+            setBackgroundImage("");
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .finally(() => {
+            onClose();
+          });
+      }
+      createTheme();
+    }
   };
 
   const { form } = useAddThemeForm({
+    data: data,
     onSubmit: handleSubmit
   });
 
@@ -141,8 +203,6 @@ const AddThemeModal = ({ open, onClose }) => {
       form.setFieldValue("backgroundimage", backgroundImage);
     }
   }, [backgroundImage]);
-
-  console.log(form);
 
   return (
     <StyledModal
@@ -165,14 +225,18 @@ const AddThemeModal = ({ open, onClose }) => {
               placeholder={"Enter name"}
               value={form.values.name}
               name='name'
-              // style={{ borderColor: "#707070" }}
+              style={{
+                borderColor: !!form.errors.name ? COLORS.DANGER : "#707070"
+              }}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
               isInvalid={!!form.errors.name}
             />
-            <Form.Control.Feedback type='invalid'>
-              Please enter name.
-            </Form.Control.Feedback>
+            {!!form.errors.name ? (
+              <ErrorMessage errorMessage={"Please enter name"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.category'>
             <Form.Label>List Category</Form.Label>
@@ -191,7 +255,12 @@ const AddThemeModal = ({ open, onClose }) => {
                 <React.Fragment>
                   <Dropdown.Toggle
                     id='dropdown-autoclose-true'
-                    style={{ height: 38 }}
+                    style={{
+                      height: 38,
+                      borderColor: !!form.errors.category_id
+                        ? COLORS.DANGER
+                        : "#707070"
+                    }}
                   >
                     {themeCategories.filter(
                       (v) => v._id === form.values.category_id
@@ -213,12 +282,15 @@ const AddThemeModal = ({ open, onClose }) => {
                       </Dropdown.Item>
                     ))}
                   </Dropdown.Menu>
+
+                  {!!form.errors.category_id ? (
+                    <ErrorMessage errorMessage={"Please select category"} />
+                  ) : (
+                    <React.Fragment />
+                  )}
                 </React.Fragment>
               )}
             </Select>
-            <Form.Control.Feedback type='invalid'>
-              Please enter name.
-            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.textColor'>
             <Form.Label>Text Color</Form.Label>
@@ -250,6 +322,11 @@ const AddThemeModal = ({ open, onClose }) => {
                 <BrushFill style={{ fontSize: "14px" }} color={COLORS.DANGER} />
               </AddColor>
             </div>
+            {!!form.errors.textcolor ? (
+              <ErrorMessage errorMessage={"Please select text color"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.backgroundColor'>
             <Form.Label>Background Color</Form.Label>
@@ -281,6 +358,11 @@ const AddThemeModal = ({ open, onClose }) => {
                 <BrushFill style={{ fontSize: "13px" }} color={COLORS.DANGER} />
               </AddColor>
             </div>
+            {!!form.errors.bodycolor ? (
+              <ErrorMessage errorMessage={"Please select background color"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group className='mb-3' controlId='addThemeForm.headerColor'>
             <Form.Label>Header Color</Form.Label>
@@ -313,14 +395,39 @@ const AddThemeModal = ({ open, onClose }) => {
                 <BrushFill style={{ fontSize: "13px" }} color={COLORS.DANGER} />
               </AddColor>
             </div>
+            {!!form.errors.headercolor ? (
+              <ErrorMessage errorMessage={"Please select header color"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Header Image</Form.Label>
-            <FileUpload onFileSelected={setHeaderImage} />
+            <FileUpload
+              key={`file-headerimage}`}
+              img={form.values.headerimage}
+              onFileSelected={setHeaderImage}
+              isError={!!form.errors.headerimage}
+            />
+            {!!form.errors.headerimage ? (
+              <ErrorMessage errorMessage={"Please select header image"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Background Image</Form.Label>
-            <FileUpload onFileSelected={setBackgroundImage} />
+            <FileUpload
+              key={`file-backgroundimage`}
+              img={form.values.backgroundimage}
+              onFileSelected={setBackgroundImage}
+              isError={!!form.errors.backgroundimage}
+            />
+            {!!form.errors.backgroundimage ? (
+              <ErrorMessage errorMessage={"Please select background image"} />
+            ) : (
+              <React.Fragment />
+            )}
           </Form.Group>
         </Form>
       </StyledModal.Body>
@@ -346,7 +453,7 @@ const AddThemeModal = ({ open, onClose }) => {
         style={{ height: 40, marginTop: 20 }}
         onClick={form.handleSubmit}
       >
-        Add Theme
+        {data ? "Update" : "Add"} Theme
       </StyledButton>
     </StyledModal>
   );
