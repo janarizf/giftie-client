@@ -5,6 +5,7 @@ import ProfileMainView from "../../../components/profile/profile.component"
 import GroupMainView from "../../../components/groups/group.component";
 import Image from 'react-bootstrap/Image'
 import GetCurrentUser from '../../../helper'
+import shopeeService from "../../../services/shopee/shopee.service";
 
 export default class Account extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ export default class Account extends Component {
 
     }
     componentWillMount = () => {
+     //   var shapi = shopeeService.shopeeApi();
         var user = GetCurrentUser();
 
         this.setState({
