@@ -1,15 +1,15 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export const useAddThemeForm = ({ onSubmit }) => {
+export const useAddThemeForm = ({ data, onSubmit }) => {
   const initialValues = {
-    backgroundimage: "",
-    bodycolor: "",
-    category_id: "",
-    headercolor: "",
-    headerimage: "",
-    name: "",
-    textcolor: ""
+    backgroundimage: data && data.backgroundimage ? data.backgroundimage : "",
+    bodycolor: data && data.bodycolor ? data.bodycolor : "",
+    category_id: data && data.category_id ? data.category_id : "",
+    headercolor: data && data.headercolor ? data.headercolor : "",
+    headerimage: data && data.headerimage ? data.headerimage : "",
+    name: data && data.name ? data.name : "",
+    textcolor: data && data.textcolor ? data.textcolor : ""
   };
 
   const validationSchema = Yup.object().shape({
