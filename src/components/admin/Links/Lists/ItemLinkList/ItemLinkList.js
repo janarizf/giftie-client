@@ -1,41 +1,49 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Filter from "../Filter/Filter";
-import { CustomTable } from "../../../../../shared";
+import listsService from "../../../../../services/lists.service";
+import EditItemModal from "./EditItemModal/EditItemModal";
+import { CustomTableEditable } from "../../../../../shared";
+import ItemTable from "./ItemTable";
 
-const headers = ["User", "Item", "Date Posted", "Item Link", "Link Status"];
-const mockData = [
-  {
-    id: "user1",
-    item: "Lorem Ipsum",
-    date_posted: "11 Jul 2023",
-    item_link: "https://bit.lyh/lorem-ipsum/dolor-sit-amet",
-    link_status: "User Affiliate"
-  },
-  {
-    id: "user2",
-    item: "Lorem Ipsum",
-    date_posted: "11 Jul 2023",
-    item_link: "https://bit.lyh/lorem-ipsum/dolor-sit-amet",
-    link_status: "User Affiliate"
-  },
-  {
-    id: "user3",
-    item: "Lorem Ipsum",
-    date_posted: "11 Jul 2023",
-    item_link: "https://bit.lyh/lorem-ipsum/dolor-sit-amet",
-    link_status: "User Affiliate"
-  }
-];
+const headers = ["Item", "Date Posted", "Item Link"];
 
 const ItemLinkList = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    async function fetchData() {
+      await listsService
+        .getAll()
+        .then((response) => {
+          const allItems = [];
+          for (const list of response.data) {
+              allItems.push(...list.items);
+          }
+          setResponse(allItems);
+          setIsLoading(false);
+        })
+        .catch(function (error) {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+    fetchData();
+  },[])
+
+  const items = useMemo(() => {
+    return response ? response : [];
+  }, [response]);
+
   return (
     <div>
       <Filter />
-      <CustomTable
+      <ItemTable
         responsive='sm'
         hasActions
         headers={headers}
-        data={mockData}
+        data={items}
       />
     </div>
   );

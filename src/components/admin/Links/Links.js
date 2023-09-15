@@ -6,7 +6,7 @@ import Lists from "./Lists/Lists";
 const Links = () => {
   return (
     <Container>
-      <Head />
+      {/* <Head /> */}
       <Lists />
     </Container>
   );

@@ -52,6 +52,17 @@ class ListsDataService {
         console.log(err);
       });
   }
+  async updateItemLink( data) {
+    return await http
+      .post("/lists/updateItemLink", data)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   additem(id, data) {
     return http.put(`/lists/update/${id}`, data);
   }

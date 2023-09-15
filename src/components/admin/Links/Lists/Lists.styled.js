@@ -15,5 +15,5 @@ export const TabContainer = styled.div`
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding: 10px 0;
-  height: 96%;
+  height: 100%;
 `;
