@@ -37,7 +37,7 @@ const ItemTable = ({
         setisEditItemModalOpen(true);
 
     };
-
+ 
     return (
         <StyledTable {...props}>
             {headers.length ? (

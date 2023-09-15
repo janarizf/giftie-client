@@ -9,7 +9,10 @@ const headers = ["Item", "Date Posted", "Item Link"];
 
 const ItemLinkList = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState(null);
+  const [itemFilter, setItemFilter] = useState("");
+  const [itemDateFilter, setItemDateFilter] = useState("");
+  const [itemData, setItemData] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -19,9 +22,10 @@ const ItemLinkList = () => {
         .then((response) => {
           const allItems = [];
           for (const list of response.data) {
-              allItems.push(...list.items);
+            allItems.push(...list.items);
           }
-          setResponse(allItems);
+          setItemData(allItems);
+          setFilteredData(allItems);
           setIsLoading(false);
         })
         .catch(function (error) {
@@ -30,20 +34,58 @@ const ItemLinkList = () => {
         });
     }
     fetchData();
-  },[])
+  }, [])
+
+  useEffect(() => {
+    async function fetchData() {
+      var filteredData = itemData;
+      if (itemFilter) {
+        filteredData = filteredData.filter((item) =>
+          item.name.toLowerCase().includes(itemFilter.toLowerCase()) ||
+          item.website.toLowerCase().includes(itemFilter.toLowerCase())
+        );
+      }
+      if (itemDateFilter) {
+        filteredData = filteredData.filter((item) =>
+        item.addedon.substring(0, 10) == itemDateFilter)
+      }
+      setFilteredData(filteredData);
+    }
+    fetchData();
+  }, [itemFilter,itemDateFilter]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     var filteredData = filteredData;
+  //     if (itemDateFilter) {
+  //       filteredData = filteredData.filter((item) =>
+  //       item.addedon.substring(0, 10) == itemDateFilter)
+  //     }
+  //     setFilteredData(filteredData);
+  //   }
+  //   fetchData();
+  // }, [itemDateFilter]);
 
   const items = useMemo(() => {
-    return response ? response : [];
-  }, [response]);
+    return itemData ? itemData : [];
+  }, [itemData]);
+  const filteredItems = useMemo(() => {
+    return filteredData ? filteredData : [];
+  }, [filteredData]);
 
   return (
     <div>
-      <Filter />
+      <Filter
+        itemFilter={itemFilter}
+        setItemFilter={setItemFilter}
+        itemDateFilter={itemDateFilter}
+        setItemDateFilter={setItemDateFilter}
+      />
       <ItemTable
         responsive='sm'
         hasActions
         headers={headers}
-        data={items}
+        data={filteredItems}
       />
     </div>
   );
