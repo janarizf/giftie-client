@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Filter from "../Filter/Filter";
+import listUrlService from "../../../../../services/admin/listurlrequest.service";
+import ListTable from "./ListTable";
+
 import { CustomTable } from "../../../../../shared";
 
-const headers = ["User", "Basic Link", "List Link Request to", "Link Status"];
+const headers = ["Basic Link", "List Link Request to", "Link Status", "Requested By", "Requested Date", "Approved By", "Approved Date"];
+const status = ["Waiting", "Rejected", "Approved"]
 const mockData = [
   {
     id: "user1",
@@ -25,6 +29,42 @@ const mockData = [
 ];
 
 const ListLinkList = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [itemFilter, setItemFilter] = useState("");
+  const [itemDateFilter, setItemDateFilter] = useState("");
+  const [itemData, setItemData] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    async function fetchData() {
+      await listUrlService
+        .getAll()
+        .then((response) => {
+          const allItems = [];
+          for (const list of response.data) {
+            allItems.push(...list.items);
+          }
+          setItemData(allItems);
+          setFilteredData(allItems);
+          setIsLoading(false);
+        })
+        .catch(function (error) {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+    fetchData();
+  }, [])
+
+  const items = useMemo(() => {
+    return itemData ? itemData : [];
+  }, [itemData]);
+  const filteredItems = useMemo(() => {
+    return filteredData ? filteredData : [];
+  }, [filteredData]);
+
+
   return (
     <div>
       <Filter />
@@ -33,6 +73,12 @@ const ListLinkList = () => {
         hasActions
         headers={headers}
         data={mockData}
+      />
+      <ListTable
+        responsive='md'
+        hasActions
+        headers={headers}
+        data={filteredItems}
       />
     </div>
   );
